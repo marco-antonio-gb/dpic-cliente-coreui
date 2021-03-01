@@ -8,7 +8,8 @@
 
 ``` bash
 # clone the project 
-$ git clone https://github.com/marco-antonio-gb/dpic-cliente.git
+$ git clone https://github.com/marco-antonio-gb/dpic-cliente-vuetify.git
+ 
 
 # Install dependencies
 $ cd dpic-cliente
