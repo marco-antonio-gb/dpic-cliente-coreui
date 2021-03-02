@@ -1,14 +1,6 @@
 <template>
 <div>
-    <div class="d-flex flex-row align-items-center mb-3">
-        <div class="mr-2">
-            <CButton size="sm" shape="pill" color="secondary" @click="$router.go(-1)" pressed>Volver</CButton>
-        </div>
-        <div>
-            <h3 class="p-0 m-0 font-weight-bold">{{ $route.meta.title }}</h3>
-        </div>
-        <div></div>
-    </div>
+    <goback  class="mb-3"/>
     <form @submit.prevent="MateriaStore" >
         <CCard bodyWrapper class="mb-2">
             <CRow>

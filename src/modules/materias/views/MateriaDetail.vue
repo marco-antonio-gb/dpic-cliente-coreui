@@ -1,8 +1,7 @@
 <template>
 <div>
-    <div class="d-flex justify-content-between align-items-center p-1 pb-3">
-        <h3 class="p-0 m-0 font-weight-bold">
-            <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <goback />
         <button class="btn btn-success" @click="$router.push({path:'/materias/update/'+$route.params.idMateria})"> Editar materia</button>
     </div>
     <CCard>

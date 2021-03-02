@@ -98,6 +98,7 @@ export default {
     name: 'postgrados-list',
     data() {
         return {
+             
             items: [{
                     text: 'Inicio',
                     to: '/'

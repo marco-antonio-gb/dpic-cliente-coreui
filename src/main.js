@@ -11,6 +11,10 @@ axios.defaults.baseURL = process.env.VUE_APP_URL_API;
 Vue.config.performance = true;
 Vue.config.productionTip = false;
 Vue.use(CoreuiVue);
+import VueConfirmDialog from "vue-confirm-dialog";
+import "@/components/globalComponents";
+Vue.use(VueConfirmDialog);
+Vue.component("vue-confirm-dialog", VueConfirmDialog.default);
 require("@/store/subscriber");
 Vue.prototype.$log = console.log.bind(console);
 store.dispatch("auth/attempt", localStorage.getItem("token")).then(() => {

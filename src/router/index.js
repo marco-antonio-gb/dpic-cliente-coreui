@@ -10,7 +10,6 @@ const UsuarioAdd = () => import("@/modules/usuarios/views/UsuarioAdd");
 const UsuarioDetail = () => import("@/modules/usuarios/views/UsuarioDetail");
 const UsuarioList = () => import("@/modules/usuarios/views/UsuarioList");
 const UsuarioUpdate = () => import("@/modules/usuarios/views/UsuarioUpdate");
-
 //views
 const Dashboard = () => import("@/views/Dashboard");
 //potgraduantes
@@ -23,7 +22,6 @@ const PostgraduantesList = () =>
 	import("@/modules/postgraduantes/views/PostgraduantesList");
 const PostgraduantesUpdate = () =>
 	import("@/modules/postgraduantes/views/PostgraduantesUpdate");
-
 //potgrados
 const Postgrados = () => import("@/modules/postgrados/Postgrados");
 const PostgradosAdd = () => import("@/modules/postgrados/views/PostgradoAdd");
@@ -50,7 +48,16 @@ const MateriasAdd = () => import("@/modules/materias/views/MateriaAdd");
 const MateriasDetail = () => import("@/modules/materias/views/MateriaDetail");
 const MateriasList = () => import("@/modules/materias/views/MateriaList");
 const MateriasUpdate = () => import("@/modules/materias/views/MateriaUpdate");
-
+//inscripciones
+const Inscripciones = () => import("@/modules/inscripciones/Inscripciones");
+const InscripcionList = () =>
+	import("@/modules/inscripciones/views/InscripcionList");
+const InscripcionUpdate = () =>
+	import("@/modules/inscripciones/views/InscripcionUpdate");
+const InscripcionAdd = () =>
+	import("@/modules/inscripciones/views/InscripcionAdd");
+const InscripcionDetail = () =>
+	import("@/modules/inscripciones/views/InscripcionDetail");
 Vue.use(Router);
 export const router = new Router({
 	mode: "history", // https://router.vuejs.org/api/#mode
@@ -132,7 +139,7 @@ export const router = new Router({
 							path: "/postgraduantes/add",
 							name: "postgraduantes-add",
 							component: PostgraduantesAdd,
-							meta: { title: "Registrar nuevo posrgraduante" }
+							meta: { title: "Registrar nuevo postgraduante" }
 						},
 						{
 							path: "/postgraduantes/detail/:idPostgraduante",
@@ -285,10 +292,43 @@ export const router = new Router({
 							}
 						}
 					]
+				},
+				{
+					path: "/inscripciones",
+					component: Inscripciones,
+					children: [
+						{
+							path: "",
+							name: "inscripcion-list",
+							component: InscripcionList,
+							meta: { title: "Lista de inscripciones" }
+						},
+						{
+							path: "/inscripciones/add",
+							name: "inscripciones-add",
+							component: InscripcionAdd,
+							meta: {
+								title: "Registrar nueva inscripcion"
+							}
+						},
+						{
+							path: "/inscripciones/detail/:idInscripcion",
+							name: "inscripciones-detail",
+							component: InscripcionDetail,
+							meta: { title: "Detalle inscripciones" }
+						},
+						{
+							path: "/inscripciones/update/:idInscripcion",
+							name: "inscripciones-update",
+							component: InscripcionUpdate,
+							meta: {
+								title: "Editar informacion de la inscripcion"
+							}
+						}
+					]
 				}
 			]
 		},
-
 		{
 			path: "*",
 			redirect: "/pages/404"
@@ -301,11 +341,9 @@ router.beforeEach((to, from, next) => {
 });
 // router.beforeEach((to, from, next) => {
 // 	document.title = `${process.env.VUE_APP_TITLE} - ${to.name}`;
-
 // 	const publicPages = ["/login"];
 // 	const authRequired = !publicPages.includes(to.path);
 // 	const loggedIn = localStorage.getItem("user");
-
 // 	if (authRequired && !loggedIn) {
 // 		return next("/login");
 // 	}

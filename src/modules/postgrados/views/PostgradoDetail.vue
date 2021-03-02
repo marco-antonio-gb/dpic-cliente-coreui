@@ -1,8 +1,7 @@
 <template>
 <div>
-    <div class="d-flex justify-content-between align-items-center p-1 pb-3">
-        <h3 class="p-0 m-0 font-weight-bold">
-            <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <goback />
         <button class="btn btn-success" @click="$router.push({path:'/postgrados/update/'+$route.params.idPostgrado})"> Editar postgrado</button>
     </div>
     <CCard>
@@ -20,7 +19,7 @@
                     <span>Fecha Final: <strong>{{postgrado.fecha_final}}</strong> </span>
                 </CCol>
             </CRow>
-            <table class="table table-hover table-sm mt-3">
+            <table class="table table-hover mt-3">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -34,7 +33,7 @@
                         <th scope="row">{{index+1}}</th>
                         <td><strong> {{materia.sigla}} </strong></td>
                         <td>
-                          <a href="javascript:void(0)"  @click="$router.push({path:'/materias/detail/'+materia.idMateria})">{{materia.nombre}}</a>
+                            <a href="javascript:void(0)" @click="$router.push({path:'/materias/detail/'+materia.idMateria})">{{materia.nombre}}</a>
                         </td>
                         <td>{{materia.credito}}</td>
                     </tr>
@@ -55,6 +54,7 @@
     <!-- <pre>{{postgrado}}</pre> -->
 </div>
 </template>
+
 <script>
 import PostgradoService from '../services/PostgradoService'
 export default {

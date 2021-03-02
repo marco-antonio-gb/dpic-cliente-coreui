@@ -36,6 +36,16 @@ export default [
 				to: "/docentes",
 				icon: "cil-book"
 			},
+			{
+				_name: "CSidebarNavTitle",
+				_children: ["Academico"]
+			},
+			{
+				_name: "CSidebarNavItem",
+				name: "Inscripciones",
+				to: "/inscripciones",
+				icon: "cil-user"
+			},
 
 			{
 				_name: "CSidebarNavTitle",

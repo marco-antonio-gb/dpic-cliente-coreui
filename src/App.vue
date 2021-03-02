@@ -1,5 +1,10 @@
 <template>
+<div>
   <router-view></router-view>
+   <vue-confirm-dialog></vue-confirm-dialog>
+</div>
+  
+  
 </template>
 
 <script>

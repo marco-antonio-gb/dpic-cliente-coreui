@@ -1,6 +1,7 @@
 // Here you can add other styles
-.c-sidebar {
-	background: #1a1f23;
+.c-sidebar,
+.c-sidebar .c-sidebar-brand {
+	background: #1a1f23 !important;
 }
 .c-subheader {
 	min-height: auto;
@@ -11,7 +12,7 @@
 .c-sidebar .c-sidebar-nav-link:hover,
 .c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
 	color: #fff;
-	background: #636f83;
+	background: #0b0f14;
 }
 .card-body-custom {
 	-webkit-box-flex: 1;
@@ -20,16 +21,18 @@
 	min-height: 1px;
 	padding: 0 1.25rem;
 }
-.form-control:focus {
-	-webkit-box-shadow: none;
-	box-shadow: none;
-}
+// .form-control:focus {
+// 	-webkit-box-shadow: none;
+// 	box-shadow: none;
+// }
 table th,
 .table td {
 	vertical-align: middle;
 }
 .c-footer {
-color: #969696;
+	color: #969696;
+	padding: 5px !important;
+	line-height: 1;
 }
 .c-main {
 	padding-top: 15px;
@@ -46,33 +49,42 @@ color: #969696;
 .table > thead {
 	background-color: #ebedef;
 }
-.custom-link{
-    color: #1a1f23;
-    font-weight: 500;
- 
-    
+.custom-link {
+	color: #1a1f23;
+	font-weight: 500;
 }
-.custom-link:hover{
-    color: #2e2f30;
-    text-decoration: underline;
+.custom-link:hover {
+	color: #2e2f30;
+	text-decoration: underline;
 }
-.user-names{
- text-align: right;
+.user-names {
+	text-align: right;
 	line-height: 1;
 }
-.user-names strong{
-  font-size: 1rem;
+.user-names strong {
+	font-size: 1rem;
+}
+input::placeholder,
+.form-control::placeholder {
+	color: rgba(20, 12, 86, 0.45);
+	// font-size: 0.80rem;
+	font-weight: normal;
+}
+.form-control {
+	color: #1e1e1e !important;
+	font-weight: 500;
+	background: #f8f8f8;
+}
+label {
+	font-size: 0.80rem !important;
+}
+.btn {
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-weight: 500;
 	
 }
-input::placeholder, .form-control::placeholder {
-	color: rgba(20,12,86,0.45);
-	font-size: 0.80rem;
-	font-weight: normal;
-  }
-  .form-control{
-	  color: #1e1e1e !important;
-	  font-weight: 500;
-  }
-  label {
- font-size: 0.80rem !important;
+.c-sidebar-nav-title {
+	font-weight: 400 !important;
+	letter-spacing: 1px;
 }

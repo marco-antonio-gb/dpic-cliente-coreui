@@ -1,9 +1,8 @@
 <template>
 <div>
-    <div class="d-flex align-items-center p-1 pb-3">
+    <div class="d-flex align-items-center  ">
         <div class="mr-auto">
-            <h3 class="p-0 m-0 font-weight-bold">
-                <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
+           <goback/>
         </div>
         <div class="">
             <CDropdown color="secondary" toggler-text="Opciones" class="m-2">
