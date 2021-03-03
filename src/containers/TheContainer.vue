@@ -5,14 +5,14 @@
       <TheHeader/>
       <div class="c-body">
         <main class="c-main">
-          <CContainer fluid>
+          <CContainer class="pb-5" >
             <!-- <transition name="fade" mode="out-in"> -->
               <router-view :key="$route.path"></router-view>
             <!-- </transition> -->
           </CContainer>
         </main>
       </div>
-      <TheFooter/>
+      <!-- <TheFooter/> -->
     </CWrapper>
   </div>
 </template>

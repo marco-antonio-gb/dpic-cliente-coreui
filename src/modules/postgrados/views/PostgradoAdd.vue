@@ -1,6 +1,6 @@
 <template>
 <div>
-    <goback />
+    <goback class="mb-3"/>
     <form @submit.prevent="PostgradoStore" id="PostgradoStore">
         <CCard bodyWrapper class="mb-2">
             <CRow>

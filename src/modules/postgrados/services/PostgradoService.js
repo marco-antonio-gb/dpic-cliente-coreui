@@ -72,7 +72,7 @@ export default {
 						console.log(error.response.data.message);
 						console.log(error.response.status);
 						console.log(error.response.headers);
-						this.log_out(true);
+						// this.log_out(true);
 					} else if (error.request) {
 						// The request was made but no response was received
 						console.log(error.request);

@@ -42,6 +42,7 @@
                 <template #opciones="{item }">
                     <td class="py-2">
                         <CButtonGroup>
+                            
                             <CButton color="light" size="sm" @click="$router.push({path:'/postgrados/detail/'+item.idMateria})">
                                 <CIcon name="cil-user"></CIcon>
                             </CButton>

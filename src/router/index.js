@@ -308,7 +308,7 @@ export const router = new Router({
 							name: "inscripciones-add",
 							component: InscripcionAdd,
 							meta: {
-								title: "Registrar nueva inscripcion"
+								title: "Formulario de inscripcion"
 							}
 						},
 						{
