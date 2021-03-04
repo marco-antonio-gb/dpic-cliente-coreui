@@ -39,6 +39,9 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="text-right">
+                <h4 class="mr-5"><strong>Total horas:  </strong> {{total_creditos}}</h4>
+            </div>
             <!-- <CListGroup>
                 <p class="text-muted">Materias: </p>
                 <CListGroupItem href="javascript:void(0)"  @click="$router.push({path:'/materias/detail/'+materia.idMateria})">
@@ -57,9 +60,11 @@
 
 <script>
 import PostgradoService from '../services/PostgradoService'
+import CustomService from '../services/CustomService'
 export default {
     data() {
         return {
+            total_creditos:0,
             postgrado: {
                 nombre: '',
                 fecha_inicio: '',
@@ -75,7 +80,8 @@ export default {
         this.PostgradoShow(this.$route.params.idPostgrado);
     },
     mixins: [
-        PostgradoService
+        PostgradoService,
+        CustomService
     ],
     methods: {}
 }

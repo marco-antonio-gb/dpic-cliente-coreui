@@ -18,11 +18,18 @@ export default {
 				""), (this.postgrado.precio =
 				""), (this.postgrado.gestion = new Date().getFullYear()), (this.postgrado.nivel_id =
 				"");
-			// this.show_toast = false;
+			this.postgrado.materias = [];
 		},
 		cancelarPostgrado() {
 			this.resetForm();
 			this.$router.go(-1);
+		},
+		totalCreditos(myArray) {
+			var total = 0;
+			myArray.materias.forEach(element => {
+				total += parseFloat(element.credito);
+			});
+			this.total_creditos = total;
 		}
 	}
 };

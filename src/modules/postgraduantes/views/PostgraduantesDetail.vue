@@ -17,7 +17,7 @@
         <div class=""><button class="btn btn-success" @click="$router.push({path:'/postgraduantes/update/'+$route.params.idPostgraduante})"> Editar postgraduante</button></div>
 
     </div>
-    <p>Informacion personal</p>
+    <p class="font-weight-bold">Informacion personal</p>
     <CCard>
         <CCardBody>
             <div class="d-flex align-items-center">
@@ -73,7 +73,7 @@
             </CListGroup> -->
         </CCardBody>
     </CCard>
-    <p>Cursos de postgrados</p>
+    <p class="font-weight-bold p-0">Cursos de postgrados</p>
     <CCard>
         <table class="table table-hover table-sm mt-3">
             <thead>

@@ -1,14 +1,21 @@
 export default {
 	methods: {
 		InscripcionIndex() {
+			this.isLoading = true;
 			axios
 				.get("/inscripciones")
 				.then(response => {
 					if (response.status === 200) {
-						this.inscripciones = response.data.data;
+						(this.inscripciones = response.data.data.map(
+							(item, id) => {
+								return {
+									...item
+								};
+							}
+						)), (this.isLoading = false);
+						this.total = response.data.total;
 					} else {
 						console.log(response);
-						this.isLoading = false;
 					}
 				})
 				.catch(error => {

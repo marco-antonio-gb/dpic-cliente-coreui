@@ -3,7 +3,7 @@
     <goback class="mb-3" />
     <form @submit.prevent="InscripcionStore" id="PostgradoStore">
         <p class="mb-1 ml-2 font-weight-bold">Postgrado</p>
-        <CCard bodyWrapper>
+        <CCard bodyWrapper class="mb-2">
             <CRow>
                 <CCol sm="8">
                     <div class="form-group">
@@ -11,7 +11,7 @@
                         <select required id="dropDown" class="form-control" v-model="inscripcion.postgrado.postgrado_id" @change="someHandler">
                             <option value="">Seleccionar postgrado</option>
                             <option v-for="postgrado in postgrados" :key="postgrado.id" v-bind:value="postgrado.idPostgrado">
-                               {{postgrado.gestion}} - {{ postgrado.nombre }}
+                                {{postgrado.gestion}} - {{ postgrado.nombre }}
                             </option>
                         </select>
                     </div>
@@ -24,7 +24,6 @@
                 </CCol>
             </CRow>
         </CCard>
-
         <p class="mb-1 ml-2 font-weight-bold">Postgraduante</p>
         <CCard bodyWrapper class="mb-2">
             <CRow>
@@ -39,22 +38,28 @@
                 </CCol>
             </CRow>
             <CRow>
-                <CCol sm="3">
+                <CCol sm="2">
                     <CInput label="C.I." placeholder="cedula " v-model="inscripcion.postgraduante.ci" />
                 </CCol>
-                <CCol sm="3">
+                <CCol sm="2">
                     <div class="form-group">
                         <label for="uid-l744h660att" class=""> Externsion C.I. </label>
                         <select required id="dropDown" class="form-control" v-model="inscripcion.postgraduante.ci_ext">
-                            <option disabled value="">Seleccione extension </option>
+                            <option disabled value="">Extension </option>
                             <option v-for="ext in options_ci" :key="ext.id" v-bind:value="ext.value">
                                 {{ ext.text }}
                             </option>
                         </select>
                     </div>
                 </CCol>
-                <CCol sm="3">
+                <CCol sm="4">
                     <CInput label="Lugar Nacimiento" placeholder="lugar" v-model="inscripcion.postgraduante.lugar_nac" />
+                </CCol>
+                 <CCol sm="2">
+                    <CInput label="Telefono Domicilio" placeholder="telefono fijo" v-model="inscripcion.postgraduante.telf_domicilio" />
+                </CCol>
+                 <CCol sm="2">
+                    <CInput label="Celular" placeholder="celular" v-model="inscripcion.postgraduante.celular" />
                 </CCol>
                 <!-- <CCol sm="3">
                     <CInput label="Fecha nacimiento" type="date" placeholder="lugar" v-model="inscripcion.postgraduante.fecha_nac" />
@@ -67,19 +72,18 @@
                 <!-- <CCol sm="3">
                     <CInput label="Nro Domicilio" placeholder="nro" v-model="inscripcion.postgraduante.nro_domicilio" />
                 </CCol> -->
-                <CCol sm="3">
-                    <CInput label="Telefono Domicilio" placeholder="telefono fijo" v-model="inscripcion.postgraduante.telf_domicilio" />
-                </CCol>
+               
             </CRow>
             <CRow>
-                <CCol sm="6">
-                    <CInput label="Celular" placeholder="celular" v-model="inscripcion.postgraduante.celular" />
-                </CCol>
+               
                 <CCol sm="3">
                     <CInput label="Correo" placeholder="email" v-model="inscripcion.postgraduante.correo" />
                 </CCol>
                 <CCol sm="3">
                     <CInput label="Profesion" placeholder="profesion" v-model="inscripcion.postgraduante.profesion" />
+                </CCol>
+                <CCol sm="6">
+                    <CInput label="Observaciones" placeholder="observaciones" v-model="inscripcion.postgraduante.observaciones" />
                 </CCol>
             </CRow>
             <!-- <CRow>
@@ -94,10 +98,7 @@
                 </CCol>
             </CRow> -->
             <CRow>
-                <CCol sm="12">
-                    <CInput label="Observaciones" placeholder="observaciones" v-model="inscripcion.postgraduante.observaciones" />
-                </CCol>
-               
+                
             </CRow>
         </CCard>
         <p class="mb-1 ml-2 font-weight-bold">Pagos</p>
@@ -107,7 +108,7 @@
             </div>
             <div class="card-outline p-1 form-group" v-for="(input,k) in inscripcion.pagos" :key="k">
                 <div class="d-flex align-items-end  m-0 p-0">
-                     <div class="p-1 w-50 ">
+                    <div class="p-1 w-50 ">
                         <label class="control-label">Item:</label>
                         <input type="text" class="form-control " placeholder="por concepto de..." name="item" v-model="input.item" />
                     </div>
@@ -117,9 +118,8 @@
                     </div>
                     <div class="p-1 w-50 ">
                         <label class="control-label">Nro. Boleta</label>
-                        <input type="text" class="form-control " placeholder="Nro de boleta"  v-model="input.boleta" />
+                        <input type="text" class="form-control " placeholder="Nro de boleta" v-model="input.boleta" />
                     </div>
- 
                     <div class="p-1 w-100">
                         <label class="control-label">Observaciones:</label>
                         <input type="text" class="form-control " placeholder="Notas..." name="fecha_fin" v-model="input.observacion" />
@@ -135,11 +135,10 @@
                         </CButtonGroup>
                     </div>
                 </div>
-
             </div>
         </CCard>
         <div class="text-right">
-            <button class="btn btn-secondary mr-2" @click.prevent="resetForm">Cancelar</button>
+            <button class="btn btn-secondary mr-2" @click.prevent="cancelarInscripcionAdd">Cancelar</button>
             <CButton color="primary" class="px-4  " type="submit" :disabled="isLoading">
                 <CSpinner color="warning" size="sm" v-if="isLoading" />
                 <span v-if="isLoading">
@@ -148,7 +147,7 @@
             </CButton>
         </div>
     </form>
-     <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
+    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
         <CToast :show="show_toast" :header="`${$route.meta.title}`">
             {{message_toast}}
         </CToast>
@@ -161,18 +160,16 @@
 import InscripcionService from '../services/InscripcionService';
 import CustomInscripcion from '../services/CustomInscripcion'
 var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
+var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 export default {
     data() {
         return {
             select_precio: '',
-            
             select_pagos: '',
             selected: null,
             isLoading: false,
             inscripcion: {
-                gestion:today.getFullYear(),
+                gestion: today.getFullYear(),
                 postgraduante: {
                     paterno: '',
                     materno: '',
@@ -263,18 +260,17 @@ export default {
                 this.inscripcion.pagos > 0
             )
                 return;
-            if(k===1){
+            if (k === 1) {
                 label = "Matricula"
-            }else{
-                label =label +(k-1)
+            } else {
+                label = label + (k - 1)
             }
             this.inscripcion.pagos.push({
-                item: label ,
+                item: label,
                 costo_unitario: null,
-                boleta:'',
+                boleta: '',
                 fecha_cobro: date,
                 observacion: null,
-                
             });
         },
         someHandler(e) {
@@ -289,7 +285,6 @@ export default {
             }
             this.select_precio = __FOUND.precio;
             this.select_pagos = __FOUND.cantidad_pagos;
-        
         },
     }
 }

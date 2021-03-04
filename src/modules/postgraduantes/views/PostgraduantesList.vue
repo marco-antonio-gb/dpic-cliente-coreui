@@ -99,15 +99,7 @@ export default {
     data() {
         return {
              
-            items: [{
-                    text: 'Inicio',
-                    to: '/'
-                },
-                {
-                    text: 'Postgraduantes',
-                     
-                },
-            ],
+           
             postgraduantes: [],
             // items: '',
             isLoading: false,

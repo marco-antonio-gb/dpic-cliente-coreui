@@ -38,15 +38,28 @@ export default {
 			}
 		},
 		resetForm() {
-			(this.postgrado.nombre = ""), (this.postgrado.fecha_inicio =
-				""), (this.postgrado.fecha_final =
-				""), (this.postgrado.cantidad_pagos =
-				""), (this.postgrado.precio =
-				""), (this.postgrado.gestion = new Date().getFullYear()), (this.postgrado.nivel_id =
-				"");
-			// this.show_toast = false;
+			(this.inscripcion.postgraduante.paterno =
+				""), (this.inscripcion.postgraduante.materno =
+				""), (this.inscripcion.postgraduante.nombres =
+				""), (this.inscripcion.postgraduante.ci =
+				""), (this.inscripcion.postgraduante.ci_ext =
+				""), (this.inscripcion.postgraduante.lugar_nac =
+				""), (this.inscripcion.postgraduante.fecha_nac =
+				""), (this.inscripcion.postgraduante.direc_domicilio =
+				""), (this.inscripcion.postgraduante.nro_domicilio =
+				""), (this.inscripcion.postgraduante.telf_domicilio =
+				""), (this.inscripcion.postgraduante.celular =
+				""), (this.inscripcion.postgraduante.correo =
+				""), (this.inscripcion.postgraduante.profesion =
+				""), (this.inscripcion.postgraduante.lugar_trabajo =
+				""), (this.inscripcion.postgraduante.telf_trabajo =
+				""), (this.inscripcion.postgraduante.lugar_estudio =
+				""), (this.inscripcion.postgraduante.observaciones =
+				""), (this.inscripcion.postgraduante.foto =
+				""), (this.inscripcion.postgrado.postgrado_id =
+				""), (this.inscripcion.pagos = []);
 		},
-		cancelarInscripcion() {
+		cancelarInscripcionAdd() {
 			this.resetForm();
 			this.$router.go(-1);
 		}

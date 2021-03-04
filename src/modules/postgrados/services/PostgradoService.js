@@ -93,6 +93,7 @@ export default {
 						(this.postgrado =
 							response.data.data), (this.isLoading = false);
 						this.total = response.data.total;
+						this.totalCreditos(response.data.data);
 					} else {
 						console.log(response);
 					}
