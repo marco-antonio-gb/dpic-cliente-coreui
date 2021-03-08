@@ -19,19 +19,15 @@
                     <CInput label="C.I." placeholder="cedula " v-model="postgraduante.ci" />
                 </CCol>
                 <CCol sm="3">
-                    <label>CI Ext</label>
-                    <select class="custom-select" v-model="postgraduante.ci_ext">
-                        <option value="">Extension C.I.</option>
-                        <option value="La Paz">La Paz</option>
-                        <option value="Oruro">Oruro</option>
-                        <option value="Potosi">Potosi</option>
-                        <option value="Cochabamba">Cochabamba</option>
-                        <option value="Chuquisaca">Chuquisaca</option>
-                        <option value="Tarija">Tarija</option>
-                        <option value="Santa Cruz">Santa Cruz</option>
-                        <option value="Beni">Beni</option>
-                        <option value="Pando">Pando</option>
-                    </select>
+                    <div class="form-group">
+                        <label   class=""> Externsion C.I. </label>
+                        <select required id="dropDown" class="form-control" v-model="postgraduante.ci_ext">
+                            <option disabled value="">Seleccione extension </option>
+                            <option v-for="ext in options_ci" :key="ext.id" v-bind:value="ext.value">
+                                {{ ext.text }}
+                            </option>
+                        </select>
+                    </div>
                 </CCol>
                 <CCol sm="3">
                     <CInput label="Lugar Nacimiento" placeholder="lugar" v-model="postgraduante.lugar_nac" />
@@ -92,18 +88,17 @@
             </CButton>
         </div>
     </form>
-    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
-        <CToast :show="show_toast" :header="`${$route.meta.title}`">
-            {{message_toast}}
-        </CToast>
-    </CToaster>
+       <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+<pre>{{postgraduante}}</pre>
 </div>
 </template>
 
 <script>
-import goBack from '@/components/GoBack'
+
 import PostgraduanteService from '../services/PostgraduanteService'
 import CustomPostgraduante from '../services/CustomPostgraduante'
+import ToastProps from '@/components/ShowToast'
+
 export default {
     data() {
         return {
@@ -130,6 +125,44 @@ export default {
                 fecha_inscripcion: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
                 foto: '',
             },
+            options_ci: [ 
+                {
+                    value: "OR",
+                    text: "ORURO"
+                },
+                {
+                    value: "LP",
+                    text: "LA PAZ"
+                },
+                {
+                    value: "PT",
+                    text: "POTOSI"
+                },
+                {
+                    value: "CB",
+                    text: "COCHABAMBA"
+                },
+                {
+                    value: "CH",
+                    text: "CHUQUISACA"
+                },
+                {
+                    value: "TJ",
+                    text: "TARIJA"
+                },
+                {
+                    value: "SC",
+                    text: "SANTA CRUZ"
+                },
+                {
+                    value: "BN",
+                    text: "BENI"
+                },
+                {
+                    value: "PD",
+                    text: "PANDO"
+                }
+            ],
             validator_toast: '',
             message_toast: '',
             show_toast: false,
@@ -140,5 +173,8 @@ export default {
         PostgraduanteService,
         CustomPostgraduante
     ],
+    components:{
+        ToastProps
+    }
 }
 </script>

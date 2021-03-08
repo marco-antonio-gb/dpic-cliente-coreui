@@ -2,18 +2,16 @@
 <div>
     <goback class="mb-3"/>
     <form @submit.prevent="PostgradoStore" id="PostgradoStore">
-        <p class="p-0 font-weight-bold">Informacion de postgrado</p>
+        <!-- <p class="p-0 font-weight-bold">Informacion de postgrado</p> -->
         <CCard bodyWrapper class="mb-3">
             <CRow>
-                <CCol sm="6">
+                <CCol sm="9">
                     <CInput label="Nombre" required placeholder="Nombre del postgrado" v-model="postgrado.nombre" />
                 </CCol>
                 <CCol sm="3">
                     <CInput label="Fecha Inicio" type="date" required v-model="postgrado.fecha_inicio" />
                 </CCol>
-                <CCol sm="3">
-                    <CInput label="Fecha Final" type="date" required v-model="postgrado.fecha_final" />
-                </CCol>
+                
             </CRow>
             <CRow>
                 <CCol sm="3">
@@ -22,7 +20,6 @@
                 <CCol sm="3">
                     <CInput label="Cantidad Pagos" placeholder="0" v-model="postgrado.cantidad_pagos" />
                 </CCol>
-                
                 <CCol sm="3">
                     <div class="form-group">
                         <label for="uid-l744h660att" class=""> Nivel </label>
@@ -35,44 +32,49 @@
                     </div>
                 </CCol>
                 <CCol sm="3">
-                    <CInput label="Gestion" readonly v-model="postgrado.gestion" />
+                    <CInput label="Gestion academica"   v-model="postgrado.gestion" />
                 </CCol>
             </CRow>
         </CCard>
-        <p class="p-0 font-weight-bold">Asignar/Registrar Materias</p>
+        <!-- <p class="p-0 font-weight-bold">Asignar/Registrar Materias</p>
         <CCard bodyWrapper>
-            <div class="text-center p-3" v-if="postgrado.materias.length===0">
+            <div class="text-center p-3" v-if="postgrado.materia_docente.length===0">
                 <button class="btn btn-secondary " @click.prevent="addLinePagos(1)">Registrar Materias</button>
             </div>
-            <div class="card-outline p-1 form-group mb-0" v-for="(input,k) in postgrado.materias" :key="k">
+            <div class="card-outline p-1 form-group mb-0" v-for="(input,k) in postgrado.materia_docente" :key="k">
                 <div class="d-flex align-items-end  m-0 p-0">
-                    <div class="p-1 w-100 ">
-                        <label class="control-label">Nombre materia: {{k+1}}</label>
-                        <input type="text" class="form-control " placeholder="por concepto de..."   v-model="input.nombre" />
+    
+                     <div class="p-1 w-50 ">
+                        <label class=""> <strong>MATERIA/MODULO *</strong> </label>
+                        <select required id="dropDown" class="form-control" v-model="input.materia_id">
+                            <option value="null">Seleccionar materia</option>
+                            <option v-for="materia in materias" :key="materia.id" v-bind:value="materia.idMateria">
+                                {{materia.sigla}} - {{ materia.nombre }}
+                            </option>
+                        </select>
                     </div>
                     <div class="p-1 w-50 ">
-                        <label class="control-label">Sigla</label>
-                        <input type="text" class="form-control " placeholder="Costo"   v-model="input.sigla" />
+                        <label class=""> <strong>DOCENTE *</strong> </label>
+                        <select required id="dropDown" class="form-control" v-model="input.docente_id">
+                            <option value="null">Seleccionar docente</option>
+                            <option v-for="docente in docentes" :key="docente.id" v-bind:value="docente.idUsuario">
+                                {{ docente.full_name }}
+                            </option>
+                        </select>
                     </div>
-                    <div class="p-1 w-50 ">
-                         <label class="control-label">Credito:</label>
-                        <input type="text" class="form-control " placeholder="Notas..." name="fecha_fin" v-model="input.credito" />
-                       
-                    </div>
-                   
                     <div class="mb-1">
                         <CButtonGroup>
-                            <CButton color="secondary" size="sm" @click.prevent="removeInputPago(k)" v-show="k || ( !k && postgrado.materias.length > 0)">
+                            <CButton color="secondary" size="sm" @click.prevent="removeInputPago(k)" v-show="k || ( !k && postgrado.materia_docente.length > 0)">
                                 <CIcon name="cil-trash" />
                             </CButton>
-                            <CButton color="dark" size="sm" @click.prevent="addLinePagos(k+2)" v-show="k == postgrado.materias.length-1">
+                            <CButton color="dark" size="sm" @click.prevent="addLinePagos(k+2)" v-show="k == postgrado.materia_docente.length-1">
                                 <CIcon name="cil-plus" />
                             </CButton>
                         </CButtonGroup>
                     </div>
                 </div>
             </div>
-        </CCard>
+        </CCard> -->
         <div class="text-right">
             <button class="btn btn-secondary mr-2" @click.prevent="cancelarPostgrado">Cancelar</button>
             <CButton color="primary" class="px-4  " type="submit" :disabled="isLoading">
@@ -83,33 +85,33 @@
             </CButton>
         </div>
     </form>
-    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
-        <CToast :show="show_toast" :header="`${$route.meta.title}`">
-            {{message_toast}}
-        </CToast>
-    </CToaster>
- 
+        <ToastProps  :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+
 </div>
 </template>
 <script>
 import PostgradoService from '../services/PostgradoService'
 import CustomService from '../services/CustomService'
+import ToastProps from '@/components/ShowToast'
+
 export default {
     data() {
         return {
             isLoading: false,
-            fixedToasts: 0,
             postgrado: {
                 nombre: '',
                 fecha_inicio: '',
-                fecha_final: '',
+         
                 cantidad_pagos: '',
                 precio: '',
                 gestion: new Date().getFullYear(),
                 nivel_id: '',
-                materias:[]
+                materia_docente:[]
             },
             niveles: [],
+            docentes:[],
+            materias:[],
+           
             validator_toast: '',
             message_toast: '',
             show_toast: false,
@@ -120,6 +122,9 @@ export default {
         PostgradoService,
         CustomService
     ],
+    components:{
+        ToastProps
+    },
     methods: {
         addFixedToast() {
             this.fixedToasts++
@@ -133,35 +138,49 @@ export default {
                     console.log(e)
                 })
         },
+        getDocentes() {
+            axios.get("/docentes")
+                .then(response => {
+                    this.docentes = response.data.data
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+        },
+        getMaterias() {
+            axios.get("/materias")
+                .then(response => {
+                    this.materias = response.data.data
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+        },
         removeInputPago(index) {
-            this.postgrado.materias.splice(index, 1);
+            this.postgrado.materia_docente.splice(index, 1);
         },
         addLinePagos(k) {
-            let label = 'Cuota Nro.  ';
-            let checkEmptyLines = this.postgrado.materias.filter(
+            let checkEmptyLines = this.postgrado.materia_docente.filter(
                 line => line.item === null
             );
             if (
                 checkEmptyLines.length >= 1 &&
-                this.postgrado.materias > 0
+                this.postgrado.materia_docente > 0
             )
                 return;
-           
-            this.postgrado.materias.push({
-                nombre: '',
-                sigla: ' ',
-              
-                credito: '',
+            this.postgrado.materia_docente.push({
+                // nombre: '',
+                // sigla: ' ',
+                materia_id: null,
+                docente_id:null
             });
         },
     },
     mounted() {
         this.getNiveles()
+        this.getDocentes()
+        this.getMaterias()
     },
-    watch: {
-        show_toast() {
-            return false
-        }
-    }
+    
 }
 </script>

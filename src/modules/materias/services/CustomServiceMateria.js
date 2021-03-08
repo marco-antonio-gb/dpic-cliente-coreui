@@ -46,6 +46,22 @@ export default {
 						console.log("Error", error.message);
 					}
 				});
+		},
+		deleteMateria(id) {
+			this.$confirm({
+				title: "Eliminar registro",
+				message: `Esta seguro(a) que desea eliminar la MATERIA/MODULO?`,
+				button: {
+					no: "No",
+					yes: "Eliminar"
+				},
+
+				callback: confirm => {
+					if (confirm) {
+						this.MateriaDestroy(id);
+					}
+				}
+			});
 		}
 	}
 };

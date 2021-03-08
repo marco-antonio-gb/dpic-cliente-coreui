@@ -12,13 +12,10 @@
         </div>
     </div>
 </template>
-
 <script>
 export default {
     name:'goback'
 }
 </script>
-
 <style>
-
 </style>

@@ -11,32 +11,35 @@ export default {
 				.get("/materias")
 				.then(response => {
 					if (response.data.success) {
-						(this.materias = response.data.data.map((item, id) => {
-							return {
-								...item,
-								id
-							};
-						})), (this.isLoading = false);
+						(this.materias =
+							response.data.data), (this.isLoading = false);
 						this.total = response.data.total;
 					} else {
-						console.log(response);
 						this.isLoading = false;
+						this.showToast(response.data.message, true, "");
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						this.log_out(true);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
+					if (error.response) {
+						this.showToast(
+							"SERVER a: " + error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER v: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER c: " + error.message,
+							true,
+							"danger"
+						);
+					}
 				});
 		},
 		/*-----------------------------------*/
@@ -45,6 +48,90 @@ export default {
 			this.isLoading = true;
 			axios
 				.post("/materias", this.materia)
+				.then(response => {
+					if (response.data.success) {
+						this.isLoading = false;
+						this.showToast(response.data.message, true, "success");
+						this.resetForm();
+					} else {
+						this.isLoading = false;
+						if (response.data.validator) {
+							this.showToast(
+								response.data.validator,
+								true,
+								"warning"
+							);
+						}
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
+		},
+		/*-----------------------------------*/
+		MateriaShow(id) {
+			this.isLoading = true;
+			axios
+				.get("/materias/" + id)
+				.then(response => {
+					if (response.status === 200) {
+						(this.materia =
+							response.data.data), (this.isLoading = false);
+					} else {
+						console.log(response);
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
+		},
+
+		/*-----------------------------------*/
+		MateriaUpdate(id) {
+			this.show_toast = false;
+			this.isLoading = true;
+			axios
+				.put("/materias/" + id, this.materia)
 				.then(response => {
 					if (response.data.success) {
 						this.isLoading = false;
@@ -67,61 +154,71 @@ export default {
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						// this.log_out(true);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
-				});
-		},
-		/*-----------------------------------*/
-		MateriaShow(id) {
-			this.isLoading = true;
-			axios
-				.get("/materias/" + id)
-				.then(response => {
-					if (response.status === 200) {
-						(this.materia =
-							response.data.data), (this.isLoading = false);
-					} else {
-						console.log(response);
-					}
-				})
-				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						this.log_out(true);
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
 					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
 					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
 					}
-					this.isLoading = false;
 				});
-		},
-		/*-----------------------------------*/
-		MateriaEdit(id) {
-			console.log("Metodo edit" + " - " + id);
-		},
-		/*-----------------------------------*/
-		MateriaUpdate(id) {
-			console.log("Metodo update" + " - " + id);
 		},
 		/*-----------------------------------*/
 		MateriaDestroy(id) {
-			console.log("Metodo destroy" + " - " + id);
+			this.show_toast = false;
+			// this.isLoading = true;
+			axios
+				.delete("/materias/" + id)
+				.then(response => {
+					if (response.data.success) {
+						this.showToast(response.data.message, true, "success");
+						this.MateriaIndex();
+					} else {
+						console.log(response);
+						this.showToast(
+							"Error al eliminar el registro",
+							true,
+							"warning"
+						);
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
 		}
 	}
 };

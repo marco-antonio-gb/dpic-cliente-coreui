@@ -41,9 +41,9 @@ export default {
 			(this.usuario.paterno = ""), (this.usuario.materno =
 				""), (this.usuario.nombres = ""), (this.usuario.ci =
 				""), (this.usuario.ci_ext = ""), (this.usuario.telefono =
-				""), (this.usuario.celular = ""), (this.usuario.titulo_abrv =
-				""), (this.usuario.profesion = ""), (this.usuario.tipo_usuario =
-				""), (this.usuario.email = ""), (this.usuario.password = "");
+				""), (this.usuario.celular = ""), (this.usuario.profesion =
+				""), (this.usuario.tipo_usuario = ""), (this.usuario.email =
+				""), (this.usuario.password = "");
 		},
 		CancelarUsuarioAdd() {
 			this.resetForm();

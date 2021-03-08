@@ -42,15 +42,16 @@
                 <template #opciones="{item }">
                     <td class="py-2">
                         <CButtonGroup>
-                            <CButton color="light" size="sm" @click="UsuarioUpdate(item.idUsuario)">
+                            <CButton color="light" size="sm" @click="$router.push({path:'/usuarios/update/'+item.idUsuario})">
                                 <CIcon name="cil-pencil"></CIcon>
                             </CButton>
-                            <CButton color="secondary" size="sm" @click="handleClick(item.idUsuario)">
-                                <CIcon name="cil-trash"></CIcon>
-                            </CButton>
-                            <CButton color="dark" size="sm" @click="UsuarioShow(item.idUsuario)">
+                            <CButton color="secondary" size="sm" @click="$router.push({path:'/usuarios/detail/'+item.idUsuario})">
                                 <CIcon name="cil-user"></CIcon>
                             </CButton>
+                            <CButton color="dark" size="sm" @click="handleClick(item.idUsuario)">
+                                <CIcon name="cil-trash"></CIcon>
+                            </CButton>
+                            
                         </CButtonGroup>
                     </td>
                 </template>

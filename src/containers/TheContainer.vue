@@ -5,7 +5,7 @@
       <TheHeader/>
       <div class="c-body">
         <main class="c-main">
-          <CContainer class="pb-5" fluid>
+          <CContainer   fluid>
             <!-- <transition name="fade" mode="out-in"> -->
               <router-view :key="$route.path"></router-view>
             <!-- </transition> -->

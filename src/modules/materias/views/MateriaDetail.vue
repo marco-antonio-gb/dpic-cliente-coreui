@@ -4,6 +4,7 @@
         <goback />
         <button class="btn btn-success" @click="$router.push({path:'/materias/update/'+$route.params.idMateria})"> Editar materia</button>
     </div>
+    <p class="font-weight-bold">Informacion del docente</p>
     <CCard>
         <CCardBody>
             <div class="d-flex align-items-center">
@@ -21,7 +22,10 @@
             </CRow>
             
         </CCardBody>
+        
+        
     </CCard>
+    <p class="font-weight-bold">Materias asignadas</p>
     <!-- <pre>{{materia}}</pre> -->
 </div>
 </template>

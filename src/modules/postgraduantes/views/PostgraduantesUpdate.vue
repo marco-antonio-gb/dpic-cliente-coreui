@@ -1,14 +1,6 @@
 <template>
 <div>
-    <div class="d-flex flex-row align-items-center mb-3">
-        <div class="mr-2">
-            <CButton size="sm" shape="pill" color="secondary" @click="$router.go(-1)" pressed>Volver</CButton>
-        </div>
-        <div>
-            <h3 class="p-0 m-0">{{ $route.meta.title }}</h3>
-        </div>
-        <div></div>
-    </div>
+   <goback class="mb-3"/>
     <form @submit.prevent="PostgraduanteUpdate($route.params.idPostgraduante)"  >
         <CCard bodyWrapper class="mb-2">
             <CRow>
@@ -86,7 +78,7 @@
                     <CInput label="Observaciones" placeholder="observaciones" v-model="postgraduante.observaciones" />
                 </CCol>
                <CCol sm="4">
-                    <CInput readonly label="Fecha Registro"  v-model="postgraduante.fecha_inscripcion" />
+                    <CInput readonly label="Fecha Registro"  v-model="postgraduante.created_at " />
                 </CCol>
             </CRow>
         </CCard>
@@ -134,7 +126,7 @@ export default {
                 telf_trabajo: '',
                 lugar_estudio: '',
                 observaciones: '',
-                fecha_inscripcion: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                // fecha_inscripcion: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 foto: '',
             },
             validator_toast: '',

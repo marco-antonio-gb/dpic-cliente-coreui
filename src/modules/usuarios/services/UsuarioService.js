@@ -23,19 +23,27 @@ export default {
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						this.log_out(true);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
 				});
 		},
 		/*-----------------------------------*/
@@ -59,31 +67,114 @@ export default {
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
 				});
 		},
 		/*-----------------------------------*/
 		UsuarioShow(id) {
-			console.log("Metodo show" + " - " + id);
+			this.isLoading = true;
+			axios
+				.get("/usuarios/" + id)
+				.then(response => {
+					if (response.status === 200) {
+						this.usuario = response.data.data;
+						this.isLoading = false;
+						// this.total = response.data.total;
+					} else {
+						console.log(response);
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
 		},
-		/*-----------------------------------*/
-		UsuarioEdit(id) {
-			console.log("Metodo edit" + " - " + id);
-		},
+
 		/*-----------------------------------*/
 		UsuarioUpdate(id) {
-			console.log("Metodo update" + " - " + id);
+			this.show_toast = false;
+			this.isLoading = true;
+			axios
+				.put("/usuarios/" + id, this.usuario)
+				.then(response => {
+					if (response.data.success) {
+						this.isLoading = false;
+						this.showToast(response.data.message, true, "success");
+						// this.show_toast = false;
+						this.resetForm();
+					} else {
+						this.isLoading = false;
+						if (response.data.validator) {
+							this.showToast(
+								response.data.validator,
+								true,
+								"warning"
+							);
+						}
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
 		},
 		/*-----------------------------------*/
 		UsuarioDestroy(id) {
@@ -104,16 +195,26 @@ export default {
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
 					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
 					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
 					}
 				});
 		}

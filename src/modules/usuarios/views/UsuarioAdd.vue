@@ -1,14 +1,6 @@
 <template>
 <div>
-    <div class="d-flex flex-row align-items-center mb-3">
-        <div class="mr-2">
-            <CButton size="sm" shape="pill" color="secondary" @click="$router.go(-1)" pressed>Volver</CButton>
-        </div>
-        <div>
-            <h3 class="p-0 m-0 font-weight-bold">{{ $route.meta.title }}</h3>
-        </div>
-        <div></div>
-    </div>
+    <goback class="mb-3"/>
     <form @submit.prevent="UsuarioStore" id="PostgradoStore">
         <CCard bodyWrapper class="mb-2">
             <CRow>
@@ -45,9 +37,7 @@
                 </CCol>
             </CRow>
             <CRow>
-               <CCol sm="2">
-                    <CInput label="Titulo" placeholder="titulo" v-model="usuario.titulo_abrv" />
-                </CCol>
+              
                <CCol sm="4">
                     <CInput label="Profesion" placeholder="profesion" v-model="usuario.profesion" />
                 </CCol>
@@ -57,9 +47,7 @@
                <CCol sm="3">
                     <CInput label="Password *" required placeholder="password" type="password" v-model="usuario.password" />
                 </CCol>
-            </CRow>
-            <CRow>
-              <CCol sm="3">
+                <CCol sm="2">
                     <div class="form-group">
                         <label for="uid-l744h660att" class=""> Tipo usuario </label>
                         <select required id="dropDown" class="form-control" v-model="usuario.tipo_usuario_id" >
@@ -70,6 +58,7 @@
                         </select>
                     </div>
                 </CCol>
+          
             </CRow>
         </CCard>
         <div class="text-right">
@@ -85,17 +74,16 @@
             </CButton>
         </div>
     </form>
-    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
-        <CToast :show="show_toast" :header="`${$route.meta.title}`">
-            {{message_toast}}
-        </CToast>
-    </CToaster>
+      <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+
     
 </div>
 </template>
 <script>
 import UsuarioService from '../services/UsuarioService'
 import CustomUsuario from '../services/CustomUsuario'
+import ToastProps from '@/components/ShowToast'
+
 export default {
     data() {
         return {
@@ -110,7 +98,7 @@ export default {
                 ci_ext: '',
                 telefono:'',
                 celular: '',
-                titulo_abrv:'',
+              
                 profesion: '',
                 tipo_usuario_id: '',
                 email: '',
@@ -162,12 +150,13 @@ export default {
     created(){
       this.getTipoUsuario()
     },
+    components:{
+        ToastProps
+    },
     mixins: [
         UsuarioService,
         CustomUsuario
     ],
-    methods:{
-      
-    }
+     
 }
 </script>

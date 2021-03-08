@@ -1,22 +1,21 @@
 <template>
 <div>
-    <goback  class="mb-3"/>
-    <form @submit.prevent="MateriaStore" >
+    <goback class="mb-3" />
+    <form @submit.prevent="MateriaStore">
         <CCard bodyWrapper class="mb-2">
             <CRow>
                 <CCol sm="6">
                     <CInput label="Nombre" required placeholder="Nombre del materia" v-model="materia.nombre" />
                 </CCol>
                 <CCol sm="3">
-                    <CInput label="Sigla" type="text"  placeholder="Sigla" required v-model="materia.sigla" />
+                    <CInput label="Sigla" type="text" placeholder="Sigla" required v-model="materia.sigla" />
                 </CCol>
                 <CCol sm="3">
                     <CInput label="Credito" placeholder="credito " v-model="materia.credito" />
                 </CCol>
-                
             </CRow>
             <CRow>
-              <CCol sm="12">
+                <!-- <CCol sm="12">
                     <div class="form-group">
                         <label for="uid-l744h660att" class=""> Postgrados </label>
                         <select required id="dropDown" class="form-control" v-model="materia.postgrado_id">
@@ -26,13 +25,11 @@
                             </option>
                         </select>
                     </div>
-                </CCol>
-              <!-- <CCol sm="8">
+                </CCol> -->
+                <!-- <CCol sm="8">
                     <CInput label="Descripcion" placeholder="Descripcion" type="text"   v-model="materia.descripcion" />
                 </CCol>
                  -->
-                
-                
             </CRow>
         </CCard>
         <div class="text-right">
@@ -45,65 +42,39 @@
             </CButton>
         </div>
     </form>
-    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
-        <CToast :show="show_toast" :header="`${$route.meta.title}`">
-            {{message_toast}}
-        </CToast>
-    </CToaster>
+    <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
 
 <script>
 import MateriaService from '../services/MateriaService'
 import CustomServiceMateria from '../services/CustomServiceMateria'
+import ToastProps from '@/components/ShowToast'
 export default {
     data() {
         return {
             isLoading: false,
-            fixedToasts: 0,
             materia: {
                 nombre: '',
                 sigla: '',
                 descripcion: '',
                 credito: '',
-                postgrado_id:''
-                
+                postgrado_id: ''
             },
             niveles: [],
             validator_toast: '',
             message_toast: '',
             show_toast: false,
             color_toast: '',
-            postgrados:[]
+            postgrados: []
         }
     },
     mixins: [
         MateriaService,
         CustomServiceMateria
     ],
-    methods: {
-        addFixedToast() {
-            this.fixedToasts++
-        },
-        getNiveles() {
-            axios.get("/niveles")
-                .then(response => {
-                    this.niveles = response.data.data
-                })
-                .catch(e => {
-                    console.log(e)
-                })
-        }
+    components: {
+        ToastProps
     },
-    created() {
-        this.getNiveles()
-        this.PostgradoIndex()
-        
-    },
-    watch: {
-        show_toast() {
-            return false
-        }
-    }
 }
 </script>

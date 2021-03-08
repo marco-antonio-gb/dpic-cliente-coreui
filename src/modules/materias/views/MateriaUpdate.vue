@@ -1,15 +1,7 @@
 <template>
 <div>
-    <div class="d-flex flex-row align-items-center mb-3">
-        <div class="mr-2">
-            <CButton size="sm" shape="pill" color="secondary" @click="$router.go(-1)" pressed>Volver</CButton>
-        </div>
-        <div>
-            <h3 class="p-0 m-0 font-weight-bold">{{ $route.meta.title }}</h3>
-        </div>
-        <div></div>
-    </div>
-    <form @submit.prevent="MateriaUpdate" >
+    <goback class="mb-3"/>
+    <form @submit.prevent="MateriaUpdate($route.params.idMateria)" >
         <CCard bodyWrapper class="mb-2">
             <CRow>
                 <CCol sm="6">
@@ -29,7 +21,7 @@
                         <label for="uid-l744h660att" class=""> Postgrados </label>
                         <select required id="dropDown" class="form-control" v-model="materia.postgrado_id">
                             <option value="">Seleccionar postgrado</option>
-                            <option v-for="postgrado in materia.postgrados" :key="postgrado.id" v-bind:value="postgrado.idPostgrado">
+                            <option v-for="postgrado in postgrados" :key="postgrado.id" v-bind:value="materia.postgrado_id">
                                 {{ postgrado.nombre }}
                             </option>
                         </select>
@@ -48,11 +40,8 @@
             </CButton>
         </div>
     </form>
-    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
-        <CToast :show="show_toast" :header="`${$route.meta.title}`">
-            {{message_toast}}
-        </CToast>
-    </CToaster>
+        <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+
     <pre>{{materia}}</pre>
 </div>
 </template>
@@ -60,6 +49,8 @@
 <script>
 import MateriaService from '../services/MateriaService'
 import CustomServiceMateria from '../services/CustomServiceMateria'
+import ToastProps from '@/components/ShowToast'
+
 export default {
     data() {
         return {
@@ -85,6 +76,9 @@ export default {
         MateriaService,
         CustomServiceMateria
     ],
+    components:{
+        ToastProps
+    },
     methods: {
         addFixedToast() {
             this.fixedToasts++
@@ -104,10 +98,6 @@ export default {
         this.MateriaShow(this.$route.params.idMateria);
         
     },
-    watch: {
-        show_toast() {
-            return false
-        }
-    }
+    
 }
 </script>

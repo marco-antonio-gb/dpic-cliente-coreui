@@ -22,7 +22,7 @@ export default [
 				_name: "CSidebarNavItem",
 				name: "Pagos",
 				to: "/pagos",
-				icon: "cil-book"
+				icon: "cil-dollar"
 			},
 			{
 				_name: "CSidebarNavItem",
@@ -44,7 +44,7 @@ export default [
 				_name: "CSidebarNavItem",
 				name: "Inscripciones",
 				to: "/inscripciones",
-				icon: "cil-user"
+				icon: "cil-education"
 			},
 
 			{

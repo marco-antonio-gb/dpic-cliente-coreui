@@ -1,12 +1,13 @@
 <template>
 <div>
     <div class="d-flex justify-content-between align-items-center p-1 pb-3">
-        <h3 class="p-0 m-0 font-weight-bold"><CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
+        <h3 class="p-0 m-0 font-weight-bold">
+            <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
         <button class="btn btn-primary" @click="$router.push({path:'/postgrados/add'})"> Nuevo postgrado</button>
     </div>
     <CCard>
-        <CCardHeader>
-             <span class="badge badge-secondary">{{total}}</span>  Registros en total
+        <!-- <CCardHeader class="d-flex justify-content-between align-items-center">
+            <span>{{total}} Registros en total</span> 
             <div class="card-header-actions">
                 <span class="text-muted">Exportar: </span>
                 <CButtonGroup>
@@ -18,9 +19,9 @@
                     </CButton>
                 </CButtonGroup>
             </div>
-        </CCardHeader>
+        </CCardHeader> -->
         <CCardBody class="card-body-custom ">
-            <CDataTable :items="postgrados" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover  size="sm">
+            <CDataTable :items="postgrados" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover size="sm">
                 <template #nombre="{item}">
                     <td>
                         <router-link class="custom-link" :to="{ name: 'postgrados-detail', params: { idPostgrado: item.idPostgrado }}" v-slot="{ href,navigate }" custom>
@@ -47,7 +48,7 @@
                             <CButton color="secondary" size="sm" @click="$router.push({path:'/postgrados/update/'+item.idPostgrado})">
                                 <CIcon name="cil-pencil"></CIcon>
                             </CButton>
-                            <CButton color="dark" size="sm"  >
+                            <CButton color="dark" size="sm" @click="handleClick(item.idPostgrado)">
                                 <CIcon name="cil-trash"></CIcon>
                             </CButton>
                         </CButtonGroup>
@@ -55,32 +56,25 @@
                 </template>
             </CDataTable>
         </CCardBody>
-        <CToaster :autohide="3000">
-            <template v-for="toast in fixedToasts">
-                <CToast :key="'toast' + toast" :show="true" header="CToast fixed component">
-                    Hello, world! This is a <b>toast</b> number {{toast}}.
-                </CToast>
-            </template>
-        </CToaster>
+               <ToastProps  :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
     </CCard>
 </div>
 </template>
 <script>
 import PostgradoService from '../services/PostgradoService'
+import CustomService from '../services/CustomService'
+import ToastProps from '@/components/ShowToast'
 const fields = [{
         label: 'Postgrado',
         key: 'nombre',
     },
     {
-        label:'Fecha Inicio',
+        label: 'Fecha Inicio',
         key: 'fecha_inicio'
     },
+   
     {
-        label:'Fecha Final',
-        key: 'fecha_final'
-    },
-    {
-        label:'# Pagos',
+        label: '# Pagos',
         key: 'cantidad_pagos'
     },
     {
@@ -98,28 +92,23 @@ export default {
     name: 'postgrados-list',
     data() {
         return {
-            items: [{
-                    text: 'Inicio',
-                    to: '/'
-                },
-                {
-                    text: 'Postgrados',
-                    to:'/postgrados'
-                },
-            ],
             postgrados: [],
-            // items: '',
             isLoading: false,
             fields,
-            details: [],
-            collapseDuration: 0,
-            fixedToasts: 0,
-            total:''
+            total: 0,
+            validator_toast: '',
+            message_toast: '',
+            show_toast: false,
+            color_toast: ''
         }
     },
     mixins: [
-        PostgradoService
+        PostgradoService,
+        CustomService
     ],
+    components:{
+        ToastProps
+    },
     created() {
         this.PostgradoIndex()
     },

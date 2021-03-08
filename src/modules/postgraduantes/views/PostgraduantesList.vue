@@ -1,14 +1,15 @@
 <template>
 <div>
     <div class="d-flex justify-content-between align-items-center p-1 pb-3">
-        <h3 class="p-0 m-0 font-weight-bold"><CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
+        <h3 class="p-0 m-0 font-weight-bold">
+            <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
         <button class="btn btn-primary" @click="$router.push({path:'/postgraduantes/add'})"> Nuevo postgraduante</button>
     </div>
     <CCard>
-        <CCardHeader>
-             <span class="badge badge-secondary">{{total}}</span>  Registros en total
+        <!-- <CCardHeader>
+            <span class="badge badge-secondary">{{total}}</span> Registros en total
             <div class="card-header-actions">
-                <span class="text-muted">Exportar: </span>
+            
                 <CButtonGroup>
                     <CButton color="light" size="sm">
                         PDF
@@ -18,15 +19,15 @@
                     </CButton>
                 </CButtonGroup>
             </div>
-        </CCardHeader>
+        </CCardHeader> -->
         <CCardBody class="card-body-custom ">
-            <CDataTable :items="postgraduantes" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover  size="sm">
-                <template #nombre="{item}">
+            <CDataTable :items="postgraduantes" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover size="sm">
+                <template #full_name="{item}">
                     <td>
                         <router-link class="custom-link" :to="{ name: 'postgraduante-detail', params: { idPostgraduante: item.idPostgraduante }}" v-slot="{ href,navigate }" custom>
                             <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
                                 <CIcon name="cilLink" size="sm"></CIcon>
-                                {{item.nombre}}
+                                {{item.full_name}}
                             </a>
                         </router-link>
                     </td>
@@ -40,52 +41,61 @@
                 </template>
                 <template #opciones="{item }">
                     <td class="py-2">
-                        <CButtonGroup>
-                            <CButton color="light" size="sm" @click="$router.push({path:'/postgraduantes/detail/'+item.idPostgraduante})">
-                                <CIcon name="cil-user"></CIcon>
-                            </CButton>
-                            <CButton color="secondary" size="sm" @click="$router.push({path:'/postgraduantes/update/'+item.idPostgraduante})">
+                         <CButtonGroup>
+                            <CButton color="light" size="sm" @click="$router.push({path:'/postgraduantes/update/'+item.idPostgraduante})">
                                 <CIcon name="cil-pencil"></CIcon>
                             </CButton>
-                            <CButton color="dark" size="sm"  >
+                            <CButton color="secondary" size="sm" @click="$router.push({path:'/postgraduantes/detail/'+item.idPostgraduante})">
+                                <CIcon name="cil-user"></CIcon>
+                            </CButton>
+                            <CButton color="dark" size="sm" @click="handleClick(item.idPostgraduante)">
                                 <CIcon name="cil-trash"></CIcon>
                             </CButton>
+                            
                         </CButtonGroup>
+                        <!-- <router-link :to="`/postgraduantes/detail/${item.idPostgraduante}`" class="mr-2">
+                            <CIcon name="cil-user"></CIcon>
+                        </router-link>
+                        <router-link :to="`/postgraduantes/update/${item.idPostgraduante}`" class="mr-2">
+                            <CIcon name="cil-pencil"></CIcon>
+                        </router-link>
+                        <router-link :to="`/postgraduantes/update/${item.idPostgraduante}`" class="mr-2">
+                            <CIcon name="cil-trash"></CIcon>
+                        </router-link> -->
                     </td>
                 </template>
             </CDataTable>
         </CCardBody>
-        <CToaster :autohide="3000">
-            <template v-for="toast in fixedToasts">
-                <CToast :key="'toast' + toast" :show="true" header="CToast fixed component">
-                    Hello, world! This is a <b>toast</b> number {{toast}}.
-                </CToast>
-            </template>
-        </CToaster>
+  
     </CCard>
+    <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+
 </div>
 </template>
+
 <script>
 import PostgraduanteService from '../services/PostgraduanteService'
+import ToastProps from '@/components/ShowToast'
+import CustomPostgraduante from '../services/CustomPostgraduante'
+
 const fields = [{
-        label: 'Paterno',
-        key: 'paterno',
+        label: 'Nombre completo',
+        key: 'full_name',
     },
     {
-        label:'Materno',
-        key: 'materno'
+        label: 'C.I.',
+        key: 'cedula'
     },
     {
-        label:'Nombres',
-        key: 'nombres'
-    },
-    {
-        label:'C.I.',
-        key: 'ci'
-    },
-    {
+        label: 'Celular',
         key: 'celular'
     },
+    {
+        label: 'Profesion',
+        key: 'profesion'
+    },
+    
+    
     {
         key: 'opciones',
         label: 'Opciones',
@@ -98,23 +108,26 @@ export default {
     name: 'postgrados-list',
     data() {
         return {
-             
-           
             postgraduantes: [],
-            // items: '',
+           
             isLoading: false,
             fields,
-            details: [],
-            collapseDuration: 0,
-            fixedToasts: 0,
-            total:''
+            validator_toast: '',
+            message_toast: '',
+            show_toast: false,
+            color_toast: '',
+            total: ''
         }
     },
-    mixins: [
-        PostgraduanteService
-    ],
     created() {
         this.PostgraduanteIndex()
+    },
+    mixins: [
+        PostgraduanteService,
+        CustomPostgraduante
+    ],
+    components: {
+        ToastProps
     },
 }
 </script>

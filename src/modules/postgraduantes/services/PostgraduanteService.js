@@ -10,34 +10,36 @@ export default {
 			axios
 				.get("/postgraduantes")
 				.then(response => {
-					if (response.status === 200) {
-						(this.postgraduantes = response.data.data.map(
-							(item, id) => {
-								return {
-									...item,
-									id
-								};
-							}
-						)), (this.isLoading = false);
+					if (response.data.success) {
+						this.isLoading = false;
+						this.postgraduantes = response.data.data;
 						this.total = response.data.total;
 					} else {
-						console.log(response);
+						this.isLoading = false;
+						this.showToast(response.data.message, true, "");
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						this.log_out(true);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
+					if (error.response) {
+						this.showToast(
+							"SERVER a: " + error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER v: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER c: " + error.message,
+							true,
+							"danger"
+						);
+					}
 				});
 		},
 		/*-----------------------------------*/
@@ -68,19 +70,26 @@ export default {
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						this.log_out(true);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
+					if (error.response) {
+						this.showToast(
+							"SERVER a: " + error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER v: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER c: " + error.message,
+							true,
+							"danger"
+						);
+					}
 				});
 		},
 		/*-----------------------------------*/
@@ -98,19 +107,26 @@ export default {
 					}
 				})
 				.catch(error => {
-					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
-						this.log_out(true);
-					} else if (error.request) {
-						// The request was made but no response was received
-						console.log(error.request);
-					} else {
-						// Something happened in setting up the request that triggered an Error
-						console.log("Error", error.message);
-					}
 					this.isLoading = false;
+					if (error.response) {
+						this.showToast(
+							"SERVER a: " + error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER v: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER c: " + error.message,
+							true,
+							"danger"
+						);
+					}
 				});
 		},
 		/*-----------------------------------*/
@@ -136,25 +152,26 @@ export default {
 					}
 				})
 				.catch(error => {
+					this.isLoading = false;
 					if (error.response) {
-						console.log(error.response.data.message);
-						console.log(error.response.status);
-						console.log(error.response.headers);
 						this.showToast(
-							error.response.data.message,
+							"SERVER a: " + error.response.data.message,
 							true,
-							"success"
+							"danger"
 						);
 					} else if (error.request) {
-						// The request was made but no response was received
-						// console.log(error.request);
-						this.showToast(error.response, true, "success");
+						this.showToast(
+							"SERVER v: " + error.request,
+							true,
+							"danger"
+						);
 					} else {
-						// Something happened in setting up the request that triggered an Error
-						// console.log("Error", error.message);
-						this.showToast(error.message, true, "success");
+						this.showToast(
+							"SERVER c: " + error.message,
+							true,
+							"danger"
+						);
 					}
-					this.isLoading = false;
 				});
 		},
 		/*-----------------------------------*/

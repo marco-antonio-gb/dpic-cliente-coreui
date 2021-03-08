@@ -1,26 +1,16 @@
 <template>
 <div>
-    <div class="d-flex flex-row align-items-center mb-3">
-        <div class="mr-2">
-            <CButton size="sm" shape="pill" color="secondary" @click="$router.go(-1)" pressed>Volver</CButton>
-        </div>
-        <div>
-            <h3 class="p-0 m-0">{{ $route.meta.title }}</h3>
-        </div>
-        <div></div>
-    </div>
+    <goback class="mb-3"/>
     <form @submit.prevent="PostgradoUpdate($route.params.idPostgrado)" id="PostgradoUpdate">
         <CCard bodyWrapper class="mb-2">
             <CRow>
-                <CCol sm="6">
+                <CCol sm="9">
                     <CInput label="Nombre" required placeholder="Nombre del postgrado" v-model="postgrado.nombre" />
                 </CCol>
                 <CCol sm="3">
                     <CInput label="Fecha Inicio" type="date" required v-model="postgrado.fecha_inicio" />
                 </CCol>
-                <CCol sm="3">
-                    <CInput label="Fecha Final" type="date" required v-model="postgrado.fecha_final" />
-                </CCol>
+                
             </CRow>
             <CRow>
                 <CCol sm="3">
@@ -30,7 +20,7 @@
                     <CInput label="Cantidad Pagos" placeholder="0" v-model="postgrado.cantidad_pagos" />
                 </CCol>
                 <CCol sm="3">
-                    <CInput label="Gestion" readonly v-model="postgrado.gestion" />
+                    <CInput label="Gestion"   v-model="postgrado.gestion" />
                 </CCol>
                 <CCol sm="3">
                     <div class="form-group">
@@ -55,17 +45,15 @@
             </CButton>
         </div>
     </form>
-    <CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
-        <CToast :show="show_toast" :header="`${$route.meta.title}`">
-            {{message_toast}}
-        </CToast>
-    </CToaster>
+    <ToastProps  :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+   
 </div>
 </template>
 
 <script>
 import PostgradoService from '../services/PostgradoService'
 import CustomService from '../services/CustomService'
+import ToastProps from '@/components/ShowToast'
 export default {
     data() {
         return {
@@ -74,7 +62,7 @@ export default {
             postgrado: {
                 nombre: '',
                 fecha_inicio: '',
-                fecha_final: '',
+          
                 cantidad_pagos: '',
                 precio: '',
                 gestion: new Date().getFullYear(),
@@ -91,6 +79,9 @@ export default {
         PostgradoService,
         CustomService
     ],
+    components:{
+        ToastProps
+    },
     methods: {
         addFixedToast() {
             this.fixedToasts++

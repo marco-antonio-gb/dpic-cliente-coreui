@@ -1,63 +1,93 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "@/store";
-const Login = () => import("@/views/pages/Login");
+const Login = () =>
+	import(/* webpackChunkName: "Login" */ "@/views/pages/Login");
 // Containers
-const TheContainer = () => import("@/containers/TheContainer");
+const TheContainer = () =>
+	import(/* webpackChunkName: "TheContainer" */ "@/containers/TheContainer");
 //Modules
-const UsuariosContainer = () => import("@/modules/usuarios/Usuarios");
-const UsuarioAdd = () => import("@/modules/usuarios/views/UsuarioAdd");
-const UsuarioDetail = () => import("@/modules/usuarios/views/UsuarioDetail");
-const UsuarioList = () => import("@/modules/usuarios/views/UsuarioList");
-const UsuarioUpdate = () => import("@/modules/usuarios/views/UsuarioUpdate");
+const UsuariosContainer = () =>
+	import(/* webpackChunkName: "Usuarios" */ "@/modules/usuarios/Usuarios");
+const UsuarioAdd = () =>
+	import(/* webpackChunkName: "UsuarioAdd" */ "@/modules/usuarios/views/UsuarioAdd");
+const UsuarioDetail = () =>
+	import(/* webpackChunkName: "UsuarioDetail" */ "@/modules/usuarios/views/UsuarioDetail");
+const UsuarioList = () =>
+	import(/* webpackChunkName: "UsuarioList" */ "@/modules/usuarios/views/UsuarioList");
+const UsuarioUpdate = () =>
+	import(/* webpackChunkName: "UsuarioUpdate" */ "@/modules/usuarios/views/UsuarioUpdate");
 //views
-const Dashboard = () => import("@/views/Dashboard");
+const Dashboard = () =>
+	import(/* webpackChunkName: "Dashboard" */ "@/views/Dashboard");
 //potgraduantes
-const Postgraduantes = () => import("@/modules/postgraduantes/Postgraduantes");
+const Postgraduantes = () =>
+	import(/* webpackChunkName: "Postgraduantes" */ "@/modules/postgraduantes/Postgraduantes");
 const PostgraduantesAdd = () =>
-	import("@/modules/postgraduantes/views/PostgraduantesAdd");
+	import(/* webpackChunkName: "PostgraduantesAdd" */ "@/modules/postgraduantes/views/PostgraduantesAdd");
 const PostgraduantesDetail = () =>
-	import("@/modules/postgraduantes/views/PostgraduantesDetail");
+	import(/* webpackChunkName: "PostgraduantesDetail" */ "@/modules/postgraduantes/views/PostgraduantesDetail");
 const PostgraduantesList = () =>
-	import("@/modules/postgraduantes/views/PostgraduantesList");
+	import(/* webpackChunkName: "PostgraduantesList" */ "@/modules/postgraduantes/views/PostgraduantesList");
 const PostgraduantesUpdate = () =>
-	import("@/modules/postgraduantes/views/PostgraduantesUpdate");
+	import(/* webpackChunkName: "PostgraduantesUpdate" */ "@/modules/postgraduantes/views/PostgraduantesUpdate");
 //potgrados
-const Postgrados = () => import("@/modules/postgrados/Postgrados");
-const PostgradosAdd = () => import("@/modules/postgrados/views/PostgradoAdd");
+const Postgrados = () =>
+	import(/* webpackChunkName: "Postgrados" */ "@/modules/postgrados/Postgrados");
+const PostgradosAdd = () =>
+	import(/* webpackChunkName: "PostgradoAdd" */ "@/modules/postgrados/views/PostgradoAdd");
 const PostgradosDetail = () =>
-	import("@/modules/postgrados/views/PostgradoDetail");
-const PostgradosList = () => import("@/modules/postgrados/views/PostgradoList");
+	import(/* webpackChunkName: "PostgradoDetail" */ "@/modules/postgrados/views/PostgradoDetail");
+const PostgradosMaterias = () =>
+	import(/* webpackChunkName: "PostgradosMaterias" */ "@/modules/postgrados/views/PostgradosMaterias");
+const PostgradosList = () =>
+	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
-	import("@/modules/postgrados/views/PostgradoUpdate");
+	import(/* webpackChunkName: "PostgradoUpdate" */ "@/modules/postgrados/views/PostgradoUpdate");
 //docentes
-const Docentes = () => import("@/modules/docentes/Docentes");
-const DocentesAdd = () => import("@/modules/docentes/views/DocenteAdd");
-const DocentesDetail = () => import("@/modules/docentes/views/DocenteDetail");
-const DocentesList = () => import("@/modules/docentes/views/DocenteList");
-const DocentesUpdate = () => import("@/modules/docentes/views/DocenteUpdate");
+const Docentes = () =>
+	import(/* webpackChunkName: "Docentes" */ "@/modules/docentes/Docentes");
+const DocentesAdd = () =>
+	import(/* webpackChunkName: "DocenteAdd" */ "@/modules/docentes/views/DocenteAdd");
+const DocentesDetail = () =>
+	import(/* webpackChunkName: "DocenteDetail" */ "@/modules/docentes/views/DocenteDetail");
+const DocentesList = () =>
+	import(/* webpackChunkName: "DocenteList" */ "@/modules/docentes/views/DocenteList");
+const DocentesUpdate = () =>
+	import(/* webpackChunkName: "DocenteUpdate" */ "@/modules/docentes/views/DocenteUpdate");
 //pagos
-const Pagos = () => import("@/modules/pagos/Pagos");
-const PagosAdd = () => import("@/modules/pagos/views/PagoAdd");
-const PagosDetail = () => import("@/modules/pagos/views/PagoDetail");
-const PagosList = () => import("@/modules/pagos/views/PagoList");
-const PagosUpdate = () => import("@/modules/pagos/views/PagoUpdate");
+const Pagos = () =>
+	import(/* webpackChunkName: "Pagos" */ "@/modules/pagos/Pagos");
+const PagosAdd = () =>
+	import(/* webpackChunkName: "PagoAdd" */ "@/modules/pagos/views/PagoAdd");
+const PagosDetail = () =>
+	import(/* webpackChunkName: "PagoDetail" */ "@/modules/pagos/views/PagoDetail");
+const PagosList = () =>
+	import(/* webpackChunkName: "PagoList" */ "@/modules/pagos/views/PagoList");
+const PagosUpdate = () =>
+	import(/* webpackChunkName: "PagoUpdate" */ "@/modules/pagos/views/PagoUpdate");
 //pagos
-const Materias = () => import("@/modules/materias/Materias");
-const MateriasAdd = () => import("@/modules/materias/views/MateriaAdd");
-const MateriasDetail = () => import("@/modules/materias/views/MateriaDetail");
-const MateriasList = () => import("@/modules/materias/views/MateriaList");
-const MateriasUpdate = () => import("@/modules/materias/views/MateriaUpdate");
+const Materias = () =>
+	import(/* webpackChunkName: "Materias" */ "@/modules/materias/Materias");
+const MateriasAdd = () =>
+	import(/* webpackChunkName: "MateriaAdd" */ "@/modules/materias/views/MateriaAdd");
+const MateriasDetail = () =>
+	import(/* webpackChunkName: "MateriaDetail" */ "@/modules/materias/views/MateriaDetail");
+const MateriasList = () =>
+	import(/* webpackChunkName: "MateriaList" */ "@/modules/materias/views/MateriaList");
+const MateriasUpdate = () =>
+	import(/* webpackChunkName: "MateriaUpdate" */ "@/modules/materias/views/MateriaUpdate");
 //inscripciones
-const Inscripciones = () => import("@/modules/inscripciones/Inscripciones");
+const Inscripciones = () =>
+	import(/* webpackChunkName: "Inscripciones" */ "@/modules/inscripciones/Inscripciones");
 const InscripcionList = () =>
-	import("@/modules/inscripciones/views/InscripcionList");
+	import(/* webpackChunkName: "InscripcionList" */ "@/modules/inscripciones/views/InscripcionList");
 const InscripcionUpdate = () =>
-	import("@/modules/inscripciones/views/InscripcionUpdate");
+	import(/* webpackChunkName: "InscripcionUpdate" */ "@/modules/inscripciones/views/InscripcionUpdate");
 const InscripcionAdd = () =>
-	import("@/modules/inscripciones/views/InscripcionAdd");
+	import(/* webpackChunkName: "InscripcionAdd" */ "@/modules/inscripciones/views/InscripcionAdd");
 const InscripcionDetail = () =>
-	import("@/modules/inscripciones/views/InscripcionDetail");
+	import(/* webpackChunkName: "InscripcionDetail" */ "@/modules/inscripciones/views/InscripcionDetail");
 Vue.use(Router);
 export const router = new Router({
 	mode: "history", // https://router.vuejs.org/api/#mode
@@ -74,7 +104,7 @@ export const router = new Router({
 		},
 		{
 			path: "/",
-			name: "Home",
+
 			component: TheContainer,
 			beforeEnter: (to, from, next) => {
 				if (!store.getters["auth/authenticated"]) {
@@ -107,19 +137,19 @@ export const router = new Router({
 						},
 						{
 							path: "/usuarios/add",
-							name: "Agregar Usuario",
+							name: "usuarios-add",
 							component: UsuarioAdd,
 							meta: { title: "Agregar usuario" }
 						},
 						{
 							path: "/usuarios/detail/:idUsuario",
-							name: "detalleUsuario",
+							name: "usuarios-detail",
 							component: UsuarioDetail,
 							meta: { title: "Detalle usuario" }
 						},
 						{
 							path: "/usuarios/update/:idUsuario",
-							name: "Editar Usuario",
+							name: "usuarios-update",
 							component: UsuarioUpdate,
 							meta: { title: "Editar de usuarios" }
 						}
@@ -180,6 +210,12 @@ export const router = new Router({
 							name: "postgrados-detail",
 							component: PostgradosDetail,
 							meta: { title: "Detalle postgrado" }
+						},
+						{
+							path: "/postgrados/asignar-materias/:idPostgrado",
+							name: "postgrados-materias",
+							component: PostgradosMaterias,
+							meta: { title: "Asignar materia a postgrado" }
 						},
 						{
 							path: "/postgrados/update/:idPostgrado",

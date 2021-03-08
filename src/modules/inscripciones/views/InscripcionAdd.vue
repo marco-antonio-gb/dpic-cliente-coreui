@@ -152,7 +152,7 @@
             {{message_toast}}
         </CToast>
     </CToaster>
-    <pre>{{inscripcion}}</pre>
+ 
 </div>
 </template>
 

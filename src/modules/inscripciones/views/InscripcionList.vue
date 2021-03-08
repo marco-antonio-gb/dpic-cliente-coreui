@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center p-1 pb-3">
         <h3 class="p-0 m-0 font-weight-bold">
             <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
-        <button class="btn btn-primary" @click="$router.push({path:'/postgraduantes/add'})"> Nuevo postgraduante</button>
+        <button class="btn btn-primary" @click="$router.push({path:'/inscripciones/add'})"> Nueva inscripcion</button>
     </div>
     <CCard>
         <CCardHeader>

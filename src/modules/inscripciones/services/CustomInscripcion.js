@@ -58,6 +58,9 @@ export default {
 				""), (this.inscripcion.postgraduante.foto =
 				""), (this.inscripcion.postgrado.postgrado_id =
 				""), (this.inscripcion.pagos = []);
+			this.select_precio = "";
+			this.select_pagos = "";
+			this.selected = null;
 		},
 		cancelarInscripcionAdd() {
 			this.resetForm();
