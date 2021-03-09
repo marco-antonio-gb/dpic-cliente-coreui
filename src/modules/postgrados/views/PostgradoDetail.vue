@@ -2,23 +2,31 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <goback />
-        <button class="btn btn-success" @click="$router.push({path:'/postgrados/update/'+$route.params.idPostgrado})"> Editar postgrado</button>
+        <!-- <button class="btn btn-success" @click="$router.push({path:'/postgrados/update/'+$route.params.idPostgrado})"> Editar postgrado</button> -->
+        <CDropdown color="primary" toggler-text="Opciones">
+            <CDropdownItem @click="$router.push({path:'/postgrados/inscribir-postgraduante/'+$route.params.idPostgrado})">Registrar postgraduante
+            </CDropdownItem>
+            <CDropdownItem @click="$router.push({path:'/postgrados/inscribir-postgraduante/'+$route.params.idPostgrado})">Registrar materias
+            </CDropdownItem>
+            <CDropdownDivider></CDropdownDivider>
+            <CDropdownItem>Something else here...</CDropdownItem>
+            <CDropdownItem disabled>Disabled action</CDropdownItem>
+        </CDropdown>
     </div>
     <CCard>
         <CCardBody>
             <div class="d-flex align-items-center">
-            <div class="mr-auto ">
-                <h4>{{postgrado.nombre}} <span class="font-weight-light">{{postgrado.gestion}}</span> </h4>
+                <div class="mr-auto ">
+                    <h4>{{postgrado.nombre}} <span class="font-weight-light">{{postgrado.gestion}}</span> </h4>
+                </div>
+                <div class="p-2"> <span class="mr-3"># Pagos: <strong>{{postgrado.cantidad_pagos}}</strong> </span></div>
+                <div class="p-2"><span>Precio: <strong>{{postgrado.precio}} Bs.</strong></span></div>
             </div>
-            <div class="p-2"> <span class="mr-3"># Pagos: <strong>{{postgrado.cantidad_pagos}}</strong> </span></div>
-            <div class="p-2"><span>Precio: <strong>{{postgrado.precio}} Bs.</strong></span></div>
-        </div>
-        <CRow>
-            <CCol lg="5">
-                <span class="mr-3">Fecha Inicio: <strong>{{postgrado.fecha_inicio}}</strong> </span>
-
-            </CCol>
-        </CRow>
+            <CRow>
+                <CCol lg="5">
+                    <span class="mr-3">Fecha Inicio: <strong>{{postgrado.fecha_inicio}}</strong> </span>
+                </CCol>
+            </CRow>
         </CCardBody>
     </CCard>
     <!-- <CCard class="border-radius-top-0" v-if="postgrado.materias.length>0">
@@ -43,7 +51,6 @@
                                             {{materia.nombre}}
                                         </a>
                                     </router-link>
-                                
                                 </td>
                                 <td>{{materia.credito}}</td>
                             </tr>
@@ -76,7 +83,6 @@
                         <tbody>
                             <tr v-for="(docente,index) in docentes" :key="docente.id">
                                 <th>{{index+1}}</th>
-                           
                                 <td>
                                     <router-link class="custom-link mr-2" :to="{ name: 'usuarios-detail', params: { idUsuario: docente.idUsuario}}" v-slot="{ href,navigate }" custom>
                                         <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
@@ -97,12 +103,11 @@
                                     </router-link>
                                 </td>
                             </tr>
-                          
                         </tbody>
                     </table>
                 </CCardBody>
             </CCard>
-             <CCard v-else class="border-radius-top-0">
+            <CCard v-else class="border-radius-top-0">
                 <CCardBody class="text-center">
                     <button class="btn btn-secondary " @click="$router.push({path:'/postgrados/asignar-materias/'+$route.params.idPostgrado})">Registrar Materias</button>
                 </CCardBody>
@@ -146,7 +151,6 @@
         <CTab title="Pagos">
             Text will not be shown.
         </CTab>
-         
         <CTab title="Calificaciones">
         </CTab>
     </CTabs>
@@ -164,7 +168,6 @@ export default {
             postgrado: {
                 nombre: '',
                 fecha_inicio: '',
-
                 cantidad_pagos: '',
                 precio: '',
                 gestion: '',
@@ -172,7 +175,7 @@ export default {
                 materias: []
             },
             postgraduantes: [],
-            docentes:[]
+            docentes: []
         }
     },
     created() {
@@ -184,7 +187,11 @@ export default {
         PostgradoService,
         CustomService
     ],
-    methods: {}
+    methods: {
+        console() {
+            console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+        }
+    }
 }
 </script>
 

@@ -68,6 +68,17 @@ export default {
 					}
 					this.isLoading = false;
 				});
+		},
+		showToast(message, status, color) {
+			if (typeof message === "string") {
+				this.show_toast = status;
+				this.message_toast = message;
+				this.color_toast = color;
+			} else {
+				this.show_toast = status;
+				this.message_toast = message.join("\n");
+				this.color_toast = color;
+			}
 		}
 	}
 };

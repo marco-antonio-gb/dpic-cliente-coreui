@@ -40,6 +40,8 @@ const PostgradosDetail = () =>
 	import(/* webpackChunkName: "PostgradoDetail" */ "@/modules/postgrados/views/PostgradoDetail");
 const PostgradosMaterias = () =>
 	import(/* webpackChunkName: "PostgradosMaterias" */ "@/modules/postgrados/views/PostgradosMaterias");
+const PostgradoPostgraduante = () =>
+	import(/* webpackChunkName: "PostgradoPostgraduante" */ "@/modules/postgrados/components/PostgradoPostgraduante");
 const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
@@ -211,12 +213,7 @@ export const router = new Router({
 							component: PostgradosDetail,
 							meta: { title: "Detalle postgrado" }
 						},
-						{
-							path: "/postgrados/asignar-materias/:idPostgrado",
-							name: "postgrados-materias",
-							component: PostgradosMaterias,
-							meta: { title: "Asignar materia a postgrado" }
-						},
+
 						{
 							path: "/postgrados/update/:idPostgrado",
 							name: "postgrados-update",
@@ -224,6 +221,19 @@ export const router = new Router({
 							meta: {
 								title: "Editar informacion de postgrado"
 							}
+						},
+						{
+							path: "/postgrados/asignar-materias/:idPostgrado",
+							name: "postgrados-materias",
+							component: PostgradosMaterias,
+							meta: { title: "Asignar materia a postgrado" }
+						},
+						{
+							path:
+								"/postgrados/inscribir-postgraduante/:idPostgrado",
+							name: "postgrado-postgraduante",
+							component: PostgradoPostgraduante,
+							meta: { title: "Inscribir postgraduante" }
 						}
 					]
 				},
