@@ -33,11 +33,18 @@ export default {
 					}
 				});
 		},
-		InscripcionStore() {
+		InscripcionStore(URL_DATA) {
+			console.log(URL_DATA);
 			this.show_toast = false;
 			this.isLoading = true;
+			var url = "";
+			if (URL_DATA === "postgrado-postgraduante-existente") {
+				url = "inscripciones-postgraduantes-existente";
+			} else if (URL_DATA === "postgrado-postgraduante-nuevo") {
+				url = "/inscripciones";
+			}
 			axios
-				.post("/inscripciones", this.inscripcion)
+				.post(url, this.inscripcion)
 				.then(response => {
 					if (response.data.success) {
 						this.isLoading = false;

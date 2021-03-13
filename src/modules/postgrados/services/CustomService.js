@@ -96,6 +96,86 @@ export default {
 					}
 				}
 			});
+		},
+		reportePagosPostgraduante(POSTGRADO_ID, POSTGRADUANTE_ID, FILE_NAME) {
+			// **********************
+			this.show_toast = false;
+			this.isLoading = true;
+
+			// let fileName =
+			// 	"0" +
+			// 	this.det_par.participacion.nro_seguimiento +
+			// 	"-" +
+			// 	empresaName.replace(/ /g, "_") +
+			// 	"-" +
+			// 	this.det_par.participacion.tipo_evento +
+			// 	"-" +
+			// 	this.det_par.participacion.gestion;
+			axios({
+				url: `/reporte-pagos-personal/${POSTGRADO_ID}/${POSTGRADUANTE_ID}`,
+				// params: this.contrato,
+				method: "GET",
+				responseType: "arraybuffer",
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => {
+					this.isLoading = false;
+					this.downloadFile(response.data, FILE_NAME);
+					// var fileURL = window.URL.createObjectURL(
+					// 	new Blob([response.data])
+					// );
+					// var fileLink = document.createElement("a");
+					// fileLink.href = fileURL;
+					// fileLink.setAttribute("download", fileName + ".pdf");
+					// fileLink.setAttribute("target", "_blank");
+					// document.body.appendChild(fileLink);
+					// fileLink.click();
+					// fileLink.remove();
+					// window.URL.revokeObjectURL(fileURL);
+				})
+				.catch(errors => {
+					this.isLoading = false;
+					console.log(errors.response);
+				});
+			// ***********************
+		},
+		GetFilename(url) {
+			console.log(url);
+			if (url) {
+				var m = url.toString().match(/.*\/(.+?)\./);
+				if (m && m.length > 1) {
+					return m[1];
+				}
+			}
+			return "";
+		},
+		downloadFile(response, filename) {
+			// It is necessary to create a new blob object with mime-type explicitly set
+			// otherwise only Chrome works like it should
+			var newBlob = new Blob([response], {
+				type: "application/pdf"
+			});
+
+			// IE doesn't allow using a blob object directly as link href
+			// instead it is necessary to use msSaveOrOpenBlob
+			if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+				window.navigator.msSaveOrOpenBlob(newBlob);
+				return;
+			}
+
+			// For other browsers:
+			// Create a link pointing to the ObjectURL containing the blob.
+			const data = window.URL.createObjectURL(newBlob);
+			var link = document.createElement("a");
+			link.href = data;
+			link.download = "REPORTE PAGOS" + "-" + filename + ".pdf";
+			link.click();
+			setTimeout(function() {
+				// For Firefox it is necessary to delay revoking the ObjectURL
+				window.URL.revokeObjectURL(data);
+			}, 100);
 		}
 	}
 };

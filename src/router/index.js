@@ -40,8 +40,11 @@ const PostgradosDetail = () =>
 	import(/* webpackChunkName: "PostgradoDetail" */ "@/modules/postgrados/views/PostgradoDetail");
 const PostgradosMaterias = () =>
 	import(/* webpackChunkName: "PostgradosMaterias" */ "@/modules/postgrados/views/PostgradosMaterias");
-const PostgradoPostgraduante = () =>
-	import(/* webpackChunkName: "PostgradoPostgraduante" */ "@/modules/postgrados/components/PostgradoPostgraduante");
+const PostgradoPostgraduanteNuevo = () =>
+	import(/* webpackChunkName: "PostgradoPostgraduanteNuevo" */ "@/modules/postgrados/components/PostgradoPostgraduanteNuevo");
+const PostgradoPostgraduantePago = () =>
+	import(/* webpackChunkName: "PostgradoPostgraduantePago" */ "@/modules/postgrados/components/PostgradoPostgraduantePago");
+
 const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
@@ -230,10 +233,24 @@ export const router = new Router({
 						},
 						{
 							path:
-								"/postgrados/inscribir-postgraduante/:idPostgrado",
-							name: "postgrado-postgraduante",
-							component: PostgradoPostgraduante,
-							meta: { title: "Inscribir postgraduante" }
+								"/postgrados/inscribir-postgraduante-nuevo/:idPostgrado",
+							name: "postgrado-postgraduante-nuevo",
+							component: PostgradoPostgraduanteNuevo,
+							meta: { title: "Inscribir Nuevo postgraduante" }
+						},
+						{
+							path:
+								"/postgrados/inscribir-postgraduante-existente/:idPostgrado",
+							name: "postgrado-postgraduante-existente",
+							component: PostgradoPostgraduanteNuevo,
+							meta: { title: "Inscribir postgraduante existente" }
+						},
+						{
+							path:
+								"/postgrados/registrar-pago/:idPostgrado/postgraduante/:idPostgraduante",
+							name: "postgrado-postgraduante-pagos",
+							component: PostgradoPostgraduantePago,
+							meta: { title: "Registrar pago postgrado" }
 						}
 					]
 				},

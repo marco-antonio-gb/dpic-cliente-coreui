@@ -1,11 +1,10 @@
 <template>
 <div class="mb-5">
     <goback class="mb-3" />
-    <form @submit.prevent="InscripcionStore" id="PostgradoStore">
+    <form @submit.prevent="InscripcionStore($route.name)" id="PostgradoStore">
         <h5 class="text-center"> {{postgrado_label}}</h5>
-         
-        <p class="mb-1 ml-2 font-weight-bold">Postgraduante</p>
-        <CCard bodyWrapper class="mb-2">
+        <CCard bodyWrapper class="mb-2" v-if="$route.name==='postgrado-postgraduante-nuevo'">
+        <p class="mb-1 ml-2 font-weight-bold">Postgraduante nuevo</p>
             <CRow>
                 <CCol sm="4">
                     <CInput label="Paterno" type="text" required placeholder="Apellido Paterno" v-model="inscripcion.postgraduante.paterno" />
@@ -41,21 +40,10 @@
                 <CCol sm="2">
                     <CInput label="Celular" placeholder="celular" v-model="inscripcion.postgraduante.celular" />
                 </CCol>
-                <!-- <CCol sm="3">
-                    <CInput label="Fecha nacimiento" type="date" placeholder="lugar" v-model="inscripcion.postgraduante.fecha_nac" />
-                </CCol> -->
             </CRow>
             <CRow>
-                <!-- <CCol sm="6">
-                    <CInput label="Direccion Domicilio" placeholder="direccion" v-model="inscripcion.postgraduante.direc_domicilio" />
-                </CCol> -->
-                <!-- <CCol sm="3">
-                    <CInput label="Nro Domicilio" placeholder="nro" v-model="inscripcion.postgraduante.nro_domicilio" />
-                </CCol> -->
-
             </CRow>
             <CRow>
-
                 <CCol sm="3">
                     <CInput label="Correo" placeholder="email" v-model="inscripcion.postgraduante.correo" />
                 </CCol>
@@ -66,19 +54,23 @@
                     <CInput label="Observaciones" placeholder="observaciones" v-model="inscripcion.postgraduante.observaciones" />
                 </CCol>
             </CRow>
-            <!-- <CRow>
-                <CCol sm="4">
-                    <CInput label="Lugar Trabajo" placeholder="trabajo" v-model="inscripcion.postgraduante.lugar_trabajo" />
-                </CCol>
-                <CCol sm="4">
-                    <CInput label="Telefono Trabajo" placeholder="telf-trabajo" v-model="inscripcion.postgraduante.telf_trabajo" />
-                </CCol>
-                <CCol sm="4">
-                    <CInput label="Lugar Estudio" placeholder="lugar estudio" v-model="inscripcion.postgraduante.lugar_estudio" />
-                </CCol>
-            </CRow> -->
             <CRow>
-
+            </CRow>
+        </CCard>
+        <CCard bodyWrapper class="mb-2" v-if="$route.name==='postgrado-postgraduante-existente'">
+            <p class="mb-1 ml-2 font-weight-bold">Postgraduante existente</p>
+            <CRow>
+                <CCol sm="12">
+                    <div class="form-group">
+                        <label   class=""> Postgraduante registrados</label>
+                        <select required   class="form-control" v-model="inscripcion.postgraduante_id">
+                            <option disabled value="">Seleccion un postgraduante </option>
+                            <option v-for="postgraduante in postgraduantes" :key="postgraduante.id" v-bind:value="postgraduante.idPostgraduante">
+                                {{ postgraduante.full_name }} - {{postgraduante.cedula}}
+                            </option>
+                        </select>
+                    </div>
+                </CCol>
             </CRow>
         </CCard>
         <p class="mb-1 ml-2 font-weight-bold">Pagos</p>
@@ -116,6 +108,7 @@
                     </div>
                 </div>
             </div>
+            <strong>TOTAL: {{total_pagos}}</strong>
         </CCard>
         <div class="text-right">
             <button class="btn btn-secondary mr-2" @click.prevent="cancelarInscripcionAdd">Cancelar</button>
@@ -127,15 +120,13 @@
             </CButton>
         </div>
     </form>
-    <pre>{{inscripcion}}</pre>
+    <!-- <pre>{{inscripcion}}</pre> -->
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
-
 </div>
 </template>
-
 <script>
 var today = new Date();
-var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' +  today.getFullYear();
+var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' +  today.getDate();
 import ToastProps from '@/components/ShowToast'
 import InscripcionService from '@/modules/inscripciones/services/InscripcionService'
 export default {
@@ -148,7 +139,7 @@ export default {
             isLoading: false,
             inscripcion: {
                 gestion: today.getFullYear(),
-                fecha_registro:date,
+                fecha_registro: date,
                 postgraduante: {
                     paterno: '',
                     materno: '',
@@ -170,9 +161,11 @@ export default {
                     foto: '',
                 },
                 postgrado_id: this.$route.params.idPostgrado,
+                postgraduante_id:'',
                 pagos: [],
             },
-            postgrado_label:'',
+            postgraduantes: [],
+            postgrado_label: '',
             options_ci: [{
                     value: "OR",
                     text: "ORURO"
@@ -216,20 +209,34 @@ export default {
             color_toast: '',
         }
     },
-    created(){
-      this.getPostgrado()
+    created() {
+        // console.log(this.$route.name)
+        if (this.$router.mame = "postgrado-postgraduante-existente") {
+            this.getPostgraduantes()
+        }
+        this.getPostgrado()
     },
-    mixins:[
+    mixins: [
         InscripcionService
     ],
-     components: {
+    components: {
         ToastProps
+    },
+    computed:{
+        total_pagos(){
+            let totalser = 0;
+            for (let itemser of this.inscripcion.pagos) {
+                totalser += Number(itemser.costo_unitario);
+            }
+            // this.registroReserva.participacion.totalServicios = totalser;
+            return totalser;
+        },
+         
     },
     methods: {
         removeInputPago(index) {
             this.inscripcion.pagos.splice(index, 1);
         },
-
         addLinePagos(k) {
             let label = 'Cuota Nro.  ';
             let checkEmptyLines = this.inscripcion.pagos.filter(
@@ -268,9 +275,9 @@ export default {
         },
         getPostgrado() {
             axios
-                .get("/postgrados/"+this.$route.params.idPostgrado)
+                .get("/postgrados/" + this.$route.params.idPostgrado)
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.data.success) {
                         this.postgrado_label = response.data.data.nombre;
                     } else {
                         console.log(response);
@@ -292,10 +299,63 @@ export default {
                     }
                 });
         },
-    }
+        getPostgraduantes() {
+            axios
+                .get("/postgraduantes-inscripciones/"+this.$route.params.idPostgrado)
+                .then(response => {
+                    if (response.data.success) {
+                        this.postgraduantes = response.data.data;
+                    } else {
+                        console.log(response);
+                        this.isLoading = false;
+                    }
+                })
+                .catch(error => {
+                    this.isLoading = false;
+                    if (error.response) {
+                        console.log(error.response.data.message);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log("Error", error.message);
+                    }
+                });
+        },
+        resetForm() {
+            (this.inscripcion.postgraduante.paterno =
+                ""), (this.inscripcion.postgraduante.materno =
+                ""), (this.inscripcion.postgraduante.nombres =
+                ""), (this.inscripcion.postgraduante.ci =
+                ""), (this.inscripcion.postgraduante.ci_ext =
+                ""), (this.inscripcion.postgraduante.lugar_nac =
+                ""), (this.inscripcion.postgraduante.fecha_nac =
+                ""), (this.inscripcion.postgraduante.direc_domicilio =
+                ""), (this.inscripcion.postgraduante.nro_domicilio =
+                ""), (this.inscripcion.postgraduante.telf_domicilio =
+                ""), (this.inscripcion.postgraduante.celular =
+                ""), (this.inscripcion.postgraduante.correo =
+                ""), (this.inscripcion.postgraduante.profesion =
+                ""), (this.inscripcion.postgraduante.lugar_trabajo =
+                ""), (this.inscripcion.postgraduante.telf_trabajo =
+                ""), (this.inscripcion.postgraduante.lugar_estudio =
+                ""), (this.inscripcion.postgraduante.observaciones =
+                ""), (this.inscripcion.postgraduante.foto =
+                ""), (this.inscripcion.postgrado_id = this.$route.params.idPostgrado), (this.inscripcion.pagos = []);
+            this.select_precio = "";
+            this.select_pagos = "";
+            this.selected = null;
+        },
+        cancelarInscripcionAdd() {
+            this.resetForm();
+            this.$router.go(-1);
+        }
+    },
+     
 }
 </script>
-
 <style>
-
 </style>

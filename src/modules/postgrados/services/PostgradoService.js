@@ -87,7 +87,7 @@ export default {
 			axios
 				.get("/postgrados/" + id)
 				.then(response => {
-					if (response.status === 200) {
+					if (response.data.success) {
 						(this.postgrado =
 							response.data.data), (this.isLoading = false);
 						this.total = response.data.total;
