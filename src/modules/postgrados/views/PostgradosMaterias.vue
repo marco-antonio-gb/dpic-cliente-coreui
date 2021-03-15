@@ -1,8 +1,8 @@
 <template>
-<div>
+<div class="mb-3">
     <goback class="mb-3" />
     <form @submit.prevent="PostgradoMateriaStore">
-        <CCard bodyWrapper>
+        <CCard bodyWrapper >
 
             <div class="text-center p-3" v-if="postgrado.materias.length===0">
                 <button class="btn btn-secondary " @click.prevent="addLineMaterias(1)">Registrar Materias</button>
@@ -11,7 +11,7 @@
                 <div class="   m-0 p-0">
 
                     <CRow>
-                        <CCol sm="4">
+                        <CCol sm="5">
                             <CInput :label="`Nombre materia ${k+1}`" required placeholder="Nombre del materia" v-model="input.nombre" />
                         </CCol>
                         <CCol sm="2">
@@ -20,7 +20,7 @@
                         <CCol sm="1">
                             <CInput label="Credito" placeholder="credito " v-model="input.credito" />
                         </CCol>
-                        <CCol sm="3">
+                        <CCol sm="2">
                             <div class="form-group">
                                 <label for="uid-l744h660att" class=""> Docentes </label>
                                 <select required id="dropDown" class="form-control" v-model="input.docente_id">
@@ -58,9 +58,7 @@
         </div>
     </form>
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
-
-    <pre>{{postgrado}}</pre>
-    <pre>{{load_materias}}</pre>
+ 
 </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<CToaster position="bottom-right" :autohide="5000" v-if="show_toast">
+<CToaster position="bottom-right" :autohide="3000" v-if="show_toast">
     <CToast :show="show_toast" :color="color_toast">
         {{message_toast}}
     </CToast>

@@ -5,7 +5,7 @@
                 <CIcon name="cil-arrow-circle-left"    size="lg"  /></a>
         </div>
         <div>
-            <h5 class="p-0 m-0 font-weight-normal ">{{ $route.meta.title }}</h5>
+            <h3 class="p-0 m-0 font-weight-bold ">{{ $route.meta.title }}</h3>
         </div>
         <div>
             <!-- another component -->

@@ -44,6 +44,8 @@ const PostgradoPostgraduanteNuevo = () =>
 	import(/* webpackChunkName: "PostgradoPostgraduanteNuevo" */ "@/modules/postgrados/components/PostgradoPostgraduanteNuevo");
 const PostgradoPostgraduantePago = () =>
 	import(/* webpackChunkName: "PostgradoPostgraduantePago" */ "@/modules/postgrados/components/PostgradoPostgraduantePago");
+const PostgradoCalificaciones = () =>
+	import(/* webpackChunkName: "PostgradoCalificaciones" */ "@/modules/postgrados/components/PostgradoCalificaciones");
 
 const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
@@ -251,7 +253,21 @@ export const router = new Router({
 							name: "postgrado-postgraduante-pagos",
 							component: PostgradoPostgraduantePago,
 							meta: { title: "Registrar pago postgrado" }
+						},
+						{
+							path:
+								"/postgrados/registrar-calificacion/:idPostgrado/asignatura/:idMateria/docente/:idDocente",
+							name: "postgrado-registro-calificaciones",
+							component: PostgradoCalificaciones,
+							meta: { title: "Registrar calificaciones Materia" }
 						}
+						// {
+						// 	path:
+						// 		"/postgrados/registrar-calificacion/:idPostgrado/postgraduante/:idPostgraduante/asignatura/:idMateria/docente/:idDocente",
+						// 	name: "postgrado-registro-calificaciones",
+						// 	component: PostgradoCalificaciones,
+						// 	meta: { title: "Registrar calificaciones Materia" }
+						// }
 					]
 				},
 				{

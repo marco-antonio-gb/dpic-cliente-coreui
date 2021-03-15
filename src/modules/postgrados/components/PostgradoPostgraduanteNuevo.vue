@@ -210,8 +210,8 @@ export default {
         }
     },
     created() {
-        // console.log(this.$route.name)
-        if (this.$router.mame = "postgrado-postgraduante-existente") {
+        var URL =this.$route.name;
+        if (URL === "postgrado-postgraduante-existente") {
             this.getPostgraduantes()
         }
         this.getPostgrado()
