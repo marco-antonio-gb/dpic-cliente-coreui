@@ -95,6 +95,29 @@ const InscripcionAdd = () =>
 	import(/* webpackChunkName: "InscripcionAdd" */ "@/modules/inscripciones/views/InscripcionAdd");
 const InscripcionDetail = () =>
 	import(/* webpackChunkName: "InscripcionDetail" */ "@/modules/inscripciones/views/InscripcionDetail");
+
+//PERMISOS
+const Permisos = () =>
+	import(/* webpackChunkName: "Permisos" */ "@/modules/permisos/Permisos");
+const PermisoList = () =>
+	import(/* webpackChunkName: "PermisoList" */ "@/modules/permisos/views/PermisoList");
+const PermisoUpdate = () =>
+	import(/* webpackChunkName: "PermisoUpdate" */ "@/modules/permisos/views/PermisoUpdate");
+const PermisoAdd = () =>
+	import(/* webpackChunkName: "PermisoAdd" */ "@/modules/permisos/views/PermisoAdd");
+
+//PERMISOS
+const Roles = () =>
+	import(/* webpackChunkName: "Roles" */ "@/modules/roles/Roles");
+const RolList = () =>
+	import(/* webpackChunkName: "RolList" */ "@/modules/roles/views/RolList");
+const RolUpdate = () =>
+	import(/* webpackChunkName: "RolUpdate" */ "@/modules/roles/views/RolUpdate");
+const RolAdd = () =>
+	import(/* webpackChunkName: "RolAdd" */ "@/modules/roles/views/RolAdd");
+const RolDetail = () =>
+	import(/* webpackChunkName: "RolDetail" */ "@/modules/roles/views/RolDetail");
+
 Vue.use(Router);
 export const router = new Router({
 	mode: "history", // https://router.vuejs.org/api/#mode
@@ -402,6 +425,72 @@ export const router = new Router({
 							component: InscripcionUpdate,
 							meta: {
 								title: "Editar informacion de la inscripcion"
+							}
+						}
+					]
+				},
+				{
+					path: "/permisos",
+					component: Permisos,
+					children: [
+						{
+							path: "",
+							name: "permiso-list",
+							component: PermisoList,
+							meta: { title: "Lista de permisos" }
+						},
+						{
+							path: "/permisos/add",
+							name: "permiso-add",
+							component: PermisoAdd,
+							meta: {
+								title: "Crear nuevo permiso"
+							}
+						},
+
+						{
+							path: "/permisos/update/:idPermiso",
+							name: "permiso-update",
+							component: PermisoUpdate,
+							meta: {
+								title: "Editar informacion del permiso"
+							}
+						}
+					]
+				},
+				{
+					path: "/roles",
+					component: Roles,
+					children: [
+						{
+							path: "",
+							name: "rol-list",
+							component: RolList,
+							meta: { title: "Lista de roles" }
+						},
+						{
+							path: "/roles/add",
+							name: "rol-add",
+							component: RolAdd,
+							meta: {
+								title: "Crear nuevo rol"
+							}
+						},
+
+						{
+							path: "/roles/detail/:idRol",
+							name: "rol-detail",
+							component: RolDetail,
+							meta: {
+								title: "Detalle informacion del rol"
+							}
+						},
+						{
+							path: "/roles/update/:idRol",
+							name: "rol-update",
+							component: RolUpdate,
+							meta: {
+								title: "Editar informacion del rol"
 							}
 						}
 					]

@@ -6,25 +6,12 @@
         <button class="btn btn-primary" @click="$router.push({path:'/usuarios/add'})"> Nuevo Usuario</button>
     </div>
     <CCard>
-        <CCardHeader>
-            <span class="badge badge-secondary">{{total}}</span> Registros en total
-            <div class="card-header-actions">
-                <span class="text-muted">Exportar: </span>
-                <CButtonGroup>
-                    <CButton color="light" size="sm">
-                        PDF
-                    </CButton>
-                    <CButton color="light" size="sm">
-                        Excel
-                    </CButton>
-                </CButtonGroup>
-            </div>
-        </CCardHeader>
+         
         <CCardBody class="card-body-custom ">
             <CDataTable :items="usuarios" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover>
-                <template #full_name="{item}">
+                <template #full_name="{item}" >
                     <td>
-                        <router-link class="custom-link" :to="{ name: 'detalleUsuario', params: { idUsuario: item.idUsuario }}" v-slot="{ href,navigate }" custom>
+                        <router-link class="custom-link" :to="{ name: 'usuarios-detail', params: { idUsuario: item.idUsuario }}" v-slot="{ href,navigate }" custom>
                             <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
                                 <CIcon name="cilLink"></CIcon>
                                 {{item.full_name}}
@@ -51,28 +38,9 @@
                             <CButton color="dark" size="sm" @click="handleClick(item.idUsuario)">
                                 <CIcon name="cil-trash"></CIcon>
                             </CButton>
-                            
                         </CButtonGroup>
                     </td>
                 </template>
-                <!-- <template #details="{item}">
-            <CCollapse :show="Boolean(item._toggled)" :duration="collapseDuration">
-                <CCardBody>
-                    <CMedia :aside-image-props="{ height: 102 }">
-                        <h4>
-                            {{item.username}}
-                        </h4>
-                        <p class="text-muted">User since: {{item.registered}}</p>
-                        <CButton size="sm" color="info" class="">
-                            User Settings
-                        </CButton>
-                        <CButton size="sm" color="danger" class="ml-1">
-                            Delete
-                        </CButton>
-                    </CMedia>
-                </CCardBody>
-            </CCollapse>
-        </template> -->
             </CDataTable>
         </CCardBody>
         <CToaster :autohide="3000">
@@ -179,7 +147,6 @@ export default {
             this.fixedToasts++;
         },
         handleClick(id) {
-          
             this.$confirm({
                 title: 'Confirmar accion',
                 message: `Esta seguro(a) que desea eliminar el usuario?`,
@@ -187,11 +154,10 @@ export default {
                     no: 'No',
                     yes: 'Eliminar'
                 },
-                
                 callback: confirm => {
                     if (confirm) {
                         this.UsuarioDestroy(id)
-                    }  
+                    }
                 }
             })
         }

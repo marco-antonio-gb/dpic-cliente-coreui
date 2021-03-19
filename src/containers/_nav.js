@@ -56,6 +56,18 @@ export default [
 				name: "Usuarios",
 				to: "/usuarios",
 				icon: "cil-user"
+			},
+			{
+				_name: "CSidebarNavItem",
+				name: "Permisos",
+				to: "/permisos",
+				icon: "cil-user"
+			},
+			{
+				_name: "CSidebarNavItem",
+				name: "Roles",
+				to: "/roles",
+				icon: "cil-user"
 			}
 		]
 	}
