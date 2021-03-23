@@ -6,20 +6,7 @@
         <button class="btn btn-primary" @click="$router.push({path:'/usuarios/add'})"> Nuevo Usuario</button>
     </div>
     <CCard>
-        <CCardHeader>
-            <span class="badge badge-secondary">{{total}}</span> Registros en total
-            <div class="card-header-actions">
-                <span class="text-muted">Exportar: </span>
-                <CButtonGroup>
-                    <CButton color="light" size="sm">
-                        PDF
-                    </CButton>
-                    <CButton color="light" size="sm">
-                        Excel
-                    </CButton>
-                </CButtonGroup>
-            </div>
-        </CCardHeader>
+       
         <CCardBody class="card-body-custom ">
             <CDataTable :items="docentes" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover>
                 <template #full_name="{item}">
@@ -30,6 +17,12 @@
                                 {{item.full_name}}
                             </a>
                         </router-link>
+                    </td>
+                </template>
+                 <template #roles="{item}">
+                    <td>
+                        <span class="badge badge-light mr-1 text-uppercase rounded p-1" v-for="rol in item.roles" :key="rol.id"> {{rol.name}}</span>
+                         
                     </td>
                 </template>
                 <template #activo="{item}">
@@ -46,10 +39,10 @@
                                 <CIcon name="cil-pencil"></CIcon>
                             </CButton>
                             <CButton color="secondary" size="sm" @click="$router.push({path:'/usuarios/detail/'+item.idUsuario})">
-                                <CIcon name="cil-trash"></CIcon>
-                            </CButton>
-                            <CButton color="dark" size="sm" @click="$router.push({path:'/usuarios/delete/'+item.idUsuario})">
                                 <CIcon name="cil-user"></CIcon>
+                            </CButton>
+                            <CButton color="dark" size="sm" @click="handleClick(item.idUsuario)">
+                                <CIcon name="cil-trash"></CIcon>
                             </CButton>
                         </CButtonGroup>
                     </td>
@@ -103,7 +96,8 @@ const fields = [
         key: 'email'
     },
     {
-        key: 'profesion'
+        label: 'Roles',
+        key: 'roles'
     },
     {
         key: 'celular'

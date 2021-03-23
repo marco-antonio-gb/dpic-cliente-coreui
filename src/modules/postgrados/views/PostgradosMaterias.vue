@@ -2,29 +2,27 @@
 <div class="mb-3">
     <goback class="mb-3" />
     <form @submit.prevent="PostgradoMateriaStore">
-        <CCard bodyWrapper >
-
+        <CCard bodyWrapper>
             <div class="text-center p-3" v-if="postgrado.materias.length===0">
                 <button class="btn btn-secondary " @click.prevent="addLineMaterias(1)">Registrar Materias</button>
             </div>
             <div class="card-outline p-1 form-group mb-0" v-for="(input,k) in postgrado.materias" :key="k">
                 <div class="   m-0 p-0">
-
                     <CRow>
-                        <CCol sm="5">
-                            <CInput :label="`Nombre materia ${k+1}`" required placeholder="Nombre del materia" v-model="input.nombre" />
+                        <CCol sm="4">
+                            <CInput label="Nombre materia" required placeholder="Nombre del materia" v-model="input.nombre" />
                         </CCol>
                         <CCol sm="2">
                             <CInput label="Sigla" type="text" placeholder="Sigla" required v-model="input.sigla" />
                         </CCol>
                         <CCol sm="1">
-                            <CInput label="Credito" placeholder="credito " v-model="input.credito" />
+                            <CInput label="Credito" placeholder="0.0 " v-model="input.credito" />
                         </CCol>
-                        <CCol sm="2">
+                        <CCol sm="3">
                             <div class="form-group">
-                                <label for="uid-l744h660att" class=""> Docentes </label>
+                                <label for="uid-l744h660att" class=""> Docente </label>
                                 <select required id="dropDown" class="form-control" v-model="input.docente_id">
-                                    <option value="">Seleccionar docente</option>
+                                    <option value="">Seleccionar...</option>
                                     <option v-for="postgrado in load_materias" :key="postgrado.id" v-bind:value="postgrado.idUsuario">
                                         {{ postgrado.full_name }}
                                     </option>
@@ -41,11 +39,16 @@
                             </CButton>
                             <!-- </CButtonGroup> -->
                         </CCol>
-
                     </CRow>
-
                 </div>
             </div>
+        </CCard>
+        <CCard bodyWrapper>
+            <CRow>
+                <CCol sm="7" class="text-right">
+                    <strong>  Total Horas: {{total_horas}}</strong> 
+                </CCol>
+            </CRow>
         </CCard>
         <div class="text-right">
             <button class="btn btn-secondary mr-2" @click.prevent="cancelarMateriaPostgrado">Cancelar</button>
@@ -58,15 +61,12 @@
         </div>
     </form>
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
- 
 </div>
 </template>
-
 <script>
 import PostgradoService from '../services/PostgradoService'
 import CustomService from '../services/CustomService'
 import ToastProps from '@/components/ShowToast'
-
 export default {
     data() {
         return {
@@ -82,7 +82,7 @@ export default {
                     nombre: '',
                     sigla: '',
                     credito: '',
-                    docente_id:''
+                    docente_id: ''
                 }]
             },
             load_materias: [],
@@ -90,7 +90,7 @@ export default {
         }
     },
     created() {
-        this.getMaterias()
+        this.getDocentes()
     },
     mixins: [
         PostgradoService,
@@ -100,20 +100,17 @@ export default {
         ToastProps
     },
     methods: {
-        getMaterias() {
+        getDocentes() {
             axios
                 .get("/docentes")
                 .then(response => {
                     if (response.status === 200 && response.data.data) {
                         (this.load_materias = response.data.data)
-
                     } else {
-
                         this.showToast(response.data.message, true, "");
                     }
                 })
                 .catch(error => {
-
                     if (error.response) {
                         this.showToast(
                             error.response.data.message,
@@ -142,12 +139,11 @@ export default {
             this.postgrado.materias.push({
                 nombre: '',
                 sigla: '',
-                credito: "",
-                docente_id:''
+                credito: 0,
+                docente_id: ''
             });
         },
         cancelarMateriaPostgrado() {
-
             this.$router.go(-1);
         },
         showToast(message, status, color) {
@@ -170,7 +166,6 @@ export default {
         },
         PostgradoMateriaStore() {
             this.show_toast = false;
-
             if (this.postgrado.materias.length <= 0) {
                 this.showToast(
                     "Registre al menos una materia",
@@ -192,7 +187,7 @@ export default {
                                 this.showToast(
                                     response.data.validator,
                                     true,
-                                    "warning"
+                                    "warning" 
                                 );
                                 // this.show_toast = false;
                             } else {
@@ -220,6 +215,11 @@ export default {
             }
         },
     },
+    computed: {
+        total_horas() {
+            return this.postgrado.materias.reduce((acc, cur) => acc + Number(cur.credito), 0);
+        }
+    }
     // computed: {
     //     selectAll: {
     //         get: function () {
@@ -227,21 +227,16 @@ export default {
     //         },
     //         set: function (value) {
     //             var selected = [];
-
     //             if (value) {
     //                 this.users.forEach(function (user) {
     //                     selected.push(user.id);
     //                 });
     //             }
-
     //             this.selected = selected;
     //         }
     //     }
     // }
-
 }
 </script>
-
 <style>
-
 </style>

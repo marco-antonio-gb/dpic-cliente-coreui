@@ -19,7 +19,7 @@ const UsuarioUpdate = () =>
 	import(/* webpackChunkName: "UsuarioUpdate" */ "@/modules/usuarios/views/UsuarioUpdate");
 //views
 const Dashboard = () =>
-	import(/* webpackChunkName: "Dashboard" */ "@/views/Dashboard");
+	import(/* webpackChunkName: "Dashboard" */ "@/views/Black");
 //potgraduantes
 const Postgraduantes = () =>
 	import(/* webpackChunkName: "Postgraduantes" */ "@/modules/postgraduantes/Postgraduantes");

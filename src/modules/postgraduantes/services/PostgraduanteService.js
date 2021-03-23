@@ -176,7 +176,45 @@ export default {
 		},
 		/*-----------------------------------*/
 		PostgraduanteDestroy(id) {
-			console.log("Metodo destroy" + " - " + id);
+			this.show_toast = false;
+			// this.isLoading = true;
+			axios
+				.delete("/postgraduantes/" + id)
+				.then(response => {
+					if (response.data.success) {
+						this.showToast(response.data.message, true, "success");
+						this.UsuarioIndex();
+					} else {
+						this.showToast(
+							response.data.validator,
+							true,
+							"success"
+						);
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
 		}
 	}
 };

@@ -17,7 +17,14 @@ export default {
 				})
 				.catch(error => {
 					this.isLoading = false;
-					if (error.response.status === 500) {
+					if (error.response.status === 403) {
+						this.showToast(
+							"Error 403 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status === 500) {
 						this.showToast(
 							"Error 500 (server): " +
 								error.response.data.message,
@@ -70,7 +77,14 @@ export default {
 				})
 				.catch(error => {
 					this.isLoading = false;
-					if (error.response.status === 500) {
+					if (error.response.status === 403) {
+						this.showToast(
+							"Error 403 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status === 500) {
 						this.showToast(
 							"Error 500 (server): " +
 								error.response.data.message,
@@ -115,7 +129,14 @@ export default {
 				})
 				.catch(error => {
 					this.isLoading = false;
-					if (error.response.status === 500) {
+					if (error.response.status === 403) {
+						this.showToast(
+							"Error 403 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status === 500) {
 						this.showToast(
 							"Error 500 (server): " +
 								error.response.data.message,
@@ -165,7 +186,14 @@ export default {
 				})
 				.catch(error => {
 					this.isLoading = false;
-					if (error.response.status === 500) {
+					if (error.response.status === 403) {
+						this.showToast(
+							"Error 403 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status === 500) {
 						this.showToast(
 							"Error 500 (server): " +
 								error.response.data.message,
@@ -215,7 +243,14 @@ export default {
 				})
 				.catch(error => {
 					this.isLoading = false;
-					if (error.response.status === 500) {
+					if (error.response.status === 403) {
+						this.showToast(
+							"Error 403 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status === 500) {
 						this.showToast(
 							"Error 500 (server): " +
 								error.response.data.message,

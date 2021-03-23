@@ -22,16 +22,15 @@
             </CHeaderNavLink>
         </CHeaderNavItem> -->
     </CHeaderNav>
-    <CHeaderNav class="mr-2" >
-
-  
-                <div class="d-flex flex-column user-names" v-if="authenticated" >
-                    <div><strong class="m-0">{{ usuario.nombres }} </strong></div>
-                    <div><small>{{usuario.rol}}</small></div>
-
-                </div>
-       
-
+    <CHeaderNav class="mr-2">
+        <div class="d-flex flex-column user-names" v-if="authenticated">
+            <div><strong class="m-0">{{ usuario.data.nombres }} </strong></div>
+            <div>
+                <small v-for="(rol,index) in usuario.data.roles" :key="rol.id">
+                    <span v-if="index>=1"> - </span>{{rol.name}}
+                </small>
+            </div>
+        </div>
         <!-- <CHeaderNavItem class="d-md-down-none mx-2">
             <CHeaderNavLink>
                 <CIcon name="cil-bell" /> 
@@ -62,7 +61,6 @@ import {
     mapActions
 } from 'vuex'
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
-
 export default {
     name: 'TheHeader',
     data() {

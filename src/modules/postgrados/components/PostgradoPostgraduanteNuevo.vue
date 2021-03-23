@@ -2,9 +2,9 @@
 <div class="mb-5">
     <goback class="mb-3" />
     <form @submit.prevent="InscripcionStore($route.name)" id="PostgradoStore">
-        <h5 class="text-center"> {{postgrado_label}}</h5>
+        <h6 class="mb-1"> CURSO DE POSTGRADO: {{postgrado_label}}</h6>
         <CCard bodyWrapper class="mb-2" v-if="$route.name==='postgrado-postgraduante-nuevo'">
-        <p class="mb-1 ml-2 font-weight-bold">Postgraduante nuevo</p>
+            <!-- <p class="mb-1 ml-2 font-weight-bold">Postgraduante nuevo</p> -->
             <CRow>
                 <CCol sm="4">
                     <CInput label="Paterno" type="text" required placeholder="Apellido Paterno" v-model="inscripcion.postgraduante.paterno" />
@@ -62,8 +62,8 @@
             <CRow>
                 <CCol sm="12">
                     <div class="form-group">
-                        <label   class=""> Postgraduante registrados</label>
-                        <select required   class="form-control" v-model="inscripcion.postgraduante_id">
+                        <label class=""> Postgraduante registrados</label>
+                        <select required class="form-control" v-model="inscripcion.postgraduante_id">
                             <option disabled value="">Seleccion un postgraduante </option>
                             <option v-for="postgraduante in postgraduantes" :key="postgraduante.id" v-bind:value="postgraduante.idPostgraduante">
                                 {{ postgraduante.full_name }} - {{postgraduante.cedula}}
@@ -108,7 +108,9 @@
                     </div>
                 </div>
             </div>
-            <strong>TOTAL: {{total_pagos}}</strong>
+            <div class="p-2">
+                <strong>TOTAL: {{total_pagos}}</strong>
+            </div>
         </CCard>
         <div class="text-right">
             <button class="btn btn-secondary mr-2" @click.prevent="cancelarInscripcionAdd">Cancelar</button>
@@ -124,9 +126,10 @@
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
+
 <script>
 var today = new Date();
-var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' +  today.getDate();
+var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 import ToastProps from '@/components/ShowToast'
 import InscripcionService from '@/modules/inscripciones/services/InscripcionService'
 export default {
@@ -161,7 +164,7 @@ export default {
                     foto: '',
                 },
                 postgrado_id: this.$route.params.idPostgrado,
-                postgraduante_id:'',
+                postgraduante_id: '',
                 pagos: [],
             },
             postgraduantes: [],
@@ -210,7 +213,7 @@ export default {
         }
     },
     created() {
-        var URL =this.$route.name;
+        var URL = this.$route.name;
         if (URL === "postgrado-postgraduante-existente") {
             this.getPostgraduantes()
         }
@@ -222,16 +225,10 @@ export default {
     components: {
         ToastProps
     },
-    computed:{
-        total_pagos(){
-            let totalser = 0;
-            for (let itemser of this.inscripcion.pagos) {
-                totalser += Number(itemser.costo_unitario);
-            }
-            // this.registroReserva.participacion.totalServicios = totalser;
-            return totalser;
+    computed: {
+        total_pagos() {
+            return this.inscripcion.pagos.reduce((acc, cur) => acc + Number(cur.costo_unitario), 0);
         },
-         
     },
     methods: {
         removeInputPago(index) {
@@ -301,7 +298,7 @@ export default {
         },
         getPostgraduantes() {
             axios
-                .get("/postgraduantes-inscripciones/"+this.$route.params.idPostgrado)
+                .get("/postgraduantes-inscripciones/" + this.$route.params.idPostgrado)
                 .then(response => {
                     if (response.data.success) {
                         this.postgraduantes = response.data.data;
@@ -354,8 +351,8 @@ export default {
             this.$router.go(-1);
         }
     },
-     
 }
 </script>
+
 <style>
 </style>

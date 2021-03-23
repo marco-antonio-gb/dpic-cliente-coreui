@@ -43,6 +43,23 @@
                     </CRow>
                 </CCardBody>
             </CCard>
+            <CCard>
+                <CCardHeader>
+                    <strong>Roles de usuario</strong>
+                </CCardHeader>
+                <CCardBody>
+                    <span v-for="rol in usuario.roles" :key="rol.id">
+                        <router-link class="custom-link" :to="{ name: 'rol-detail', params: { idRol: rol.id }}" v-slot="{ href,navigate }" custom>
+                            <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
+
+                                <span class="badge badge-light mr-1 text-uppercase rounded p-1" > {{rol.name}}</span>
+                            </a>
+                        </router-link>
+                    </span>
+
+                </CCardBody>
+            </CCard>
+
         </CCol>
         <CCol sm="4">
             <CCard>
@@ -65,8 +82,11 @@
             </CCard>
         </CCol>
     </CRow>
- 
+<hr class="m-1"> 
+<div class="text-right">
+    <small class="text-muted   p-1">Creado: {{ usuario.created_at }}, ultima actualizacion: {{usuario.updated_at}}</small>
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+</div>
 </div>
 </template>
 
@@ -168,10 +188,10 @@ export default {
                 this.color_toast = color;
             }
         },
-        resetForm(){
-          this.updatePassword.current_password='';
-          this.updatePassword.new_password='';
-          this.updatePassword.new_confirm_password='';
+        resetForm() {
+            this.updatePassword.current_password = '';
+            this.updatePassword.new_password = '';
+            this.updatePassword.new_confirm_password = '';
         }
     }
 }

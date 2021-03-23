@@ -13,10 +13,18 @@
                     <td>
                         <router-link class="custom-link" :to="{ name: 'usuarios-detail', params: { idUsuario: item.idUsuario }}" v-slot="{ href,navigate }" custom>
                             <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
-                                <CIcon name="cilLink"></CIcon>
+                               
                                 {{item.full_name}}
-                            </a>
+                            </a> 
                         </router-link>
+                        <br>
+                            <small>{{item.profesion}}</small>
+                    </td>
+                </template>
+                <template #roles="{item}">
+                    <td>
+                        <span class="badge badge-light mr-1 text-uppercase rounded p-1" v-for="rol in item.roles" :key="rol.id"> {{rol.name}}</span>
+                         
                     </td>
                 </template>
                 <template #activo="{item}">
@@ -50,7 +58,7 @@
                 </CToast>
             </template>
         </CToaster>
-        <!-- <pre>{{usuarios.data}}</pre> -->
+   
     </CCard>
 </div>
 </template>
@@ -73,7 +81,9 @@ const fields = [
         key: 'email'
     },
     {
-        key: 'profesion'
+        label: 'Roles',
+
+        key: 'roles'
     },
     {
         key: 'celular'

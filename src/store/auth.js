@@ -1,15 +1,14 @@
 import axios from "axios";
-import { router } from "../router";
-
 export default {
 	namespaced: true,
 	state: {
 		token: null,
 		user: null,
 		error: null,
-		refresh: false
+		refresh: false,
+		permissions: null,
+		roles: null
 	},
-
 	getters: {
 		authenticated(state) {
 			return state.token && state.user;
@@ -22,9 +21,14 @@ export default {
 		},
 		refresh(state) {
 			return state.refresh;
+		},
+		permisos(state) {
+			return state.permissions;
+		},
+		roles(state) {
+			return state.roles;
 		}
 	},
-
 	mutations: {
 		SET_TOKEN(state, token) {
 			state.token = token;
@@ -38,11 +42,14 @@ export default {
 		CLEAR_ERROR(state, data) {
 			state.error = data;
 		},
-		REFRESH_TOKEN(state, data) {
-			state.refresh = data;
+
+		SET_PERMISSIONS(state, data) {
+			state.permissions = data;
+		},
+		SET_ROLES(state, data) {
+			state.roles = data;
 		}
 	},
-
 	actions: {
 		async signIn({ dispatch, commit }, credentials) {
 			commit("CLEAR_ERROR", null);
@@ -55,9 +62,13 @@ export default {
 				try {
 					let response = await axios.post("auth/me");
 					commit("SET_USER", response.data);
+					commit("SET_PERMISSIONS", response.data.permisos);
+					commit("SET_ROLES", response.data.data.roles);
 				} catch (e) {
 					commit("SET_TOKEN", null);
 					commit("SET_USER", null);
+					commit("SET_PERMISSIONS", null);
+					commit("SET_ROLES", null);
 				}
 			}
 			if (!state.token) {
@@ -71,18 +82,6 @@ export default {
 			if (!state.error) {
 				return;
 			}
-		},
-		tokenExpired({ commit }, logout) {
-			if (logout) {
-				router.replace({
-					name: "login"
-				});
-				commit("SET_TOKEN", null);
-				commit("SET_USER", null);
-			}
-		},
-		clearError({ commit }) {
-			commit("CLEAR_ERROR", null);
 		},
 		signOut({ commit }) {
 			return axios.post("auth/logout").then(() => {

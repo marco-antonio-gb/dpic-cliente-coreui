@@ -10,8 +10,9 @@
                 <CIcon name="cil-user" class="mr-2"></CIcon> Postgraduante Existente
             </CDropdownItem>
             <CDropdownItem @click="$router.push({path:'/postgrados/asignar-materias/'+$route.params.idPostgrado})">
-                <CIcon name="cil-user" class="mr-2"></CIcon> Registrar Materias
+                <CIcon name="cil-user" class="mr-2"></CIcon> Materia Nueva
             </CDropdownItem>
+
             <CDropdownDivider></CDropdownDivider>
             <CDropdownItem @click="reportePagosPostgrado($route.params.idPostgrado, postgrado.nombre)">
                 <CIcon name="cil-print" class="mr-2"></CIcon>Reporte pagos
@@ -99,12 +100,24 @@
                                     +'/docente/'
                                     +docente.idUsuario
                                     })">
-                                            <CIcon name="cil-pencil"></CIcon>
+                                            <!-- <CIcon name="cil-pencil"></CIcon> -->
+                                            Notas
+                                        </CButton>
+                                        <CButton color="light" size="sm" @click="$router.push({
+                                    path:'/postgrados/registrar-calificacion/'
+                                    +$route.params.idPostgrado                                    
+                                    +'/asignatura/'
+                                    +docente.idMateria
+                                    +'/docente/'
+                                    +docente.idUsuario
+                                    })">
+                                            <!-- <CIcon name="cil-list"></CIcon> -->
+                                            Lista
                                         </CButton>
                                         <CButton color="secondary" size="sm" @click="reporteCalificacionesPostgrado($route.params.idPostgrado,docente.idMateria,docente.idUsuario,docente.nombre)">
                                             <CIcon name="cil-print"></CIcon>
                                         </CButton>
-                                     
+
                                     </CButtonGroup>
                                 </td>
                             </tr>
@@ -225,7 +238,6 @@
                                             <CIcon name="cil-print"></CIcon> Notas
                                         </CButton>
 
-                                       
                                     </CButtonGroup>
                                 </td>
                             </tr>
@@ -344,10 +356,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.border-radius-top-0 {
-    border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important;
-}
-</style>

@@ -1,8 +1,9 @@
 import { mapActions } from "vuex";
+import store from "@/store/";
 export default {
 	methods: {
 		...mapActions({
-			log_out: "auth/tokenExpired"
+			refreshUserData: "auth/attempt"
 		}),
 		/*-----------------------------------*/
 		UsuarioIndex() {
@@ -46,45 +47,55 @@ export default {
 		UsuarioStore() {
 			this.show_toast = false;
 			this.isLoading = true;
-			axios
-				.post("/usuarios", this.usuario)
-				.then(response => {
-					if (response.status === 201) {
+			if (this.usuario.roles.length <= 0) {
+				this.isLoading = false;
+				this.showToast("Seleccione un rol de usuario", true, "warning");
+			} else {
+				axios
+					.post("/usuarios", this.usuario)
+					.then(response => {
+						if (response.status === 201) {
+							this.isLoading = false;
+							this.showToast(
+								response.data.message,
+								true,
+								"success"
+							);
+							// this.show_toast = false;
+							this.resetForm();
+						} else {
+							this.isLoading = false;
+							this.showToast(
+								response.data.validator,
+								true,
+								"success"
+							);
+						}
+					})
+					.catch(error => {
 						this.isLoading = false;
-						this.showToast(response.data.message, true, "success");
-						// this.show_toast = false;
-						this.resetForm();
-					} else {
-						this.showToast(
-							response.data.validator,
-							true,
-							"success"
-						);
-					}
-				})
-				.catch(error => {
-					this.isLoading = false;
-					if (error.response.status == 404) {
-						this.showToast(
-							"Error 404 (server): " +
-								error.response.data.message,
-							true,
-							"danger"
-						);
-					} else if (error.request) {
-						this.showToast(
-							"SERVER error request: " + error.request,
-							true,
-							"danger"
-						);
-					} else {
-						this.showToast(
-							"SERVER ?: " + error.message,
-							true,
-							"danger"
-						);
-					}
-				});
+						if (error.response.status == 404) {
+							this.showToast(
+								"Error 404 (server): " +
+									error.response.data.message,
+								true,
+								"danger"
+							);
+						} else if (error.request) {
+							this.showToast(
+								"SERVER error request: " + error.request,
+								true,
+								"danger"
+							);
+						} else {
+							this.showToast(
+								"SERVER ?: " + error.message,
+								true,
+								"danger"
+							);
+						}
+					});
+			}
 		},
 		/*-----------------------------------*/
 		UsuarioShow(id) {
@@ -92,12 +103,13 @@ export default {
 			axios
 				.get("/usuarios/" + id)
 				.then(response => {
-					if (response.status === 200) {
+					if (response.data.success) {
 						this.usuario = response.data.data;
 						this.isLoading = false;
 						// this.total = response.data.total;
 					} else {
-						console.log(response);
+						this.isLoading = false;
+						this.showToast(response.data.message, true, "");
 					}
 				})
 				.catch(error => {
@@ -124,7 +136,6 @@ export default {
 					}
 				});
 		},
-
 		/*-----------------------------------*/
 		UsuarioUpdate(id) {
 			this.show_toast = false;
@@ -134,9 +145,20 @@ export default {
 				.then(response => {
 					if (response.data.success) {
 						this.isLoading = false;
-						this.showToast(response.data.message, true, "success");
-						// this.show_toast = false;
-						this.resetForm();
+
+						store
+							.dispatch(
+								"auth/attempt",
+								localStorage.getItem("token")
+							)
+							.then(() => {
+								this.showToast(
+									response.data.message,
+									true,
+									"success"
+								);
+								this.resetForm();
+							});
 					} else {
 						this.isLoading = false;
 						if (response.data.validator) {
@@ -149,6 +171,7 @@ export default {
 					}
 				})
 				.catch(error => {
+					console.log(error);
 					this.isLoading = false;
 					if (error.response.status == 404) {
 						this.showToast(

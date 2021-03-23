@@ -124,25 +124,25 @@ export default {
             })
         }
     },
-    computed: {
-        selectAll: {
-            get: function () {
-                return this.load_permisos ? this.rol.permisos.length == this.load_permisos.length : false;
-            },
-            set: function (value) {
-                var selected = [];
+    // computed: {
+    //     selectAll: {
+    //         get: function () {
+    //             return this.load_permisos ? this.rol.permisos.length == this.load_permisos.length : false;
+    //         },
+    //         set: function (value) {
+    //             var selected = [];
 
-                if (value) {
-                    this.load_permisos.forEach(function (user) {
-                        selected.push(user.id);
-                    });
-                }
+    //             if (value) {
+    //                 this.load_permisos.forEach(function (user) {
+    //                     selected.push(user.id);
+    //                 });
+    //             }
 
-                this.rol.permisos = selected;
-            }
-        }
-    }
+    //             this.rol.permisos = selected;
+    //         }
+    //     }
+    // }
 }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+ 

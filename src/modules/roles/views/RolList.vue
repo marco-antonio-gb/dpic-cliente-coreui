@@ -4,6 +4,9 @@
         <goback />
         <button class="btn btn-primary" @click="$router.push({path:'/roles/add'})"> Nuevo rol</button>
     </div>
+    <div v-if="canCreateUsers">
+        <a href="#" class="btn btn-primary">Add Post</a>
+    </div>
     <CCard>
         <CCardBody class="card-body-custom ">
             <CDataTable :items="roles" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover size="sm">
@@ -33,10 +36,11 @@
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
+
 <script>
 import RolService from '../services/RolService'
 import ToastProps from '@/components/ShowToast'
- 
+
 const fields = [{
         label: 'Nombre',
         key: 'name',
@@ -54,8 +58,10 @@ const fields = [{
     }
 ]
 export default {
+
     data() {
         return {
+            permissions: localStorage.getItem("permissions"),
             roles: [],
             isLoading: false,
             total: '0',
@@ -68,16 +74,22 @@ export default {
         }
     },
     created() {
-           this.getRoles()
+        this.getRoles()
     },
     mixins: [
         RolService,
-         
+
     ],
     components: {
         ToastProps
-    }
+    },
+    computed: {
+        canCreateUsers() {
+            return  this.permissions.includes("permisos-list")
+        },
+    },
 }
 </script>
+
 <style>
 </style>

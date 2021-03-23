@@ -4,11 +4,11 @@
     <form @submit.prevent="PermisoUpdate($route.params.idPermiso)">
         <CCard bodyWrapper class="mb-2">
             <CRow>
-                <CCol sm="6">
-                    <CInput label="Nombre" required placeholder="Nombre del materia" v-model="permiso.name" />
+                <CCol sm="4">
+                    <CInput label="Nombre permiso" required placeholder="Nombre del materia" v-model="permiso.name" />
                 </CCol>
-                <CCol sm="6">
-                    <CInput label="Credito" placeholder="credito " v-model="permiso.descripcion" />
+                <CCol sm="8">
+                    <CInput label="Descripcion" placeholder="credito " v-model="permiso.descripcion" />
                 </CCol>
             </CRow>
             <CRow>

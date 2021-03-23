@@ -32,6 +32,21 @@ export default {
 				this.message_toast = message.join("\n");
 				this.color_toast = color;
 			}
+		},
+		handleClick(id) {
+			this.$confirm({
+				title: "Confirmar accion",
+				message: `Esta seguro(a) que desea eliminar el usuario?`,
+				button: {
+					no: "No",
+					yes: "Eliminar"
+				},
+				callback: confirm => {
+					if (confirm) {
+						this.PostgraduanteDestroy(id);
+					}
+				}
+			});
 		}
 	}
 };

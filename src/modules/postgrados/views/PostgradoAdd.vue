@@ -1,6 +1,6 @@
 <template>
 <div>
-    <goback class="mb-3"/>
+    <goback class="mb-3" />
     <form @submit.prevent="PostgradoStore" id="PostgradoStore">
         <!-- <p class="p-0 font-weight-bold">Informacion de postgrado</p> -->
         <CCard bodyWrapper class="mb-3">
@@ -11,7 +11,6 @@
                 <CCol sm="3">
                     <CInput label="Fecha Inicio" type="date" required v-model="postgrado.fecha_inicio" />
                 </CCol>
-                
             </CRow>
             <CRow>
                 <CCol sm="3">
@@ -20,6 +19,7 @@
                 <CCol sm="3">
                     <CInput label="Cantidad Pagos" placeholder="0" v-model="postgrado.cantidad_pagos" />
                 </CCol>
+             
                 <CCol sm="3">
                     <div class="form-group">
                         <label for="uid-l744h660att" class=""> Nivel </label>
@@ -32,7 +32,7 @@
                     </div>
                 </CCol>
                 <CCol sm="3">
-                    <CInput label="Gestion academica"   v-model="postgrado.gestion" />
+                    <CInput label="Gestion academica" v-model="postgrado.gestion" />
                 </CCol>
             </CRow>
         </CCard>
@@ -43,7 +43,6 @@
             </div>
             <div class="card-outline p-1 form-group mb-0" v-for="(input,k) in postgrado.materia_docente" :key="k">
                 <div class="d-flex align-items-end  m-0 p-0">
-    
                      <div class="p-1 w-50 ">
                         <label class=""> <strong>MATERIA/MODULO *</strong> </label>
                         <select required id="dropDown" class="form-control" v-model="input.materia_id">
@@ -85,15 +84,13 @@
             </CButton>
         </div>
     </form>
-        <ToastProps  :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
-
+    <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
 <script>
 import PostgradoService from '../services/PostgradoService'
 import CustomService from '../services/CustomService'
 import ToastProps from '@/components/ShowToast'
-
 export default {
     data() {
         return {
@@ -101,17 +98,15 @@ export default {
             postgrado: {
                 nombre: '',
                 fecha_inicio: '',
-         
-                cantidad_pagos: '',
-                precio: '',
+                cantidad_pagos: 0,
+                precio: 0,
                 gestion: new Date().getFullYear(),
                 nivel_id: '',
-                materia_docente:[]
+                materia_docente: []
             },
             niveles: [],
-            docentes:[],
-            materias:[],
-           
+            docentes: [],
+            materias: [],
             validator_toast: '',
             message_toast: '',
             show_toast: false,
@@ -122,7 +117,7 @@ export default {
         PostgradoService,
         CustomService
     ],
-    components:{
+    components: {
         ToastProps
     },
     methods: {
@@ -172,7 +167,7 @@ export default {
                 // nombre: '',
                 // sigla: ' ',
                 materia_id: null,
-                docente_id:null
+                docente_id: null
             });
         },
     },
@@ -180,7 +175,6 @@ export default {
         this.getNiveles()
         this.getDocentes()
         this.getMaterias()
-    },
-    
+    }
 }
 </script>

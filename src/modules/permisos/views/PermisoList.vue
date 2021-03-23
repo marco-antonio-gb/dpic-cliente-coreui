@@ -7,6 +7,11 @@
     <CCard>
         <CCardBody class="card-body-custom ">
             <CDataTable :items="permisos" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover size="sm">
+                <template #name="{item }">
+                    <td class="py-2">
+                        <strong>{{item.name}}</strong>
+                    </td>
+                </template>
                 <template #opciones="{item }">
                     <td class="py-2">
                         <CButtonGroup>
@@ -30,11 +35,11 @@ import PermisoService from '../services/PermisoService'
 import ToastProps from '@/components/ShowToast'
  
 const fields = [{
-        label: 'Nombre',
+        label: 'Nombre permiso',
         key: 'name',
     },
     {
-        label: 'Descripcion',
+        label: 'Descripcion del permiso',
         key: 'descripcion'
     },
     {
