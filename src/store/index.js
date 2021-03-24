@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import auth from "./auth";
 Vue.use(Vuex);
 export default new Vuex.Store({
+	namespaced: true,
+
 	state: {
 		sidebarShow: "responsive",
 		sidebarMinimize: false

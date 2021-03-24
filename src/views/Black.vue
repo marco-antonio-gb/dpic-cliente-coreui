@@ -8,18 +8,24 @@
 </template>
 
 <script>
- 
+ import example from '@/services/example'
 export default {
   data(){
     return{
       msg:"Holaaaaa"
     }
   },
+  mixins:[
+    example
+  ],
   methods:{
     createPost(){
       console.log("METODO")
     }
   },
+  // created(){
+  //   console.log(this.getRoles())
+  // }
  
 }
 </script>

@@ -3,81 +3,80 @@ export default {
 		{
 			_name: "CSidebarNavTitle",
 			_children: ["Inicio"],
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Postgraduantes",
 			to: "/postgraduantes",
 			icon: "cil-pencil",
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador", "Docente"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Postgrados",
 			to: "/postgrados",
 			icon: "cil-book",
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador", "Docente"]
 		},
-		{
-			_name: "CSidebarNavItem",
-			name: "Pagos",
-			to: "/pagos",
-			icon: "cil-dollar",
-			roles: ["Sistemas"]
-		},
+		// {
+		// 	_name: "CSidebarNavItem",
+		// 	name: "Pagos",
+		// 	to: "/pagos",
+		// 	icon: "cil-dollar"
+		// 	permissions: ["Sistemas"]
+		// },
 		{
 			_name: "CSidebarNavItem",
 			name: "Materias",
 			to: "/materias",
 			icon: "cil-book",
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador", "Docente"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Docentes",
 			to: "/docentes",
 			icon: "cil-book",
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador"]
 		},
-		{
-			_name: "CSidebarNavTitle",
-			_children: ["Academico"],
-			roles: ["Sistemas"]
-		},
-		{
-			_name: "CSidebarNavItem",
-			name: "Inscripciones",
-			to: "/inscripciones",
-			icon: "cil-education",
-			roles: ["Sistemas"]
-		},
-
+		// {
+		// 	_name: "CSidebarNavTitle",
+		// 	_children: ["Academico"],
+		// 	permissions: ["Sistemas",'Administrador',"Docente"]
+		// },
+		// {
+		// 	_name: "CSidebarNavItem",
+		// 	name: "Inscripciones",
+		// 	to: "/inscripciones",
+		// 	icon: "cil-education",
+		// 	permissions: ["Sistemas"]
+		// },
 		{
 			_name: "CSidebarNavTitle",
 			_children: ["Administracion"],
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Usuarios",
 			to: "/usuarios",
 			icon: "cil-user",
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Permisos",
 			to: "/permisos",
 			icon: "cil-user",
-			roles: ["Docente", "Sistemas"]
+			permissions: ["Sistemas", "Administrador"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Roles",
-			to: "/roles",
+			to: "/permissions",
 			icon: "cil-user",
-			roles: ["Sistemas"]
+			permissions: ["Sistemas", "Administrador"]
 		}
 	]
 };

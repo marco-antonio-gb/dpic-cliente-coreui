@@ -51,13 +51,8 @@
                 </template>
             </CDataTable>
         </CCardBody>
-        <CToaster :autohide="3000">
-            <template v-for="toast in fixedToasts">
-                <CToast :key="'toast' + toast" :show="true" header="CToast fixed component">
-                    Hello, world! This is a <b>toast</b> number {{toast}}.
-                </CToast>
-            </template>
-        </CToaster>
+          <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
+
    
     </CCard>
 </div>
@@ -66,6 +61,8 @@
 <script>
 import CustomUsuario from '../services/CustomUsuario'
 import UsuarioService from '../services/UsuarioService'
+import ToastProps from '@/components/ShowToast'
+
 const fields = [
     // {
     //     key: 'nombres',
@@ -110,7 +107,11 @@ export default {
             details: [],
             collapseDuration: 0,
             fixedToasts: 0,
-            total: ''
+            total: '',
+            validator_toast: '',
+            message_toast: '',
+            show_toast: false,
+            color_toast: ''
         }
     },
     created() {
@@ -121,6 +122,9 @@ export default {
         UsuarioService,
         CustomUsuario
     ],
+    components:{
+        ToastProps
+    },
     methods: {
         getBadge(status) {
             switch (status) {

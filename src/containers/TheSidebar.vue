@@ -8,6 +8,7 @@
     <!-- <CSidebarMinimizer class="d-md-down-none" @click.native="$store.commit('set', ['sidebarMinimize', !minimize])" /> -->
 </CSidebar>
 </template>
+
 <script>
 import nav from './_nav'
 import {
@@ -33,8 +34,13 @@ export default {
                 return [];
             }
             return nav.navItems.filter(item => {
-                // return !item.roles || item.roles.includes(this.currentRoles);
-                return  !item.roles || this.rolesusuario.data.roles.some(r=> item.roles.includes(r.name))
+                if (this.rolesusuario === undefined) {
+                    return [];
+                } else {
+                    return !item.permissions || this.rolesusuario.some(r => item.permissions.includes(r.name))
+
+                }
+
             });
         },
         computedSidebar() {
@@ -44,7 +50,7 @@ export default {
             }];
         },
         ...mapGetters({
-            rolesusuario: 'auth/user'
+            rolesusuario: 'auth/roles'
         })
     },
 }

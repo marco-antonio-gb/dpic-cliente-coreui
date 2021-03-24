@@ -6,6 +6,11 @@ const Login = () =>
 // Containers
 const TheContainer = () =>
 	import(/* webpackChunkName: "TheContainer" */ "@/containers/TheContainer");
+// Unauthorized
+const Unauthorized = () =>
+	import(/* webpackChunkName: "Unauthorized" */ "@/components/Unauthorized");
+const PageNotFound = () =>
+	import(/* webpackChunkName: "PageNotFound"  */ "@/components/PageNotFound");
 //Modules
 const UsuariosContainer = () =>
 	import(/* webpackChunkName: "Usuarios" */ "@/modules/usuarios/Usuarios");
@@ -46,7 +51,6 @@ const PostgradoPostgraduantePago = () =>
 	import(/* webpackChunkName: "PostgradoPostgraduantePago" */ "@/modules/postgrados/components/PostgradoPostgraduantePago");
 const PostgradoCalificaciones = () =>
 	import(/* webpackChunkName: "PostgradoCalificaciones" */ "@/modules/postgrados/components/PostgradoCalificaciones");
-
 const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
@@ -95,7 +99,6 @@ const InscripcionAdd = () =>
 	import(/* webpackChunkName: "InscripcionAdd" */ "@/modules/inscripciones/views/InscripcionAdd");
 const InscripcionDetail = () =>
 	import(/* webpackChunkName: "InscripcionDetail" */ "@/modules/inscripciones/views/InscripcionDetail");
-
 //PERMISOS
 const Permisos = () =>
 	import(/* webpackChunkName: "Permisos" */ "@/modules/permisos/Permisos");
@@ -105,7 +108,6 @@ const PermisoUpdate = () =>
 	import(/* webpackChunkName: "PermisoUpdate" */ "@/modules/permisos/views/PermisoUpdate");
 const PermisoAdd = () =>
 	import(/* webpackChunkName: "PermisoAdd" */ "@/modules/permisos/views/PermisoAdd");
-
 //PERMISOS
 const Roles = () =>
 	import(/* webpackChunkName: "Roles" */ "@/modules/roles/Roles");
@@ -117,7 +119,6 @@ const RolAdd = () =>
 	import(/* webpackChunkName: "RolAdd" */ "@/modules/roles/views/RolAdd");
 const RolDetail = () =>
 	import(/* webpackChunkName: "RolDetail" */ "@/modules/roles/views/RolDetail");
-
 Vue.use(Router);
 export const router = new Router({
 	mode: "history", // https://router.vuejs.org/api/#mode
@@ -134,7 +135,6 @@ export const router = new Router({
 		},
 		{
 			path: "/",
-
 			component: TheContainer,
 			beforeEnter: (to, from, next) => {
 				if (!store.getters["auth/authenticated"]) {
@@ -163,25 +163,37 @@ export const router = new Router({
 							path: "",
 							name: "Usuarios",
 							component: UsuarioList,
-							meta: { title: "Lista de usuarios" }
+							meta: {
+								title: "Lista de usuarios",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/usuarios/add",
 							name: "usuarios-add",
 							component: UsuarioAdd,
-							meta: { title: "Agregar usuario" }
+							meta: {
+								title: "Agregar usuario",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/usuarios/detail/:idUsuario",
 							name: "usuarios-detail",
 							component: UsuarioDetail,
-							meta: { title: "Detalle usuario" }
+							meta: {
+								title: "Detalle usuario",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/usuarios/update/:idUsuario",
 							name: "usuarios-update",
 							component: UsuarioUpdate,
-							meta: { title: "Editar de usuarios" }
+							meta: {
+								title: "Editar de usuarios",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						}
 					]
 				},
@@ -193,26 +205,40 @@ export const router = new Router({
 							path: "",
 							name: "postgraduantes-list",
 							component: PostgraduantesList,
-							meta: { title: "Lista postgraduantes registrados" }
+							meta: {
+								title: "Lista postgraduantes registrados",
+								permissions: [
+									"Sistemas",
+									"Administrador",
+									"Docente"
+								]
+							}
 						},
 						{
 							path: "/postgraduantes/add",
 							name: "postgraduantes-add",
 							component: PostgraduantesAdd,
-							meta: { title: "Registrar nuevo postgraduante" }
+							meta: {
+								title: "Registrar nuevo postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/postgraduantes/detail/:idPostgraduante",
 							name: "postgraduantes-detail",
 							component: PostgraduantesDetail,
-							meta: { title: "Detalle postgraduante" }
+							meta: {
+								title: "Detalle postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/postgraduantes/update/:idPostgraduante",
 							name: "postgraduantes-update",
 							component: PostgraduantesUpdate,
 							meta: {
-								title: "Editar informacion de postgraduante"
+								title: "Editar informacion de postgraduante",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						}
 					]
@@ -225,64 +251,90 @@ export const router = new Router({
 							path: "",
 							name: "postgrados-list",
 							component: PostgradosList,
-							meta: { title: "Lista postgrados registrados" }
+							meta: {
+								title: "Lista postgrados registrados",
+								permissions: [
+									"Sistemas",
+									"Administrador",
+									"Docente"
+								]
+							}
 						},
 						{
 							path: "/postgrados/add",
 							name: "postgrados-add",
 							component: PostgradosAdd,
 							meta: {
-								title: "Registrar curso de postgrado"
+								title: "Registrar curso de postgrado",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						},
 						{
 							path: "/postgrados/detail/:idPostgrado",
 							name: "postgrados-detail",
 							component: PostgradosDetail,
-							meta: { title: "Detalle postgrado" }
+							meta: {
+								title: "Detalle postgrado",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
-
 						{
 							path: "/postgrados/update/:idPostgrado",
 							name: "postgrados-update",
 							component: PostgradosUpdate,
 							meta: {
-								title: "Editar informacion de postgrado"
+								title: "Editar informacion de postgrado",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						},
 						{
 							path: "/postgrados/asignar-materias/:idPostgrado",
 							name: "postgrados-materias",
 							component: PostgradosMaterias,
-							meta: { title: "Asignar materia a postgrado" }
+							meta: {
+								title: "Asignar materia a postgrado",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path:
 								"/postgrados/inscribir-postgraduante-nuevo/:idPostgrado",
 							name: "postgrado-postgraduante-nuevo",
 							component: PostgradoPostgraduanteNuevo,
-							meta: { title: "Inscribir Nuevo postgraduante" }
+							meta: {
+								title: "Inscribir Nuevo postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path:
 								"/postgrados/inscribir-postgraduante-existente/:idPostgrado",
 							name: "postgrado-postgraduante-existente",
 							component: PostgradoPostgraduanteNuevo,
-							meta: { title: "Inscribir postgraduante existente" }
+							meta: {
+								title: "Inscribir postgraduante existente",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path:
 								"/postgrados/registrar-pago/:idPostgrado/postgraduante/:idPostgraduante",
 							name: "postgrado-postgraduante-pagos",
 							component: PostgradoPostgraduantePago,
-							meta: { title: "Registrar pago postgrado" }
+							meta: {
+								title: "Registrar pago postgrado",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path:
 								"/postgrados/registrar-calificacion/:idPostgrado/asignatura/:idMateria/docente/:idDocente",
 							name: "postgrado-registro-calificaciones",
 							component: PostgradoCalificaciones,
-							meta: { title: "Registrar calificaciones Materia" }
+							meta: {
+								title: "Registrar calificaciones Materia",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						}
 						// {
 						// 	path:
@@ -301,28 +353,36 @@ export const router = new Router({
 							path: "",
 							name: "docentes-list",
 							component: DocentesList,
-							meta: { title: "Lista docentes registrados" }
+							meta: {
+								title: "Lista docentes registrados",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/docentes/add",
 							name: "docentes-add",
 							component: DocentesAdd,
 							meta: {
-								title: "Registrar materia"
+								title: "Registrar materia",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						},
 						{
 							path: "/docentes/detail/:idDocente",
 							name: "docentes-detail",
 							component: DocentesDetail,
-							meta: { title: "Detalle postgraduante" }
+							meta: {
+								title: "Detalle postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/docentes/update/:idDocente",
 							name: "docentes-update",
 							component: DocentesUpdate,
 							meta: {
-								title: "Editar informacion de la materia"
+								title: "Editar informacion de la materia",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						}
 					]
@@ -335,28 +395,36 @@ export const router = new Router({
 							path: "",
 							name: "pagos-list",
 							component: PagosList,
-							meta: { title: "Lista pagos registrados" }
+							meta: {
+								title: "Lista pagos registrados",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/pagos/add",
 							name: "pagos-add",
 							component: PagosAdd,
 							meta: {
-								title: "Registrar nuevo pago"
+								title: "Registrar nuevo pago",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						},
 						{
 							path: "/pagos/detail/:idPago",
 							name: "pagos-detail",
 							component: PagosDetail,
-							meta: { title: "Detalle pagos" }
+							meta: {
+								title: "Detalle pagos",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/pagos/update/:idPago",
 							name: "pagos-update",
 							component: PagosUpdate,
 							meta: {
-								title: "Editar informacion de pago"
+								title: "Editar informacion de pago",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						}
 					]
@@ -369,28 +437,40 @@ export const router = new Router({
 							path: "",
 							name: "materias-list",
 							component: MateriasList,
-							meta: { title: "Lista materias registrados" }
+							meta: {
+								title: "Lista materias registrados",
+								permissions: [
+									"Sistemas",
+									"Administrador",
+									"Docente"
+								]
+							}
 						},
 						{
 							path: "/materias/add",
 							name: "materias-add",
 							component: MateriasAdd,
 							meta: {
-								title: "Registrar nueva materia"
+								title: "Registrar nueva materia",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						},
 						{
 							path: "/materias/detail/:idMateria",
 							name: "materias-detail",
 							component: MateriasDetail,
-							meta: { title: "Detalle materias" }
+							meta: {
+								title: "Detalle materias",
+								permissions: ["Sistemas", "Administrador"]
+							}
 						},
 						{
 							path: "/materias/update/:idMateria",
 							name: "materias-update",
 							component: MateriasUpdate,
 							meta: {
-								title: "Editar informacion de Materia"
+								title: "Editar informacion de Materia",
+								permissions: ["Sistemas", "Administrador"]
 							}
 						}
 					]
@@ -437,23 +517,27 @@ export const router = new Router({
 							path: "",
 							name: "permiso-list",
 							component: PermisoList,
-							meta: { title: "Lista de permisos" }
+							meta: {
+								title: "Lista de permisos",
+								permissions: ["Sistemas"]
+							}
 						},
 						{
 							path: "/permisos/add",
 							name: "permiso-add",
 							component: PermisoAdd,
 							meta: {
-								title: "Crear nuevo permiso"
+								title: "Crear nuevo permiso",
+								permissions: ["Sistemas"]
 							}
 						},
-
 						{
 							path: "/permisos/update/:idPermiso",
 							name: "permiso-update",
 							component: PermisoUpdate,
 							meta: {
-								title: "Editar informacion del permiso"
+								title: "Editar informacion del permiso",
+								permissions: ["Sistemas"]
 							}
 						}
 					]
@@ -466,23 +550,27 @@ export const router = new Router({
 							path: "",
 							name: "rol-list",
 							component: RolList,
-							meta: { title: "Lista de roles" }
+							meta: {
+								title: "Lista de roles",
+								permissions: ["Sistemas"]
+							}
 						},
 						{
 							path: "/roles/add",
 							name: "rol-add",
 							component: RolAdd,
 							meta: {
-								title: "Crear nuevo rol"
+								title: "Crear nuevo rol",
+								permissions: ["Sistemas"]
 							}
 						},
-
 						{
 							path: "/roles/detail/:idRol",
 							name: "rol-detail",
 							component: RolDetail,
 							meta: {
-								title: "Detalle informacion del rol"
+								title: "Detalle informacion del rol",
+								permissions: ["Sistemas"]
 							}
 						},
 						{
@@ -490,7 +578,8 @@ export const router = new Router({
 							name: "rol-update",
 							component: RolUpdate,
 							meta: {
-								title: "Editar informacion del rol"
+								title: "Editar informacion del rol",
+								permissions: ["Sistemas"]
 							}
 						}
 					]
@@ -498,22 +587,32 @@ export const router = new Router({
 			]
 		},
 		{
+			path: "/unauthorized",
+			name: "acceso-denegado",
+			component: Unauthorized,
+			meta: {
+				title: "Error 403"
+			}
+		},
+		{
 			path: "*",
-			redirect: "/pages/404"
+			component: PageNotFound,
+			meta: {
+				title: "Error 404"
+			}
 		}
 	]
 });
 router.beforeEach((to, from, next) => {
+	var userPermissions = store.getters["auth/roles"];
+
 	document.title = `${process.env.VUE_APP_TITLE} - ${to.meta.title}`;
+	if (to.meta.permissions && to.meta.permissions.length > 0) {
+		let isAllowed = userPermissions.some(p =>
+			to.meta.permissions.includes(p.name)
+		);
+
+		if (!isAllowed) return next("/unauthorized");
+	}
 	next();
 });
-// router.beforeEach((to, from, next) => {
-// 	document.title = `${process.env.VUE_APP_TITLE} - ${to.name}`;
-// 	const publicPages = ["/login"];
-// 	const authRequired = !publicPages.includes(to.path);
-// 	const loggedIn = localStorage.getItem("user");
-// 	if (authRequired && !loggedIn) {
-// 		return next("/login");
-// 	}
-// 	next();
-// });

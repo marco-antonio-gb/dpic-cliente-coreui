@@ -7,7 +7,7 @@ export default {
 		error: null,
 		refresh: false,
 		permissions: null,
-		roles: null
+		roles: []
 	},
 	getters: {
 		authenticated(state) {

@@ -8,6 +8,7 @@ export default {
 		/*-----------------------------------*/
 		UsuarioIndex() {
 			this.isLoading = true;
+			this.show_toast = false;
 			axios
 				.get("/usuarios")
 				.then(response => {
@@ -16,7 +17,9 @@ export default {
 							response.data.data), (this.isLoading = false);
 						this.total = response.data.total;
 					} else {
-						this.showToast(response.data.validator, true, "");
+						this.isLoading = false;
+
+						this.showToast(response.data.message, true, "");
 					}
 				})
 				.catch(error => {
