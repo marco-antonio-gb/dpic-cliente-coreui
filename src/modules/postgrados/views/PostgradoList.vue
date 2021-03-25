@@ -6,20 +6,7 @@
         <button class="btn btn-primary" @click="$router.push({path:'/postgrados/add'})"> Nuevo postgrado</button>
     </div>
     <CCard>
-        <!-- <CCardHeader class="d-flex justify-content-between align-items-center">
-            <span>{{total}} Registros en total</span> 
-            <div class="card-header-actions">
-                <span class="text-muted">Exportar: </span>
-                <CButtonGroup>
-                    <CButton color="light" size="sm">
-                        PDF
-                    </CButton>
-                    <CButton color="light" size="sm">
-                        Excel
-                    </CButton>
-                </CButtonGroup>
-            </div>
-        </CCardHeader> -->
+    
         <CCardBody class="card-body-custom ">
             <CDataTable :items="postgrados" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover size="sm">
                 <template #nombre="{item}">
@@ -72,7 +59,6 @@ const fields = [{
         label: 'Fecha Inicio',
         key: 'fecha_inicio'
     },
-   
     {
         label: '# Pagos',
         key: 'cantidad_pagos'

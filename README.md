@@ -1,63 +1,17 @@
 
 
-# Directory Structure
-
-Aerobatic defaults to some specific common front-end conventions. By conforming to these conventions you can simplify your configuration (convention over configuration).
-
-Here is the basic suggested skeleton for your app repo that each of the starter templates conforms to:
-
-```bash
-├── dist (or build)
-├── node_modules
-├── public
-├── config
-│   └── routes.js
-├── screens
-│   └── App
-│       ├── components
-│       ├── screens
-│       │   ├── Admin
-│       │   │   ├── components
-│       │   │   ├── screens
-│       │   │   │   ├── Reports
-│       │   │   │   │   ├── components
-│       │   │   │   │   └── index.js
-│       │   │   │   └── Users
-│       │   │   │       ├── components
-│       │   │   │       └── index.js
-│       │   │   └── index.js
-│       │   └── Course
-│       │       ├── components
-│       │       ├── screens
-│       │       │   └── Assignments
-│       │       │       ├── components
-│       │       │       └── index.js
-│       │       └── index.js
-│       └── index.js
-├── index.js
-├── test
-├── .env
-├── .env.production
-├── .eslintrc.js
-├── .gitignore
-├── .postcssrc.js
-├── Babel.config.js
-├── CHANGELOG.md
-├── jest.config.js
-├── LICENCE
-├── package.json
-├── README.md
-└── vue.config.js
-```
-
-Your app's source code is nested beneath the `app` directory. This is where assets are served from in `debug` mode. Note that in most cases it is not necessary to setup a watch to re-compile languages and syntaxes including CoffeeScript, Sass, Stylus, Jade, and LESS as the development server will automatically do this for you in middleware. Note that in your index page, you should not include the `/app` prefix since the development asset server will treat it as the root.
-
-```html
-<!- Serves app/js/main.js-->
-<script data-aero-build="debug" src="/js/main.js"></script>
-```
-
-For deployment, `yoke` assumes that all the files (including the index page) required to run in `release` mode have been written to a directory called either `dist` or `build` off the root. Grunt or Gulp both have good facilities for writing the outputs of a task to a different directory.
+# Modulos y funcionamiento
+Para el correcto funcionamiento del sistema se recomienda seguir el siguiente order de tareas a realizar.
+ 1. REGISTRAR USUARIOS (DOCENTES)
+    * Registrar un usuario con el rol de Docente 
+ 2. REGISTRAR CURSOS DE POSTGRADOS: Registrar el curso de postgrado que permitira registrar materias, pagos y postgraduantes.
+    1. REGISTRAR MATERIAS
+       * Registras una asignatura asignando un docente al momento de llenar el formulario
+    2. REGISTRAR POSTGRADUANTES
+       * Se registra al postgraduante incluyendo los pagos iniciales que realizara.
+    3. REPORTES:
+       1. Calificaciones por Asignatura y Personal
+       2. Pagos por Curso de postgrado y Personal
 
 ### Installation
 

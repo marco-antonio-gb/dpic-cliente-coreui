@@ -43,7 +43,7 @@ export default {
 		// {
 		// 	_name: "CSidebarNavTitle",
 		// 	_children: ["Academico"],
-		// 	permissions: ["Sistemas",'Administrador',"Docente"]
+		// 	permissions: ["Sistemas", "Administrador", "Docente"]
 		// },
 		// {
 		// 	_name: "CSidebarNavItem",
@@ -74,7 +74,7 @@ export default {
 		{
 			_name: "CSidebarNavItem",
 			name: "Roles",
-			to: "/permissions",
+			to: "/roles",
 			icon: "cil-user",
 			permissions: ["Sistemas", "Administrador"]
 		}

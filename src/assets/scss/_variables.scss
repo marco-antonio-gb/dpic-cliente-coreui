@@ -9,9 +9,10 @@ $theme-colors: (
     // "info":rgb(90,200,250),
     // "dark":#1e1e1e,
 );
-$--border-radius-base:8px;
+$--border-radius-base:0px;
 $font-family-sans-serif: "Roboto" !default;
 $card-border-radius: $--border-radius-base !default;
+$input-border-radius: $--border-radius-base !default;
 $border-radius:$--border-radius-base !default;
 $input-border-radius: 5px !default;
 $font-size-base:  .83rem !default;

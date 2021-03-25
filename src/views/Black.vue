@@ -1,32 +1,17 @@
 <template>
 <div>
-  <div v-if="$can('read', 'Materia')">
-    <button @click="createPost">Add Post</button>
- 
-  </div>
+    <ul>
+        <li v-if="can(`${['Administradosr','Sistemas']}`)">
+            <button class="btn btn-primary">Funcion A</button>
+        </li>
+    </ul>
+
 </div>
 </template>
 
 <script>
- import example from '@/services/example'
 export default {
-  data(){
-    return{
-      msg:"Holaaaaa"
-    }
-  },
-  mixins:[
-    example
-  ],
-  methods:{
-    createPost(){
-      console.log("METODO")
-    }
-  },
-  // created(){
-  //   console.log(this.getRoles())
-  // }
- 
+     
 }
 </script>
 

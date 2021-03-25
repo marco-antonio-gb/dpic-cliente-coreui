@@ -94,6 +94,7 @@ export default {
                 
                     this.submitted = true
                     this.signIn(this.form).then(() => {
+                        
                         this.$router.replace({
                             name: 'inicio'
                         })

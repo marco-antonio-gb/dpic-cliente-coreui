@@ -605,7 +605,7 @@ export const router = new Router({
 });
 router.beforeEach((to, from, next) => {
 	var userPermissions = store.getters["auth/roles"];
-
+	// console.log(userPermissions);
 	document.title = `${process.env.VUE_APP_TITLE} - ${to.meta.title}`;
 	if (to.meta.permissions && to.meta.permissions.length > 0) {
 		let isAllowed = userPermissions.some(p =>

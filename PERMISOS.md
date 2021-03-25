@@ -134,3 +134,40 @@ permissions: ["Sistemas","Docente",...]
   - Reportes
     - Calificaciones por Asignatura
     - Calificaciones por Postgraduante
+
+# Permisos para componentes
+Los roles de los usuarios que ingresen al sistema se alamacenan en el ``Store`` de la aplicacion.
+El acceso de los roles del usuario autenticado se lo realizara de la siguiente forma:
+* GETTERS
+```javascript
+//Importamos la store 
+import store from "@/store/";
+
+//Obtenemos los roles mediante los getters de la Store
+let roles = store.getters["auth/roles"];
+```
+* MAPGETTERS
+```javascript
+//Importamos el objeto mapGetters desde Vuex
+import { mapGetters } from 'vuex'
+
+export default {
+// En una propiedad computada obtenemos los roles del usuario autenticado
+  computed: {
+      ...mapGetters({
+          roles: 'auth/user'
+      })
+  },
+}
+```
+Para la gestion de permisos en los diferentes componentes html, se hace uso de MIXINS propios de Vue.
+```
+src/mixins/rolesMixin.js
+```
+### Uso del Mixin
+En cada componente que se dese proteger mediante los roles de usuario, agregar el metodo **can()**, en la directiva **v-if**, mismo metodo que recibira como parametros un array con los permisos permitidos para ese componente.
+```html
+<li v-if="can(`${['Permiso1','Permiso2',...]}`)">
+    <button class="btn btn-primary">Funcion A</button>
+</li>
+```

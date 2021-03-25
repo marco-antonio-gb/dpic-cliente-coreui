@@ -4,9 +4,9 @@
         <goback />
         <button class="btn btn-primary" @click="$router.push({path:'/roles/add'})"> Nuevo rol</button>
     </div>
-    <div v-if="canCreateUsers">
+    <!-- <div v-if="canCreateUsers">
         <a href="#" class="btn btn-primary">Add Post</a>
-    </div>
+    </div> -->
     <CCard>
         <CCardBody class="card-body-custom ">
             <CDataTable :items="roles" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover size="sm">
@@ -61,7 +61,7 @@ export default {
 
     data() {
         return {
-            permissions: localStorage.getItem("permissions"),
+            // permissions: localStorage.getItem("permissions"),
             roles: [],
             isLoading: false,
             total: '0',
@@ -83,11 +83,11 @@ export default {
     components: {
         ToastProps
     },
-    computed: {
-        canCreateUsers() {
-            return  this.permissions.includes("permisos-list")
-        },
-    },
+    // computed: {
+    //     canCreateUsers() {
+    //         return  this.permissions.includes("permisos-list")
+    //     },
+    // },
 }
 </script>
 

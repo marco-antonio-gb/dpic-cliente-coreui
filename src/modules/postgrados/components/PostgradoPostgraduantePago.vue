@@ -3,11 +3,11 @@
     <goback class="mb-3" />
     <form @submit.prevent="pagoStore">
         <h2 class="text-center font-weight-bold">Registrar Pagos</h2>
-        <p class="mb-1 ml-2 "><strong>Postgraduante:</strong> {{postgraduante.paterno}} {{postgraduante.materno}} {{postgraduante.nombres}}</p>
-        <p class="mb-1 ml-2 "><strong>Postgrado:</strong> {{postgrado_label}}</p>
+        <p class="mb-1 ml-2 ">POSTGRADUANTE: <strong>{{postgraduante_pago.postgraduante.full_name}}</strong> </p>
+        <p class="mb-1 ml-2 ">POSTGRADO: {{postgraduante_pago.postgrado}}</p>
         <CCard bodyWrapper>
             <div class="text-center p-3" v-if="registro_pagos.pagos.length===0">
-                <button class="btn btn-secondary " @click.prevent="addLinePagos(1)">Registrar plan de pagos</button>
+                <button class="btn btn-secondary " @click.prevent="addLinePagos(1)">Registrar pagos</button>
             </div>
             <div class="card-outline p-1 form-group" v-for="(input,k) in registro_pagos.pagos" :key="k">
                 <div class="d-flex align-items-end  m-0 p-0">
@@ -40,7 +40,7 @@
                 </div>
             </div>
         </CCard>
-        <div class="text-right">
+        <div class="text-right mb-3">
             <button class="btn btn-secondary mr-2" @click.prevent="cancelar">Cancelar</button>
             <CButton color="primary" class="px-4  " type="submit" :disabled="isLoading">
                 <CSpinner color="warning" size="sm" v-if="isLoading" />
@@ -48,9 +48,37 @@
                     Procesando...</span>
                 <span v-else> Guardar informacion </span>
             </CButton>
-            
         </div>
     </form>
+    <CCard class="p-1">
+        <div class="text-center">
+            RESUMEN DE PAGOS
+        </div>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <th >Item</th>
+                <th class="text-center">Nro. Boleta</th>
+                <th class="text-center">Costo [Bs.]</th>
+                <th class="text-center">Fecha de cobro</th>
+            </thead>
+            <tbody>
+                <tr v-for="pago in postgraduante_pago.pagos" :key="pago.id">
+                    <td>{{pago.item}}</td>
+                    <td class="text-center">{{pago.boleta}}</td>
+                    <td class="text-center">{{pago.costo_unitario | formatNumber}}</td>
+                    <td class="text-center">{{pago.fecha_cobro}}</td>
+                </tr>
+                <tr>
+                    
+                    <td colspan="2" class="text-right font-weight-bold">Total</td>
+                    <td class="font-weight-bold text-center "> {{total_pago | formatNumber}}</td>
+                    <td class="text-center"></td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+    </CCard>
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
@@ -69,12 +97,19 @@ export default {
                 postgrado_id: this.$route.params.idPostgrado,
                 postgraduante_id: this.$route.params.idPostgraduante,
             },
-            postgrado_label: '',
-            postgraduante: {
-                paterno: '',
-                materno: '',
-                nombres: ''
+            postgraduante_pago: {
+                postgrado: '',
+                postgraduante: {
+                    full_name: ''
+                },
+                pagos: []
             },
+            // postgrado_label: '',
+            // postgraduante: {
+            //     paterno: '',
+            //     materno: '',
+            //     nombres: ''
+            // },
             validator_toast: '',
             message_toast: '',
             show_toast: false,
@@ -82,8 +117,8 @@ export default {
         }
     },
     created() {
-        this.getPostgraduante()
-        this.getPostgrado()
+        this.getPostgraduantePagos()
+        // this.getPostgrado()
     },
     components: {
         ToastProps
@@ -94,6 +129,7 @@ export default {
         },
         addLinePagos(k) {
             let label = 'Cuota Nro.  ';
+            let pagosActual = this.postgraduante_pago.pagos.length;
             let checkEmptyLines = this.registro_pagos.pagos.filter(
                 line => line.item === null
             );
@@ -102,10 +138,14 @@ export default {
                 this.registro_pagos.pagos > 0
             )
                 return;
-            if (k === 1) {
-                label = "Matricula"
+            if (pagosActual <= 0) {
+                if (k === 1) {
+                    label = "Matricula"
+                } else {
+                    label = label + (k - 1)
+                }
             } else {
-                label = label + (k - 1)
+                label = label + (pagosActual)
             }
             this.registro_pagos.pagos.push({
                 item: label,
@@ -114,14 +154,12 @@ export default {
                 observacion: null,
             });
         },
-
         pagoStore() {
-          this.show_toast = false;
-			this.isLoading = true;
+            this.show_toast = false;
+            this.isLoading = true;
             if (this.registro_pagos.pagos.length <= 0) {
                 this.showToast("Registre al menos un pago", true, "warning");
-			this.isLoading = false;
-
+                this.isLoading = false;
             } else {
                 axios
                     .post("/pagos", this.registro_pagos)
@@ -150,42 +188,14 @@ export default {
                         }
                     });
             }
-
         },
-        getPostgrado() {
+        getPostgraduantePagos() {
             axios
-                .get("/postgrados/" + this.$route.params.idPostgrado)
+                .get("/verificar-pagos-postgrados-postgraduante/" + this.$route.params.idPostgrado + '/' + this.$route.params.idPostgraduante)
                 .then(response => {
                     if (response.data.success) {
                         this.isLoading = false;
-                        this.postgrado_label = response.data.data.nombre;
-                    } else {
-                        this.isLoading = false;
-                        this.showToast(response.data.message, true, "danger");
-                    }
-                })
-                .catch(error => {
-                    this.isLoading = false;
-                    if (error.response) {
-                        this.showToast(
-                            error.response.data.message,
-                            true,
-                            "danger"
-                        );
-                    } else if (error.request) {
-                        this.showToast(error.request, true, "danger");
-                    } else {
-                        this.showToast(error.message, true, "danger");
-                    }
-                });
-        },
-        getPostgraduante() {
-            axios
-                .get("/postgraduantes/" + this.$route.params.idPostgraduante)
-                .then(response => {
-                    if (response.data.success) {
-                        this.isLoading = false;
-                        this.postgraduante = response.data.data;
+                        this.postgraduante_pago = response.data.data;
                     } else {
                         this.isLoading = false;
                         this.showToast(response.data.message, true, "danger");
@@ -224,6 +234,12 @@ export default {
                 this.color_toast = color;
             }
         },
+    },
+    computed: {
+        total_pago() {
+
+            return this.postgraduante_pago.pagos.reduce((acc, cur) => acc + Number(cur.costo_unitario), 0);
+        }
     }
 }
 </script>

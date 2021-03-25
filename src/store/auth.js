@@ -25,7 +25,7 @@ export default {
 		permisos(state) {
 			return state.permissions;
 		},
-		roles(state) {
+		roles: state => {
 			return state.roles;
 		}
 	},
