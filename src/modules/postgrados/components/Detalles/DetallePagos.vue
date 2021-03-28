@@ -41,7 +41,7 @@
                         </table>
                     </td>
                     <td class="text-center">
-                        <CButton color="secondary" @click="reportePagosPostgraduante($route.params.idPostgrado,pago.idPostgraduante,pago.postgraduante+'-'+postgrado.nombre)">
+                        <CButton color="secondary" @click="reportePagosPostgraduante($route.params.idPostgrado,pago.idPostgraduante,pago.postgraduante+'-'+postgrado_name)">
                             <CIcon name="cil-print"></CIcon>
                         </CButton>
                     </td>
@@ -62,13 +62,21 @@
 </template>
 
 <script>
+import CustomService from '../../services/CustomService'
 export default {
     props: {
         pagos: {
             type: Array,
             default: []
+        },
+        postgrado_name:{
+            type:String,
+            default:''
         }
-    }
+    },
+    mixins:[
+        CustomService
+    ]
 }
 </script>
 

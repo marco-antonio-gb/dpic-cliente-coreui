@@ -2,10 +2,8 @@
 <div>
  
     <CCard v-if="docentes.length>0">
-        <CCardHeader>
-            <strong>Docentes / Asignaturas</strong>
-        </CCardHeader>
-        <CCardBody class="p-1">
+ 
+        <CCardBody class="p-0">
             <table class="table table-hover ">
                 <thead>
                     <tr>
@@ -51,7 +49,7 @@
                                     Notas
                                 </CButton>
                                 <CButton color="light" size="sm" @click="$router.push({
-                                    path:'/postgrados/registrar-calificacion/'
+                                    path:'/postgrados/postgraduantes-inscritos/'
                                     +$route.params.idPostgrado                                    
                                     +'/asignatura/'
                                     +docente.idMateria
@@ -80,13 +78,17 @@
 </template>
 
 <script>
+import CustomService from '../../services/CustomService'
 export default {
     props: {
         docentes: {
             type: Array,
             default: []
         },
-    }
+    },
+    mixins:[
+        CustomService
+    ]
 }
 </script>
 

@@ -36,6 +36,7 @@ const PostgraduantesList = () =>
 	import(/* webpackChunkName: "PostgraduantesList" */ "@/modules/postgraduantes/views/PostgraduantesList");
 const PostgraduantesUpdate = () =>
 	import(/* webpackChunkName: "PostgraduantesUpdate" */ "@/modules/postgraduantes/views/PostgraduantesUpdate");
+
 //potgrados
 const Postgrados = () =>
 	import(/* webpackChunkName: "Postgrados" */ "@/modules/postgrados/Postgrados");
@@ -51,6 +52,8 @@ const PostgradoPostgraduantePago = () =>
 	import(/* webpackChunkName: "PostgradoPostgraduantePago" */ "@/modules/postgrados/components/PostgradoPostgraduantePago");
 const PostgradoCalificaciones = () =>
 	import(/* webpackChunkName: "PostgradoCalificaciones" */ "@/modules/postgrados/components/PostgradoCalificaciones");
+const InscritosAsignatura = () =>
+	import(/* webpackChunkName: "InscritosAsignatura" */ "@/modules/postgrados/components/InscritosAsignatura");
 const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
@@ -334,6 +337,20 @@ export const router = new Router({
 							meta: {
 								title: "Registrar calificaciones Materia",
 								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						{
+							path:
+								"/postgrados/postgraduantes-inscritos/:idPostgrado/asignatura/:idMateria/docente/:idDocente",
+							name: "postgraduantes-inscritos",
+							component: InscritosAsignatura,
+							meta: {
+								title: "Lista de postgraduantes inscritos",
+								permissions: [
+									"Sistemas",
+									"Administrador",
+									"Docente"
+								]
 							}
 						}
 						// {

@@ -13,7 +13,37 @@ Para el correcto funcionamiento del sistema se recomienda seguir el siguiente or
        1. Calificaciones por Asignatura y Personal
        2. Pagos por Curso de postgrado y Personal
 
-### Installation
+# Descripcion de funciones
+* GESTION DE USUARIOS
+   * Lista de usuarios
+   * Detalle usuario
+   * Editar usuario + Roles
+   * Actualizar contrasena
+   * Registro nuevo usuario + Asignacion de roles
+   * Eliminar usuario
+   * Bloquear usuario [x]
+* GETION DE PERMISOS
+   * Lista de permisos
+   * Registrar nuevo permiso
+   * Editar informacion de permiso
+   * Eliminar permiso
+* GESTION DE ROLES
+   * Lista de roles
+   * Registrar nuevo rol + Asignacion de permisos
+   * Detalle de Rol + Permisos asignados al Rol
+   * Eliminar Rol
+* GESTION DE POSTGRADOS
+   * [opciones]: Registrar Postgraduante NUEVO o EXISTENTE
+   * [opciones]: Registrar Materia + Docente
+   * [opciones]: Detalle Pagos + Reporte
+      * Lista de Postgraduantes
+         * Detalle PAGOS + REPORTE
+         * Detalle NOTAS + REPORTE
+         * Registrar PAGOS
+      * Lista de Asignatura/Docentes
+         * Registrar NOTAS
+         * Lista Inscritos + Calificaciones
+         * Reporte CALIFICACIONES
 
 
 

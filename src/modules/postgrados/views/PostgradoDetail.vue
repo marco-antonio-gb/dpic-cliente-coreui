@@ -19,24 +19,30 @@
             <CDropdownItem disabled>Disabled action</CDropdownItem>
         </CDropdown>
     </div>
-      
     <PostgradoHeader :postgrado="postgrado" />
      <div class="text-center"  v-if="isLoading">
         <div class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <CTabs variant="tabs" :active-tab="0">
-        <CTab title="Asignaturas/Docentes">
+
+
+    <CTabs   :active-tab="0" variant="pills" vertical addTabsWrapperClasses="col-md-10" addNavWrapperClasses="col-md-2" fade>
+        <CTab title="Inscritos">
+            <DetallePostgraduantes :postgraduantes="postgraduantes"  :postgrado_name="postgrado.nombre"/>
+        </CTab>
+        <CTab title="Asignaturas">
             <DetalleMaterias :docentes="docentes" />
         </CTab>
         <CTab title="Pagos">
-            <DetallePagos :pagos="pagos" />
-        </CTab>
-        <CTab title="Postgraduantes">
-            <DetallePostgraduantes :postgraduantes="postgraduantes" />
+            <DetallePagos :pagos="pagos" :postgrado_name="postgrado.nombre"/>
         </CTab>
     </CTabs>
+
+
+
+
+    
 </div>
 </template>
 <script>

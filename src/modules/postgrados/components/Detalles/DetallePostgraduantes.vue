@@ -1,53 +1,47 @@
 <template>
 <div>
     <CCard v-if="postgraduantes.length>0">
-        <CCardHeader>
-            <strong>Postgraduantes</strong>
-        </CCardHeader>
-        <CCardBody class="p-1">
+        <CCardBody class="p-0">
             <table class="table table-hover  table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">CI</th>
                         <th scope="col">Celular</th>
-                        <th scope="col">Profesion</th>
-                        <th scope="col">Opciones</th>
+                        <!-- <th scope="col">Profesion</th> -->
+                        <th scope="col" class="text-right">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(postgraduante,index) in postgraduantes" :key="postgraduante.id">
-                        <td><strong>{{index+1}}</strong></td>
+                    <tr v-for="postgraduante in postgraduantes" :key="postgraduante.id">
                         <td>
                             <router-link class="custom-link mr-2" :to="{ name: 'postgraduantes-detail', params: { idPostgraduante: postgraduante.idPostgraduante}}" v-slot="{ href,navigate }" custom>
                                 <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
-                                    <CIcon name="cilLink" size="sm" class="text-dark"></CIcon>
                                     {{postgraduante.full_name}}
                                 </a>
                             </router-link>
-                            <!-- <router-link :to="`/postgraduantes/detail/${postgraduante.idPostgraduante}`" class="mr-2">
-                                {{postgraduante.full_name}}
-                            </router-link> -->
+                         
                         </td>
                         <td>{{postgraduante.cedula}}</td>
                         <td>{{postgraduante.celular}}</td>
-                        <td>{{postgraduante.profesion}}</td>
-                        <td class=" ">
+                        <!-- <td>{{postgraduante.profesion}}</td> -->
+                        <td class="text-right">
                             <CButtonGroup>
                                 <CButton color="light" size="sm" @click="$router.push({path:'/postgrados/registrar-pago/'+$route.params.idPostgrado+'/postgraduante/'+postgraduante.idPostgraduante})">
-                                    <CIcon name="cil-dollar"></CIcon> Pagar
+                                    <CIcon name="cil-dollar"></CIcon> Pagos
                                 </CButton>
-                                <CButton color="dark" size="sm" @click="reporteCalificacionesPostgraduante($route.params.idPostgrado,postgraduante.idPostgraduante,postgraduante.full_name+'-'+postgrado.nombre)">
+                                <CButton color="secondary" size="sm" @click="reporteCalificacionesPostgraduante($route.params.idPostgrado,postgraduante.idPostgraduante,postgraduante.full_name+'-'+postgrado_name)">
                                     <CIcon name="cil-print"></CIcon> Notas
+                                </CButton>
+                                <CButton color="dark" size="sm" @click="reporteCalificacionesPostgraduante($route.params.idPostgrado,postgraduante.idPostgraduante,postgraduante.full_name+'-'+postgrado_name)">
+                                    <CIcon name="cil-dollar"></CIcon> Registrar Pago
                                 </CButton>
                             </CButtonGroup>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="text-right">
-            </div>
+            
         </CCardBody>
     </CCard>
     <CCard v-else>
@@ -57,18 +51,23 @@
     </CCard>
 </div>
 </template>
-
 <script>
+import CustomService from '../../services/CustomService'
 export default {
     props: {
         postgraduantes: {
             type: Array,
             default: []
         },
-    }
+        postgrado_name:{
+            type:String,
+            default:''
+        }
+    },
+    mixins:[
+        CustomService
+    ]
 }
 </script>
-
 <style>
-
 </style>

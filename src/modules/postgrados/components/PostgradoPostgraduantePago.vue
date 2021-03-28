@@ -5,6 +5,19 @@
         <h2 class="text-center font-weight-bold">Registrar Pagos</h2>
         <p class="mb-1 ml-2 ">POSTGRADUANTE: <strong>{{postgraduante_pago.postgraduante.full_name}}</strong> </p>
         <p class="mb-1 ml-2 ">POSTGRADO: {{postgraduante_pago.postgrado}}</p>
+        <CCardHeader>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="card-title m-0"><strong>54</strong> items en total</div>
+                <CButtonGroup>
+                    <CButton color="light" size="sm">
+                        PDF
+                    </CButton>
+                    <CButton color="light" size="sm">
+                        Excel
+                    </CButton>
+                </CButtonGroup>
+            </div>
+        </CCardHeader>
         <CCard bodyWrapper>
             <div class="text-center p-3" v-if="registro_pagos.pagos.length===0">
                 <button class="btn btn-secondary " @click.prevent="addLinePagos(1)">Registrar pagos</button>

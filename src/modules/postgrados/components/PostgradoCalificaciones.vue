@@ -156,20 +156,35 @@ export default {
                     }
                 })
                 .catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data.message);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                        // this.log_out(true);
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        console.log(error.request);
-                    } else {
-                        // Something happened in setting up the request that triggered an Error
-                        console.log("Error", error.message);
-                    }
-                    this.isLoading = false;
-                });
+					this.isLoading = false;
+					if (error.response.status === 500) {
+						this.showToast(
+							"Error 500 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
         },
         generateInputs(data) {
             data.forEach(element => {
@@ -205,20 +220,35 @@ export default {
                     }
                 })
                 .catch(error => {
-                    if (error.response) {
-                        // console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                        // this.log_out(true);
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        console.log(error.request);
-                    } else {
-                        // Something happened in setting up the request that triggered an Error
-                        console.log("Error", error.message);
-                    }
-                    this.isLoading = false;
-                });
+					this.isLoading = false;
+					if (error.response.status === 500) {
+						this.showToast(
+							"Error 500 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.response.status == 404) {
+						this.showToast(
+							"Error 404 (server): " +
+								error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER error request: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER ?: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
         },
         showToast(message, status, color, time) {
             if (typeof message === "string") {

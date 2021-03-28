@@ -68,14 +68,14 @@ export default {
 			_name: "CSidebarNavItem",
 			name: "Permisos",
 			to: "/permisos",
-			icon: "cil-user",
+			icon: "cil-shield-alt",
 			permissions: ["Sistemas", "Administrador"]
 		},
 		{
 			_name: "CSidebarNavItem",
 			name: "Roles",
 			to: "/roles",
-			icon: "cil-user",
+			icon: "cil-https",
 			permissions: ["Sistemas", "Administrador"]
 		}
 	]

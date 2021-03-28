@@ -24,7 +24,7 @@
                             <CButton color="secondary" size="sm" @click="$router.push({path:'/roles/update/'+item.id})">
                                 Edit
                             </CButton>
-                            <CButton color="dark" size="sm" @click="deletePermiso(item.id)">
+                            <CButton color="dark" size="sm" @click="deleteRol(item.id)">
                                 <CIcon name="cil-trash"></CIcon>
                             </CButton>
                         </CButtonGroup>
