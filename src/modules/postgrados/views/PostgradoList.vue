@@ -13,7 +13,7 @@
                     <td>
                         <router-link class="custom-link" :to="{ name: 'postgrados-detail', params: { idPostgrado: item.idPostgrado }}" v-slot="{ href,navigate }" custom>
                             <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
-                                <CIcon name="cilLink" size="sm"></CIcon>
+                                 
                                 {{item.nombre}}
                             </a>
                         </router-link>

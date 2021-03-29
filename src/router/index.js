@@ -58,6 +58,13 @@ const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
 	import(/* webpackChunkName: "PostgradoUpdate" */ "@/modules/postgrados/views/PostgradoUpdate");
+
+/* DETALLE PAGOS POSTGRADUANTE + REPORTE */
+const DetallePagosInscritos = () =>
+	import(/* webpackChunkName: "DetallePagosInscritos" */ "@/modules/postgrados/views/detalles/DetallePagosInscritos");
+const EditarDetallePagos = () =>
+	import(/* webpackChunkName: "EditarDetallePagos" */ "@/modules/postgrados/views/detalles/EditarDetallePagos");
+
 //docentes
 const Docentes = () =>
 	import(/* webpackChunkName: "Docentes" */ "@/modules/docentes/Docentes");
@@ -281,6 +288,29 @@ export const router = new Router({
 								permissions: ["Sistemas", "Administrador"]
 							}
 						},
+						// ----------------------------------------------------------
+						/* DETALLE PAGOS INSCRITOS */
+						{
+							path:
+								"/postgrados/detalle-pagos/:idPostgrado/postgraduante/:idPostgraduante",
+							name: "postgrado-postgraduante-pagos",
+							component: DetallePagosInscritos,
+							meta: {
+								title: "Detalle pagos postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						{
+							path:
+								"/postgrados/editar-pagos/:idPostgrado/postgraduante/:idPostgraduante/pago/:idPago",
+							name: "editar-pagos",
+							component: EditarDetallePagos,
+							meta: {
+								title: "Editar pago postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						// ----------------------------------------------------------
 						{
 							path: "/postgrados/update/:idPostgrado",
 							name: "postgrados-update",
@@ -319,16 +349,7 @@ export const router = new Router({
 								permissions: ["Sistemas", "Administrador"]
 							}
 						},
-						{
-							path:
-								"/postgrados/registrar-pago/:idPostgrado/postgraduante/:idPostgraduante",
-							name: "postgrado-postgraduante-pagos",
-							component: PostgradoPostgraduantePago,
-							meta: {
-								title: "Registrar pago postgrado",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						},
+
 						{
 							path:
 								"/postgrados/registrar-calificacion/:idPostgrado/asignatura/:idMateria/docente/:idDocente",

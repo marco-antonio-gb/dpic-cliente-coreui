@@ -20,13 +20,7 @@
         </CDropdown>
     </div>
     <PostgradoHeader :postgrado="postgrado" />
-     <div class="text-center"  v-if="isLoading">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-
-
+    <loader :isLoading="isLoading"/>
     <CTabs   :active-tab="0" variant="pills" vertical addTabsWrapperClasses="col-md-10" addNavWrapperClasses="col-md-2" fade>
         <CTab title="Inscritos">
             <DetallePostgraduantes :postgraduantes="postgraduantes"  :postgrado_name="postgrado.nombre"/>
@@ -38,11 +32,6 @@
             <DetallePagos :pagos="pagos" :postgrado_name="postgrado.nombre"/>
         </CTab>
     </CTabs>
-
-
-
-
-    
 </div>
 </template>
 <script>
@@ -52,6 +41,7 @@ import DetalleMaterias from '../components/Detalles/DetalleMaterias'
 import DetallePagos from '../components/Detalles/DetallePagos'
 import DetallePostgraduantes from '../components/Detalles/DetallePostgraduantes'
 import PostgradoHeader from '../components/Detalles/PostgradoHeader'
+import Loader from '../../../components/Loader.vue'
 export default {
     data() {
         return {
@@ -84,7 +74,8 @@ export default {
         DetalleMaterias,
         DetallePagos,
         DetallePostgraduantes,
-        PostgradoHeader
+        PostgradoHeader,
+        Loader
     },
     methods: {
         getPagos(id) {

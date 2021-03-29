@@ -98,7 +98,7 @@ export default {
 		},
 		reportePagosPostgraduante(POSTGRADO_ID, POSTGRADUANTE_ID, FILE_NAME) {
 			this.show_toast = false;
-			this.isLoading = true;
+			this.isDownload = true;
 			axios({
 				url: `/reporte-pagos-personal/${POSTGRADO_ID}/${POSTGRADUANTE_ID}`,
 				method: "GET",
@@ -108,11 +108,14 @@ export default {
 				}
 			})
 				.then(response => {
-					this.isLoading = false;
-					this.downloadFile(response.data, FILE_NAME);
+					this.isDownload = false;
+					this.downloadFile(
+						response.data,
+						"REPORTE PAGOS - " + FILE_NAME
+					);
 				})
 				.catch(errors => {
-					this.isLoading = false;
+					this.isDownload = false;
 					console.log(errors.response);
 				});
 		},

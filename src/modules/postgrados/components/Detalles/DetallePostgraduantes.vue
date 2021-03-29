@@ -1,8 +1,8 @@
 <template>
 <div>
     <CCard v-if="postgraduantes.length>0">
-        <CCardBody class="p-0">
-            <table class="table table-hover  table-sm">
+        <CCardBody  >
+            <table class="table table-hover  table-sm m-0">
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
@@ -27,7 +27,7 @@
                         <!-- <td>{{postgraduante.profesion}}</td> -->
                         <td class="text-right">
                             <CButtonGroup>
-                                <CButton color="light" size="sm" @click="$router.push({path:'/postgrados/registrar-pago/'+$route.params.idPostgrado+'/postgraduante/'+postgraduante.idPostgraduante})">
+                                <CButton color="light" size="sm" @click="$router.push({path:'/postgrados/detalle-pagos/'+$route.params.idPostgrado+'/postgraduante/'+postgraduante.idPostgraduante})">
                                     <CIcon name="cil-dollar"></CIcon> Pagos
                                 </CButton>
                                 <CButton color="secondary" size="sm" @click="reporteCalificacionesPostgraduante($route.params.idPostgrado,postgraduante.idPostgraduante,postgraduante.full_name+'-'+postgrado_name)">
