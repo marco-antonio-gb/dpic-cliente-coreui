@@ -64,8 +64,8 @@
 </div>
 </template>
 <script>
-import PostgradoService from '../services/PostgradoService'
-import CustomService from '../services/CustomService'
+import PostgradoService from '../../services/PostgradoService'
+import CustomService from '../../services/CustomService'
 import ToastProps from '@/components/ShowToast'
 export default {
     data() {

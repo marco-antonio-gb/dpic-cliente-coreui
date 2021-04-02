@@ -1,6 +1,6 @@
 <template>
 <div>
-    <CCard v-if="postgraduantes.length>0">
+    <CCard v-if="postgraduantes">
         <CCardBody  >
             <table class="table table-hover  table-sm m-0">
                 <thead>
@@ -13,7 +13,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="postgraduante in postgraduantes" :key="postgraduante.id">
+                    <tr v-for="postgraduante in postgraduantes.postgraduantes" :key="postgraduante.id">
                         <td>
                             <router-link class="custom-link mr-2" :to="{ name: 'postgraduantes-detail', params: { idPostgraduante: postgraduante.idPostgraduante}}" v-slot="{ href,navigate }" custom>
                                 <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
@@ -46,6 +46,7 @@
     </CCard>
     <CCard v-else>
         <CCardBody class="text-center">
+        <pre>{{postgraduantes}}</pre>
             <span>No se registraron postgraduantes</span>
         </CCardBody>
     </CCard>
@@ -56,8 +57,8 @@ import CustomService from '../../services/CustomService'
 export default {
     props: {
         postgraduantes: {
-            type: Array,
-            default: []
+            type: Object,
+            default: ''
         },
         postgrado_name:{
             type:String,

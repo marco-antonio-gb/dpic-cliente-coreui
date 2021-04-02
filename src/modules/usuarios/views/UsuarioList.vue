@@ -5,15 +5,14 @@
             <CIcon name="cil-justify-center" /> {{$route.meta.title}}</h3>
         <button class="btn btn-primary" @click="$router.push({path:'/usuarios/add'})"> Nuevo Usuario</button>
     </div>
+    
     <CCard>
-         
         <CCardBody class="card-body-custom ">
             <CDataTable :items="usuarios" :fields="fields" :tableFilter='{ placeholder : "Buscar registros", label : "Bucar" }' :items-per-page-select='{label:"Items por pagina"}' :items-per-page="5" sorter pagination :loading='isLoading' hover>
                 <template #full_name="{item}" >
                     <td>
                         <router-link class="custom-link" :to="{ name: 'usuarios-detail', params: { idUsuario: item.idUsuario }}" v-slot="{ href,navigate }" custom>
                             <a :href="href" @click="navigate" role="link" @keypress.enter="navigate">
-                               
                                 {{item.full_name}}
                             </a> 
                         </router-link>
@@ -24,7 +23,6 @@
                 <template #roles="{item}">
                     <td>
                         <span class="badge badge-light mr-1 text-uppercase rounded p-1" v-for="rol in item.roles" :key="rol.id"> {{rol.name}}</span>
-                         
                     </td>
                 </template>
                 <template #activo="{item}">
@@ -52,17 +50,13 @@
             </CDataTable>
         </CCardBody>
           <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
-
-   
     </CCard>
 </div>
 </template>
-
 <script>
 import CustomUsuario from '../services/CustomUsuario'
 import UsuarioService from '../services/UsuarioService'
 import ToastProps from '@/components/ShowToast'
-
 const fields = [
     // {
     //     key: 'nombres',
@@ -79,7 +73,6 @@ const fields = [
     },
     {
         label: 'Roles',
-
         key: 'roles'
     },
     {

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="mb-3">
     <goback class="mb-3" />
     <CCard class="p-3">
         <small class="text-muted">Calificaciones Asignatura</small>
@@ -59,7 +59,7 @@
             </CButton>
         </div>
     </form>
-    <pre>{{calificaciones}}</pre>
+    <!-- <pre>{{calificaciones}}</pre> -->
     <ToastProps   :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
@@ -86,58 +86,14 @@ export default {
         }
     },
     created() {
-        // this.getDocente(this.$route.params.idDocente);
-        // this.getMateria(this.$route.params.idMateria);
-        // this.getPostgrado(this.$route.params.idPostgrado);
-        this.getPostgradoPostgraduantes(this.$route.params.idPostgrado);
+        this.getPostgraduanteCalificaciones(this.$route.params.idPostgrado);
     },
     components: {
         ToastProps
     },
     methods: {
-        getDocente(id) {
-            axios
-                .get("/usuarios/" + id)
-                .then(response => {
-                    if (response.data.success) {
-                        this.docente = response.data.data;
-                    } else {
-                        console.log(response);
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        },
-        getMateria(id) {
-            axios
-                .get("/materias/" + id)
-                .then(response => {
-                    if (response.data.success) {
-                        this.materia = response.data.data;
-                    } else {
-                        console.log(response);
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        },
-        getPostgrado(id) {
-            axios
-                .get("/postgrados/" + id)
-                .then(response => {
-                    if (response.data.success) {
-                        this.postgrado = response.data.data.nombre;
-                    } else {
-                        console.log(response);
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        },
-        getPostgradoPostgraduantes() {
+         
+        getPostgraduanteCalificaciones() {
             this.isLoading = true;
             let postgrado_id = this.$route.params.idPostgrado;
             let materia_id = this.$route.params.idMateria;

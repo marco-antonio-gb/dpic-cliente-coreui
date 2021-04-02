@@ -1,5 +1,5 @@
 <template>
-   <div class="d-flex flex-row align-items-center text-dark">
+   <div class="d-flex flex-row align-items-center ">
         <div class="mr-2 ">
             <a href="javascript:void(0)" class="text-dark" @click="$router.go(-1)" >
                 <CIcon name="cil-arrow-circle-left"    size="lg"  /></a>

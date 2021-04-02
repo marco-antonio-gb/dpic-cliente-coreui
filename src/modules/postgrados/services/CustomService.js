@@ -29,12 +29,12 @@ export default {
 			});
 			this.total_creditos = total;
 		},
-		getPostgradoPostgraduantes(ide) {
+		getPostgraduantesInscritos(ide) {
 			axios
-				.get("/postgrados-postgraduantes/" + ide)
+				.get("/postgraduantes-inscritos/" + ide)
 				.then(response => {
 					if (response.data.success) {
-						this.postgraduantes = response.data.data;
+						this.inscritos = response.data.data;
 					} else {
 						console.log(response);
 					}
@@ -55,12 +55,12 @@ export default {
 					this.isLoading = false;
 				});
 		},
-		getPostgradoDocentes(ide) {
+		getMateriasRegistradas(ide) {
 			axios
-				.get("/postgrados-docentes/" + ide)
+				.get("/materias-postgrado/" + ide)
 				.then(response => {
 					if (response.data.success) {
-						this.docentes = response.data.data;
+						this.materias = response.data.data;
 					} else {
 						this.showToast(response.data.message, true, "");
 					}
@@ -119,13 +119,49 @@ export default {
 					console.log(errors.response);
 				});
 		},
+		getPagosPostgrado(id) {
+			axios
+				.get("/pagos-postgrados/" + id)
+				.then(response => {
+					if (response.data.success) {
+						// this.isLoading = false;/
+						this.pagos = response.data;
+						// this.total = response.data.total;
+					} else {
+						// this.isLoading = false;
+						this.showToast(response.data.message, true, "");
+					}
+				})
+				.catch(error => {
+					this.isLoading = false;
+					if (error.response) {
+						this.showToast(
+							"SERVER: " + error.response.data.message,
+							true,
+							"danger"
+						);
+					} else if (error.request) {
+						this.showToast(
+							"SERVER: " + error.request,
+							true,
+							"danger"
+						);
+					} else {
+						this.showToast(
+							"SERVER: " + error.message,
+							true,
+							"danger"
+						);
+					}
+				});
+		},
 		reporteCalificacionesPostgraduante(
 			POSTGRADO_ID,
 			POSTGRADUANTE_ID,
 			FILE_NAME
 		) {
 			this.show_toast = false;
-			this.isLoading = true;
+			this.isDownload = true;
 			axios({
 				url: `/reporte-calificaciones-personal/${POSTGRADO_ID}/${POSTGRADUANTE_ID}`,
 				method: "GET",
@@ -135,14 +171,14 @@ export default {
 				}
 			})
 				.then(response => {
-					this.isLoading = false;
+					this.isDownload = false;
 					this.downloadFile(
 						response.data,
 						"REPORTE CALIFICACIONES" + "-" + FILE_NAME
 					);
 				})
 				.catch(errors => {
-					this.isLoading = false;
+					this.isDownload = false;
 					console.log(errors.response);
 				});
 		},
@@ -176,7 +212,7 @@ export default {
 		},
 		reportePagosPostgrado(POSTGRADO_ID, FILE_NAME) {
 			this.show_toast = false;
-			this.isLoading = true;
+			this.isDownload = true;
 			axios({
 				url: `/reporte-pagos-general/${POSTGRADO_ID}`,
 				method: "GET",
@@ -186,14 +222,14 @@ export default {
 				}
 			})
 				.then(response => {
-					this.isLoading = false;
+					this.isDownload = false;
 					this.downloadFile(
 						response.data,
 						"REPORTE PAGOS" + "-" + FILE_NAME
 					);
 				})
 				.catch(errors => {
-					this.isLoading = false;
+					this.isDownload = false;
 					console.log(errors.response);
 				});
 		},

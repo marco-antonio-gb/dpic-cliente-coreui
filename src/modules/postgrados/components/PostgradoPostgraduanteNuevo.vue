@@ -1,9 +1,9 @@
 <template>
 <div class="mb-5">
     <goback class="mb-3" />
-    <form @submit.prevent="InscripcionStore($route.name)" id="PostgradoStore">
+    <form @submit.prevent="InscripcionStore($route.params.opcionPostgraduante)" id="PostgradoStore">
         <h6 class="mb-1"> CURSO DE POSTGRADO: {{postgrado_label}}</h6>
-        <CCard bodyWrapper class="mb-2" v-if="$route.name==='postgrado-postgraduante-nuevo'">
+        <CCard bodyWrapper class="mb-2" v-if="$route.params.opcionPostgraduante==='nuevo'">
             <!-- <p class="mb-1 ml-2 font-weight-bold">Postgraduante nuevo</p> -->
             <CRow>
                 <CCol sm="4">
@@ -57,7 +57,7 @@
             <CRow>
             </CRow>
         </CCard>
-        <CCard bodyWrapper class="mb-2" v-if="$route.name==='postgrado-postgraduante-existente'">
+        <CCard bodyWrapper class="mb-2" v-if="$route.params.opcionPostgraduante==='existente'">
             <p class="mb-1 ml-2 font-weight-bold">Postgraduante existente</p>
             <CRow>
                 <CCol sm="12">

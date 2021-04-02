@@ -2,17 +2,17 @@
 $theme-colors: (
     
     "primary":#1268FB,
+    // "primary":#3571FF,
     // "secondary":rgb(88,86,214),
     // "success":rgb(52,199,89),
     // "danger":rgb(255,45,85),
     // "warning":rgb(255,149,0),
     // "info":rgb(90,200,250),
-    // "dark":#1e1e1e,
+    // "dark":#252733,
 );
-$--border-radius-base:0px;
+$--border-radius-base:6px;
 $font-family-sans-serif: "Roboto" !default;
 $card-border-radius: $--border-radius-base !default;
 $input-border-radius: $--border-radius-base !default;
 $border-radius:$--border-radius-base !default;
-$input-border-radius: 5px !default;
 $font-size-base:  .83rem !default;

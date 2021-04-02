@@ -1,5 +1,7 @@
 <template>
-   <CCard class="bg-gradient-dark text-white p-3">
+ 
+<CCard class="bg-gradient-dark text-white  mb-1">
+    <CCardBody>
         <p class="m-0 text-muted">Curso de postgrado</p>
         <h3 class="w-75">{{postgrado.nombre}}</h3>
         <CRow>
@@ -20,7 +22,9 @@
                 <strong class="h5">{{postgrado.fecha_inicio}}</strong>
             </CCol>
         </CRow>
-    </CCard>
+    </CCardBody>
+
+</CCard>
 </template>
 
 <script>

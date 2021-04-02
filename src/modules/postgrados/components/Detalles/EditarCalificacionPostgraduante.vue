@@ -2,32 +2,24 @@
 <div class="mb-5">
     <goback class="mb-3" />
     <hr>
-    <form @submit.prevent="pagoUpdate">
-
-        <p class="mb-1 ml-2 ">POSTGRADUANTE: <strong>{{postgraduante_pago.postgraduante.full_name}}</strong> </p>
-        <small class="mb-1 ml-2 ">POSTGRADO: {{postgraduante_pago.postgrado}}</small>
-
+    <form @submit.prevent="calificacionUpdate($route.params.idCalificacion)">
+        <div class="card mb-1 p-1">
+          <p class="mb-1 ml-2 ">POSTGRADUANTE: <strong>{{calificacion_postgraduante.postgraduante}}</strong> </p>
+        <p class="mb-1 ml-2 ">MATERIA: <strong>{{calificacion_postgraduante.calificacion.sigla}} - {{calificacion_postgraduante.calificacion.asignatura}}</strong> </p>
+        <small class="mb-1 ml-2 ">POSTGRADO: {{calificacion_postgraduante.postgrado}}</small>
+        </div>
         <CCard bodyWrapper>
-
             <CRow>
                 <CCol sm="3">
-                    <CInput label="Item" v-model="editarPago.item" />
+                    <CInput label="Nota Final" v-model="calificacion_postgraduante.calificacion.nota_numerica" />
                 </CCol>
                 <CCol sm="3">
-                    <CInput label="Costo unitario" v-model="editarPago.costo_unitario" />
+                    <CInput label="Fecha registro" readonly v-model="calificacion_postgraduante.calificacion.fecha_registro" />
                 </CCol>
-                <CCol sm="3">
-                    <CInput label="Nro. Boleta" v-model="editarPago.boleta" />
-                </CCol>
-                <CCol sm="3">
-                    <CInput label="Fecha de cobro" readonly v-model="editarPago.fecha_cobro" />
-                </CCol>
-                <CCol sm="12">
-                    <CInput label="Observaciones" v-model="editarPago.observacion" />
+                <CCol sm="6">
+                    <CInput label="Observaciones" v-model="calificacion_postgraduante.calificacion.observacion" />
                 </CCol>
             </CRow>
-
-            
         </CCard>
         <div class="text-right mb-3">
             <button class="btn btn-secondary mr-2" @click.prevent="cancelar">Cancelar</button>
@@ -39,11 +31,10 @@
             </CButton>
         </div>
     </form>
-    
+ 
     <ToastProps :show_toast='show_toast' :color_toast='color_toast' :message_toast='message_toast' />
 </div>
 </template>
-
 <script>
 import ToastProps from '@/components/ShowToast'
 // import InscripcionService from '@/modules/inscripciones/services/InscripcionService'
@@ -51,46 +42,33 @@ export default {
     name: 'postgrado-postgraduante',
     data() {
         return {
-            editarPago: {
-                item: '',
-                costo_unitario: '',
-                boleta: '',
-                observacion: '',
-                postgrado_id: this.$route.params.idPostgrado,
-                postgraduante_id: this.$route.params.idPostgraduante
-            },
-            selected: null,
             isLoading: false,
-
-            postgraduante_pago: {
-                postgrado: '',
-                postgraduante: {
-                    full_name: ''
-                },
-                pagos: []
+            calificacion_postgraduante:{
+              calificacion:{},
             },
-
             validator_toast: '',
             message_toast: '',
             show_toast: false,
             color_toast: '',
         }
     },
-    created() {
-        this.getPostgraduantePagos()
-        this.getPago()
-        // this.getPostgrado()
+    mounted() {
+        this.getPostgraduanteCalificacion(
+          this.$route.params.idPostgrado,
+          this.$route.params.idPostgraduante,
+          this.$route.params.idCalificacion
+        )
+    
     },
     components: {
         ToastProps
     },
     methods: {
-
-        pagoUpdate() {
+        calificacionUpdate(ID_CALIFICACION) {
             this.show_toast = false;
             this.isLoading = true;
             axios
-                .put("/pagos/" + this.$route.params.idPago, this.editarPago)
+                .put("/calificaciones/" + ID_CALIFICACION, this.calificacion_postgraduante.calificacion)
                 .then(response => {
                     if (response.data.success) {
                         this.isLoading = false;
@@ -116,13 +94,13 @@ export default {
                     }
                 });
         },
-        getPostgraduantePagos() {
+        getPostgraduanteCalificacion(ID_POSTGRADO, ID_POSTGRADUANTE, ID_CALIFICACION) {
             axios
-                .get("/verificar-pagos-postgrados-postgraduante/" + this.$route.params.idPostgrado + '/' + this.$route.params.idPostgraduante)
+                .get("/editar-calificacion-postgraduante/" + ID_POSTGRADO + '/' + ID_POSTGRADUANTE + '/'+ID_CALIFICACION)
                 .then(response => {
                     if (response.data.success) {
                         this.isLoading = false;
-                        this.postgraduante_pago = response.data.data;
+                        this.calificacion_postgraduante = response.data.data;
                     } else {
                         this.isLoading = false;
                         this.showToast(response.data.message, true, "danger");
@@ -143,40 +121,11 @@ export default {
                     }
                 });
         },
-        getPago() {
-            this.isLoading = true
-            this.show_toast = false
-            axios
-                .get("/pagos/" + this.$route.params.idPago)
-                .then(response => {
-                    if (response.data.success) {
-                        this.isLoading = false;
-                        this.editarPago = response.data.data;
-                    } else {
-                        this.isLoading = false;
-                        this.showToast(response.data.message, true, "danger");
-                    }
-                })
-                .catch(error => {
-                    this.isLoading = false;
-                    if (error.response) {
-                        this.showToast(
-                            error.response.data.message,
-                            true,
-                            "danger"
-                        );
-                    } else if (error.request) {
-                        this.showToast(error.request, true, "danger");
-                    } else {
-                        this.showToast(error.message, true, "danger");
-                    }
-                });
-        },
+        
         resetForm() {
-            this.editarPago.item = '',
-                this.editarPago.costo_unitario = '',
-                this.editarPago.boleta = '',
-                this.editarPago.observacion = ''
+        
+                this.calificacion_postgraduante={}
+                this.calificacion_postgraduante.calificacion = {}
         },
         cancelar() {
             this.resetForm();
@@ -194,9 +143,7 @@ export default {
             }
         },
     },
-
 }
 </script>
-
 <style>
 </style>

@@ -1,6 +1,6 @@
 <template>
    <div class="text-center text-primary" v-if="isLoading">
-        <div class="spinner-border " role="status">
+        <div class="spinner-border spinner-border-sm" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     </div>

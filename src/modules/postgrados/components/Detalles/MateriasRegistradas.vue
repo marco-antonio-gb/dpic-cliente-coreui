@@ -1,8 +1,27 @@
 <template>
 <div>
- 
-    <CCard v-if="docentes.length>0">
- 
+    <goback class="mb-3" />
+    <CCard bodyWrapper>
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text-muted">Detalle de Materias</small>
+                <h5 class="font-weight-bold">{{materias.postgrado}}</h5>
+            </div>
+            <div>
+                <CDropdown color="primary" toggler-text="Opciones" class="m-2">
+                    <CDropdownItem>First Action</CDropdownItem>
+                    <CDropdownItem>Second Action</CDropdownItem>
+                    <CDropdownItem>Third Action</CDropdownItem>
+                    <CDropdownDivider></CDropdownDivider>
+                    <CDropdownItem>Something else here...</CDropdownItem>
+                    <CDropdownItem disabled>Disabled action</CDropdownItem>
+                </CDropdown>
+            </div>
+        </div>
+
+    </CCard>
+    <CCard v-if="materias">
+
         <CCardBody class="p-0">
             <table class="table table-hover ">
                 <thead>
@@ -15,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(docente,index) in docentes" :key="docente.id">
+                    <tr v-for="(docente,index) in materias.materias" :key="docente.id">
                         <td class="text-center"><strong>{{index+1}}</strong></td>
                         <td>
                             <router-link class="custom-link  " :to="{ name: 'materias-detail', params: { idMateria: docente.idMateria}}" v-slot="{ href,navigate }" custom>
@@ -38,9 +57,9 @@
                         <td>
                             <CButtonGroup>
                                 <CButton color="light" size="sm" @click="$router.push({
-                                    path:'/postgrados/registrar-calificacion/'
+                                    path:'/postgrados/detail/'
                                     +$route.params.idPostgrado                                    
-                                    +'/asignatura/'
+                                    +'/materias/registrar-calificacion/materia/'
                                     +docente.idMateria
                                     +'/docente/'
                                     +docente.idUsuario
@@ -80,13 +99,16 @@
 <script>
 import CustomService from '../../services/CustomService'
 export default {
-    props: {
-        docentes: {
-            type: Array,
-            default: []
-        },
+    data() {
+        return {
+            materias: []
+        }
     },
-    mixins:[
+    created() {
+        this.getMateriasRegistradas(this.$route.params.idPostgrado);
+
+    },
+    mixins: [
         CustomService
     ]
 }

@@ -45,15 +45,26 @@ const PostgradosAdd = () =>
 const PostgradosDetail = () =>
 	import(/* webpackChunkName: "PostgradoDetail" */ "@/modules/postgrados/views/PostgradoDetail");
 const PostgradosMaterias = () =>
-	import(/* webpackChunkName: "PostgradosMaterias" */ "@/modules/postgrados/views/PostgradosMaterias");
+	import(/* webpackChunkName: "PostgradosMaterias" */ "@/modules/postgrados/components/Detalles/PostgradoRegistrarMaterias");
 const PostgradoPostgraduanteNuevo = () =>
 	import(/* webpackChunkName: "PostgradoPostgraduanteNuevo" */ "@/modules/postgrados/components/PostgradoPostgraduanteNuevo");
-const PostgradoPostgraduantePago = () =>
-	import(/* webpackChunkName: "PostgradoPostgraduantePago" */ "@/modules/postgrados/components/PostgradoPostgraduantePago");
+
+const PostgraduantesInscritos = () =>
+	import(/* webpackChunkName: "PostgraduantesInscritos" */ "@/modules/postgrados/components/Detalles/PostgraduantesInscritos");
+const PostgraduanteCalificaciones = () =>
+	import(/* webpackChunkName: "PostgraduanteCalificaciones" */ "@/modules/postgrados/components/Detalles/PostgraduanteCalificaciones");
+const EditarCalificacionPostgraduante = () =>
+	import(/* webpackChunkName: "EditarCalificacionPostgraduante" */ "@/modules/postgrados/components/Detalles/EditarCalificacionPostgraduante");
+
+const MateriasRegistradas = () =>
+	import(/* webpackChunkName: "MateriasRegistradas" */ "@/modules/postgrados/components/Detalles/MateriasRegistradas");
+const PagosRegistrados = () =>
+	import(/* webpackChunkName: "PagosRegistrados" */ "@/modules/postgrados/components/Detalles/PagosRegistrados");
 const PostgradoCalificaciones = () =>
-	import(/* webpackChunkName: "PostgradoCalificaciones" */ "@/modules/postgrados/components/PostgradoCalificaciones");
-const InscritosAsignatura = () =>
-	import(/* webpackChunkName: "InscritosAsignatura" */ "@/modules/postgrados/components/InscritosAsignatura");
+	import(/* webpackChunkName: "PostgradoCalificaciones" */ "@/modules/postgrados/components/Detalles/PostgradoCalificaciones");
+const RegistrarPagoPostgraduante = () =>
+	import(/* webpackChunkName: "RegistrarPagoPostgraduante" */ "@/modules/postgrados/components/Detalles/RegistrarPagoPostgraduante");
+
 const PostgradosList = () =>
 	import(/* webpackChunkName: "PostgradoList" */ "@/modules/postgrados/views/PostgradoList");
 const PostgradosUpdate = () =>
@@ -61,9 +72,10 @@ const PostgradosUpdate = () =>
 
 /* DETALLE PAGOS POSTGRADUANTE + REPORTE */
 const DetallePagosInscritos = () =>
-	import(/* webpackChunkName: "DetallePagosInscritos" */ "@/modules/postgrados/views/detalles/DetallePagosInscritos");
+	import(/* webpackChunkName: "DetallePagosInscritos" */ "@/modules/postgrados/components/Detalles/DetallePagosInscritos");
+
 const EditarDetallePagos = () =>
-	import(/* webpackChunkName: "EditarDetallePagos" */ "@/modules/postgrados/views/detalles/EditarDetallePagos");
+	import(/* webpackChunkName: "EditarDetallePagos" */ "@/modules/postgrados/components/Detalles/EditarDetallePagos");
 
 //docentes
 const Docentes = () =>
@@ -76,17 +88,7 @@ const DocentesList = () =>
 	import(/* webpackChunkName: "DocenteList" */ "@/modules/docentes/views/DocenteList");
 const DocentesUpdate = () =>
 	import(/* webpackChunkName: "DocenteUpdate" */ "@/modules/docentes/views/DocenteUpdate");
-//pagos
-const Pagos = () =>
-	import(/* webpackChunkName: "Pagos" */ "@/modules/pagos/Pagos");
-const PagosAdd = () =>
-	import(/* webpackChunkName: "PagoAdd" */ "@/modules/pagos/views/PagoAdd");
-const PagosDetail = () =>
-	import(/* webpackChunkName: "PagoDetail" */ "@/modules/pagos/views/PagoDetail");
-const PagosList = () =>
-	import(/* webpackChunkName: "PagoList" */ "@/modules/pagos/views/PagoList");
-const PagosUpdate = () =>
-	import(/* webpackChunkName: "PagoUpdate" */ "@/modules/pagos/views/PagoUpdate");
+
 //pagos
 const Materias = () =>
 	import(/* webpackChunkName: "Materias" */ "@/modules/materias/Materias");
@@ -288,7 +290,70 @@ export const router = new Router({
 								permissions: ["Sistemas", "Administrador"]
 							}
 						},
-						// ----------------------------------------------------------
+						// LISTA DE POSTGRADUANTES INSCRITOS AL CURSO DE POSTGRADO
+						{
+							path:
+								"/postgrados/detail/:idPostgrado/postgraduantes",
+							name: "postgraduantes-inscritos",
+							component: PostgraduantesInscritos,
+							meta: {
+								title: "Postgraduantes inscritos",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						// CALIFICACIONES (TODAS LAS MATERIAS) DEL POSTGRADUANTE REGISTRADO
+						{
+							path:
+								"/postgrados/detail/:idPostgrado/postgraduantes/calificaciones-postgraduante/:idPostgraduante",
+							name: "calificaciones-postgraduante",
+							component: PostgraduanteCalificaciones,
+							meta: {
+								title: "Detalle Calificaciones postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						// EDITAR CALIFICACION (MATERIA) DEL POSTGRADUANTE REGISTRADO
+						{
+							path:
+								"/postgrados/detail/:idPostgrado/postgraduantes/calificaciones-postgraduante/:idPostgraduante/editar-calificacion/:idCalificacion",
+							name: "editar-calificaciones-postgraduante",
+							component: EditarCalificacionPostgraduante,
+							meta: {
+								title: "Editar Calificacion postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						// LISTA DE MATERIAS REGISTRADAS EN EL  CURSO DE POSTGRADO
+						{
+							path: "/postgrados/detail/:idPostgrado/materias",
+							name: "materias-postgrado",
+							component: MateriasRegistradas,
+							meta: {
+								title: "Materias registradas",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						// REGISTRAR CALIFICACION EN UNA MATERIA DEL CURSO
+						{
+							path:
+								"/postgrados/detail/:idPostgrado/materias/registrar-calificacion/materia/:idMateria/docente/:idDocente",
+							name: "postgrado-registro-calificaciones",
+							component: PostgradoCalificaciones,
+							meta: {
+								title: "Registrar calificaciones Materia",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
+						// LISTA DE MATERIAS REGISTRADAS EN EL  CURSO DE POSTGRADO
+						{
+							path: "/postgrados/detail/:idPostgrado/pagos",
+							name: "pagos-postgrado",
+							component: PagosRegistrados,
+							meta: {
+								title: "Pagos registrados",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
 						/* DETALLE PAGOS INSCRITOS */
 						{
 							path:
@@ -300,10 +365,21 @@ export const router = new Router({
 								permissions: ["Sistemas", "Administrador"]
 							}
 						},
+						/* REGISTRar PAGOS INSCRITOS */
+						{
+							path:
+								"/postgrados/detail/:idPostgrado/pagos/registrar-pago-postgraduante/:idPostgraduante",
+							name: "registrar-pagos-postgraduante",
+							component: RegistrarPagoPostgraduante,
+							meta: {
+								title: "Registrar pagos postgraduante",
+								permissions: ["Sistemas", "Administrador"]
+							}
+						},
 						{
 							path:
 								"/postgrados/editar-pagos/:idPostgrado/postgraduante/:idPostgraduante/pago/:idPago",
-							name: "editar-pagos",
+							name: "editar-pagos-postgraduante",
 							component: EditarDetallePagos,
 							meta: {
 								title: "Editar pago postgraduante",
@@ -321,7 +397,8 @@ export const router = new Router({
 							}
 						},
 						{
-							path: "/postgrados/asignar-materias/:idPostgrado",
+							path:
+								"/postgrados/detail/:idPostgrado/registrar-materia",
 							name: "postgrados-materias",
 							component: PostgradosMaterias,
 							meta: {
@@ -331,49 +408,15 @@ export const router = new Router({
 						},
 						{
 							path:
-								"/postgrados/inscribir-postgraduante-nuevo/:idPostgrado",
+								"/postgrados/detail/:idPostgrado/registrar-postgraduante/:opcionPostgraduante",
 							name: "postgrado-postgraduante-nuevo",
 							component: PostgradoPostgraduanteNuevo,
 							meta: {
-								title: "Inscribir Nuevo postgraduante",
+								title: "Registrar Nuevo postgraduante",
 								permissions: ["Sistemas", "Administrador"]
-							}
-						},
-						{
-							path:
-								"/postgrados/inscribir-postgraduante-existente/:idPostgrado",
-							name: "postgrado-postgraduante-existente",
-							component: PostgradoPostgraduanteNuevo,
-							meta: {
-								title: "Inscribir postgraduante existente",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						},
-
-						{
-							path:
-								"/postgrados/registrar-calificacion/:idPostgrado/asignatura/:idMateria/docente/:idDocente",
-							name: "postgrado-registro-calificaciones",
-							component: PostgradoCalificaciones,
-							meta: {
-								title: "Registrar calificaciones Materia",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						},
-						{
-							path:
-								"/postgrados/postgraduantes-inscritos/:idPostgrado/asignatura/:idMateria/docente/:idDocente",
-							name: "postgraduantes-inscritos",
-							component: InscritosAsignatura,
-							meta: {
-								title: "Lista de postgraduantes inscritos",
-								permissions: [
-									"Sistemas",
-									"Administrador",
-									"Docente"
-								]
 							}
 						}
+
 						// {
 						// 	path:
 						// 		"/postgrados/registrar-calificacion/:idPostgrado/postgraduante/:idPostgraduante/asignatura/:idMateria/docente/:idDocente",
@@ -425,48 +468,7 @@ export const router = new Router({
 						}
 					]
 				},
-				{
-					path: "/pagos",
-					component: Pagos,
-					children: [
-						{
-							path: "",
-							name: "pagos-list",
-							component: PagosList,
-							meta: {
-								title: "Lista pagos registrados",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						},
-						{
-							path: "/pagos/add",
-							name: "pagos-add",
-							component: PagosAdd,
-							meta: {
-								title: "Registrar nuevo pago",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						},
-						{
-							path: "/pagos/detail/:idPago",
-							name: "pagos-detail",
-							component: PagosDetail,
-							meta: {
-								title: "Detalle pagos",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						},
-						{
-							path: "/pagos/update/:idPago",
-							name: "pagos-update",
-							component: PagosUpdate,
-							meta: {
-								title: "Editar informacion de pago",
-								permissions: ["Sistemas", "Administrador"]
-							}
-						}
-					]
-				},
+
 				{
 					path: "/materias",
 					component: Materias,
